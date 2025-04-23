@@ -1,0 +1,11 @@
+Nombre,Tipo,Vida,Ataque,Defensa,Velocidad
+Uva,Luchador,15,15,10,10
+Pasa,Zombie,10,10,5,5
+Fresa,Mago,20,12,10,8
+Naranja,Tanque,35,20,35,20
+Plátano,Zombie,30,25,20,15
+Kiwi,Guerrero,25,30,25,35
+Calabaza,Luchador,45,25,45,25
+Melón,Zombie,40,30,25,20
+Coco,Tanque,50,30,40,40
+Berenjena,Guerrero,40,50,35,50
