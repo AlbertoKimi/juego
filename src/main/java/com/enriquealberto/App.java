@@ -1,36 +1,55 @@
 package com.enriquealberto;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    private static Scene scene;
-
+  /**
+     * Método que se ejecuta cuando la aplicación JavaFX inicia.
+     * 
+     * Este método configura el título de la ventana, establece el icono de la ventana,
+     * inicializa el <code>SceneManager</code>, configura las escenas disponibles y carga la escena principal.
+     * 
+     * @param stage el <code>Stage</code> principal de la aplicación, que representa la ventana.
+     * @throws IOException si ocurre un error al cargar los recursos o las vistas.
+     */
+    
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+        // Establece el título de la ventana
+        stage.setTitle("Estructura base de una aplicación en JAVAFX");
+        
+        // Establece el icono de la ventana
+        stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));
+        
+        // Obtiene la instancia del SceneManager
+        ManagerEscenas sm = ManagerEscenas.getInstance();
+        
+        // Inicializa el SceneManager con el stage y una ruta de estilos
+        sm.init(stage);
+        
+        // Configura las escenas con identificadores y tamaños
+        sm.setScene(EscenaID.JUEGO, "Juego",800, 500);
+        sm.setScene(EscenaID.PORTADA, "Portada", 800, 500);
+        sm.setScene(EscenaID.SELECTION, "Selection", 800, 500);
+        
+        // Carga la escena principal
+        sm.loadScene(EscenaID.PORTADA);
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
+    /**
+     * El método principal que lanza la aplicación JavaFX.
+     * 
+     * @param args los argumentos de la línea de comandos, no utilizados en este caso.
+     */
     public static void main(String[] args) {
         launch();
     }
