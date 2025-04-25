@@ -26,9 +26,12 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         // Establece el título de la ventana
         stage.setTitle("Estructura base de una aplicación en JAVAFX");
+        stage.setResizable(false); // Evita que la ventana sea redimensionable
+        stage.setWidth(800); // Establece el ancho de la ventana
+        stage.setHeight(500); // Establece la altura de la ventana
         
         // Establece el icono de la ventana
-        stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));
+        /*stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));*/
         
         // Obtiene la instancia del SceneManager
         ManagerEscenas sm = ManagerEscenas.getInstance();
@@ -38,11 +41,11 @@ public class App extends Application {
         
         // Configura las escenas con identificadores y tamaños
         sm.setScene(EscenaID.JUEGO, "Juego",800, 500);
-        sm.setScene(EscenaID.PORTADA, "Portada", 800, 500);
-        sm.setScene(EscenaID.SELECTION, "Selection", 800, 500);
+        /*sm.setScene(EscenaID.PORTADA, "Portada", 800, 500);
+        sm.setScene(EscenaID.SELECTION, "Selection", 800, 500);*/
         
         // Carga la escena principal
-        sm.loadScene(EscenaID.PORTADA);
+        sm.loadScene(EscenaID.JUEGO);
     }
 
     /**
