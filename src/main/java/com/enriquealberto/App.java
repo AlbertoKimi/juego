@@ -27,8 +27,8 @@ public class App extends Application {
         // Establece el título de la ventana
         stage.setTitle("Estructura base de una aplicación en JAVAFX");
         stage.setResizable(false); // Evita que la ventana sea redimensionable
-        stage.setWidth(800); // Establece el ancho de la ventana
-        stage.setHeight(500); // Establece la altura de la ventana
+        stage.setWidth(660); // Establece el ancho de la ventana
+        stage.setHeight(620); // Establece la altura de la ventana
         
         // Establece el icono de la ventana
         /*stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));*/
@@ -40,7 +40,7 @@ public class App extends Application {
         sm.init(stage);
         
         // Configura las escenas con identificadores y tamaños
-        sm.setScene(EscenaID.JUEGO, "Juego",800, 500);
+        sm.setScene(EscenaID.JUEGO, "Juego",900,600);
         /*sm.setScene(EscenaID.PORTADA, "Portada", 800, 500);
         sm.setScene(EscenaID.SELECTION, "Selection", 800, 500);*/
         
