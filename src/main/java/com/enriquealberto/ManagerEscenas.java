@@ -62,7 +62,7 @@ public class ManagerEscenas {
      * @param width el ancho de la escena.
      * @param height el alto de la escena.
      */
-    public void setScene(EscenaID sceneID, String fxml,int width, int height){
+    public void setScene(EscenaID sceneID, String fxml/*,int width, int height*/){
        
         try {
             // Carga el archivo FXML
@@ -71,7 +71,7 @@ public class ManagerEscenas {
                 throw new IllegalStateException("No se pudo encontrar el archivo FXML: " + fxml + ".fxml");
             }
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, width, height); // Crea la escena con el tamaño especificado
+            Scene scene = new Scene(root/*, width, height*/); // Crea la escena con el tamaño especificado
             scenes.put(sceneID, scene); // Almacena la escena en el mapa con el identificador correspondiente
         } catch (IOException e) {
             e.printStackTrace(); // En caso de error al cargar el FXML
@@ -96,6 +96,16 @@ public class ManagerEscenas {
         if (scenes.containsKey(sceneID)){
             stage.setScene(scenes.get(sceneID)); // Establece la escena en la ventana principal
             stage.show(); // Muestra la ventana con la nueva escena
+        }
+    }
+
+    @SuppressWarnings("exports")
+    public Scene getScene(EscenaID sceneID){
+        if (scenes.containsKey(sceneID)){
+            return scenes.get(sceneID);
+        } else {
+            System.err.println("La escena seleccionada no existe");
+            return null;
         }
     }
 }

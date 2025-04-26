@@ -1,5 +1,5 @@
 package com.enriquealberto;
 
 public enum EscenaID {
-    PORTADA,SELECTION,JUEGO
+    PORTADA,SELECTION,JUEGO,CONTENEDOR,ESTADISTICAS
 }
