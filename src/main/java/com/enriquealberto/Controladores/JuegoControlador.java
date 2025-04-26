@@ -15,6 +15,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
 public class JuegoControlador implements Observer {
     @FXML
@@ -27,30 +31,45 @@ public class JuegoControlador implements Observer {
     public void initialize() {
         gestorMapas = Proveedor.getInstance().getGestorMapas();
         gestorMapas.subscribe(this);
-        gridPane = new GridPane();
 
-        // Ajustar el GridPane al AnchorPane
-        AnchorPane.setTopAnchor(gridPane, 0.0);
-        AnchorPane.setBottomAnchor(gridPane, 0.0);
-        AnchorPane.setLeftAnchor(gridPane, 0.0);
-        AnchorPane.setRightAnchor(gridPane, 0.0);
-        anchorPane.getChildren().add(gridPane);
-        
-        // Listener para ajustar dinámicamente las celdas
-        gridPane.widthProperty().addListener((obs, oldVal, newVal) -> generarMapa(gestorMapas.getMapas()));
-        gridPane.heightProperty().addListener((obs, oldVal, newVal) -> generarMapa(gestorMapas.getMapas()));
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(7));
+        vbox.setAlignment(Pos.CENTER);
+
+        StackPane stackPane = new StackPane();
+        Label titulo = new Label("NIVEL " + gestorMapas.getMapaActual().getNivel() + " : " + gestorMapas.getMapaActual().getNombre());
+        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        stackPane.getChildren().add(titulo);
+
+        gridPane = new GridPane();
+        gridPane.setPrefWidth(600); // Ancho fijo
+        gridPane.setPrefHeight(600); // Alto fijo
+
+        vbox.getChildren().addAll(stackPane, gridPane);
+
+        anchorPane.setPrefWidth(800); //
+        anchorPane.setPrefHeight(600); //
+
+        AnchorPane.setTopAnchor(vbox, 0.0);
+        AnchorPane.setBottomAnchor(vbox, 0.0);
+        AnchorPane.setLeftAnchor(vbox, 0.0);
+        AnchorPane.setRightAnchor(vbox, 0.0);
+        anchorPane.getChildren().add(vbox);
 
         generarMapa(gestorMapas.getMapas());
     }
 
     public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
-        gridPane.getChildren().clear(); 
+        gridPane.getChildren().clear();
         Mapa primerMapa = Proveedor.getInstance().getGestorMapas().getMapaActual();
         ArrayList<ArrayList<Integer>> matriz = primerMapa.getMapa();
         int filas = matriz.size();
         int columnas = matriz.get(0).size();
-        double anchoCelda = gridPane.getWidth() / columnas;
-        double altoCelda = gridPane.getHeight() / filas;
+
+        // Calcular el tamaño de las celdas basado en las dimensiones fijas del GridPane
+        double anchoCelda = gridPane.getPrefWidth() / columnas;
+        double altoCelda = gridPane.getPrefHeight() / filas;
 
         Image suelo = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getPared()));
@@ -68,7 +87,7 @@ public class JuegoControlador implements Observer {
                 imageView.setFitWidth(anchoCelda);
                 imageView.setFitHeight(altoCelda);
                 imageView.setPreserveRatio(false);
-                imageView.setSmooth(true); 
+                imageView.setSmooth(true);
 
                 StackPane stackPane = new StackPane(imageView);
                 stackPane.setPrefWidth(anchoCelda);
