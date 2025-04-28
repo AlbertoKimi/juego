@@ -58,6 +58,10 @@ public class JuegoControlador implements Observer {
         anchorPane.getChildren().add(vbox);
 
         generarMapa(gestorMapas.getMapas());
+
+        gridPane.setOnMouseClicked(event -> {
+            cambiarMapa();
+        });
     }
 
     public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
@@ -98,9 +102,26 @@ public class JuegoControlador implements Observer {
         }
     }
 
-    @Override
-    public void onChange() {
-        System.out.println("El mapa ha cambiado");
+    public void cambiarMapa() {
+        // Intentar avanzar al siguiente mapa
+        boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
+
+        if (haySiguiente) {
+            // Si hay un siguiente mapa, simplemente actualiza la vista
+            onChange();
+        } else {
+            // Si no hay más mapas, mostrar un mensaje
+            System.out.println("No hay más mapas disponibles.");
+        }
     }
 
+    @Override
+    public void onChange() {
+        // Actualizar el mapa actual
+        LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
+        /*ArrayList<Mapa> listaMapas = new ArrayList<>(mapas.values());*/
+        /*int indiceActual = listaMapas.indexOf(gestorMapas.getMapaActual());*/
+        /*Mapa mapaActual = listaMapas.get(indiceActual);*/
+        generarMapa(mapas);
+    }
 }

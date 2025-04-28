@@ -66,7 +66,21 @@ public class GestorMapas {
     }
     
     //¿POSIBLE MÉTODO PARA SELECCIONAR EL SIGUIENTE MAPA?
+
     public boolean avanzarAlSiguienteMapa() {
+        ArrayList<Mapa> listaMapas = new ArrayList<>(mapas.values());
+        int indiceActual = listaMapas.indexOf(mapaActual);
+    
+        if (indiceActual < listaMapas.size() - 1) {
+            mapaActual = listaMapas.get(indiceActual + 1);
+            notifyObservers(); // Notificar a los observadores del cambio
+            return true;
+        } else {
+            return false; // No hay más mapas disponibles
+        }
+    }
+
+    /*public boolean avanzarAlSiguienteMapa() {
         // Obtener el iterador de los mapas
         var iterador = mapas.values().iterator();
         boolean haySiguiente = false;
@@ -87,5 +101,5 @@ public class GestorMapas {
         
         notifyObservers(); // Notificar a los observadores sobre el cambio
         return haySiguiente;
-    }
+    }*/
 }
