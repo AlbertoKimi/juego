@@ -1,6 +1,6 @@
 #escenario:ciudad
 #suelo:/com/enriquealberto/imagenes/SueloCiudad.jpg
-#pared:/com/enriquealberto/imagenes/casa1.jpg
+#pared:/com/enriquealberto/imagenes/casa1.png
 0000000000
 0000000000
 0111100000
@@ -12,8 +12,8 @@
 0000011100
 0000011100
 #escenario:bosque
-#suelo:/com/enriquealberto/imagenes/SueloCiudad.jpg
-#pared:/com/enriquealberto/imagenes/casa1.jpg
+#suelo:/com/enriquealberto/imagenes/hierba.png
+#pared:/com/enriquealberto/imagenes/arbol1.png
 0000000000
 0110000000
 0110011100
@@ -25,8 +25,8 @@
 0000110000
 0000000000
 #escenario:pantano
-#suelo:/com/enriquealberto/imagenes/puente.png
-#pared:/com/enriquealberto/imagenes/agua.png
+#suelo:/com/enriquealberto/imagenes/losaPuente.png
+#pared:/com/enriquealberto/imagenes/agua2.jpg
 0000000000
 1111111110
 0000000000
@@ -39,7 +39,7 @@
 1100000011
 #escenario:cueva
 #suelo:/com/enriquealberto/imagenes/suelocueva.jpg
-#pared:/com/enriquealberto/imagenes/casa1.jpg
+#pared:/com/enriquealberto/imagenes/roca.png
 0010000000
 0110000010
 0110010010
