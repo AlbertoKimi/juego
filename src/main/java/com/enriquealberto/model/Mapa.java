@@ -6,6 +6,8 @@ public class Mapa {
     private String nombre;
     private String suelo;
     private String pared;
+    private String sueloLava;
+    private String lava;
     private int nivel;
     private  ArrayList<ArrayList<Integer>> mapa;
 
@@ -14,6 +16,8 @@ public class Mapa {
         this.nombre = "Mapa por defecto";
         this.suelo = "/com/enriquealberto/imagenes/SueloCiudad.jpg";
         this.pared = "/com/enriquealberto/imagenes/casa1.jpg";
+        this.lava= "/com/enriquealberto/imagenes/lavapared.jpg";
+        this.sueloLava= "/com/enriquealberto/imagenes/lava.jpg";
         this.mapa = new ArrayList<>();
     }
 
@@ -59,6 +63,22 @@ public class Mapa {
 
     public int getNivel() {
         return this.nivel;
+    }
+
+    public String getSueloLava() {
+        return this.sueloLava;
+    }
+
+    public void setSueloLava(String sueloLava) {
+        this.sueloLava = sueloLava;
+    }
+
+    public String getLava() {
+        return this.lava;
+    }
+
+    public void setLava(String lava) {
+        this.lava = lava;
     }
 
 }

@@ -73,10 +73,10 @@ public class GestorMapas {
     
         if (indiceActual < listaMapas.size() - 1) {
             mapaActual = listaMapas.get(indiceActual + 1);
-            notifyObservers(); // Notificar a los observadores del cambio
+            notifyObservers(); 
             return true;
         } else {
-            return false; // No hay más mapas disponibles
+            return false; 
         }
     }
 

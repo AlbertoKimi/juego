@@ -77,6 +77,8 @@ public class JuegoControlador implements Observer {
 
         Image suelo = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getPared()));
+        Image sueloLava = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getSueloLava()));
+        Image lava = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getLava()));
 
         for (int fila = 0; fila < filas; fila++) {
             ArrayList<Integer> filaMapa = matriz.get(fila);
@@ -85,8 +87,12 @@ public class JuegoControlador implements Observer {
                 ImageView imageView;
                 if (valor == 0) {
                     imageView = new ImageView(suelo);
-                } else {
+                } else if (valor==1){
                     imageView = new ImageView(pared);
+                } else if (valor==6){
+                    imageView =new ImageView(sueloLava);
+                } else{
+                    imageView =new ImageView(lava);
                 }
                 imageView.setFitWidth(anchoCelda);
                 imageView.setFitHeight(altoCelda);
@@ -119,9 +125,10 @@ public class JuegoControlador implements Observer {
     public void onChange() {
         // Actualizar el mapa actual
         LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
-        /*ArrayList<Mapa> listaMapas = new ArrayList<>(mapas.values());*/
-        /*int indiceActual = listaMapas.indexOf(gestorMapas.getMapaActual());*/
-        /*Mapa mapaActual = listaMapas.get(indiceActual);*/
+        /*ArrayList<Mapa> listaMapas = new ArrayList<>(mapas.values());
+        int indiceActual = listaMapas.indexOf(gestorMapas.getMapaActual());
+        Mapa mapaActual = listaMapas.get(indiceActual);
+        mapaActual.setSuelo(null);*/
         generarMapa(mapas);
     }
 }
