@@ -25,8 +25,8 @@
 0000110000
 0000000000
 #escenario:pantano
-#suelo:/com/enriquealberto/imagenes/SueloCiudad.jpg
-#pared:/com/enriquealberto/imagenes/casa1.jpg
+#suelo:/com/enriquealberto/imagenes/puente.png
+#pared:/com/enriquealberto/imagenes/agua.png
 0000000000
 1111111110
 0000000000
@@ -38,7 +38,7 @@
 1100000011
 1100000011
 #escenario:cueva
-#suelo:/com/enriquealberto/imagenes/SueloCiudad.jpg
+#suelo:/com/enriquealberto/imagenes/suelocueva.jpg
 #pared:/com/enriquealberto/imagenes/casa1.jpg
 0010000000
 0110000010

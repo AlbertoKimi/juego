@@ -7,10 +7,11 @@ public class Mapa {
     private String suelo;
     private String pared;
     private int nivel;
+    private static int contador=0;
     private  ArrayList<ArrayList<Integer>> mapa;
 
     public Mapa(){
-        this.nivel=1;
+        this.nivel=++contador;
         this.nombre = "Mapa por defecto";
         this.suelo = "suelo por defecto";
         this.pared = "pared por defecto";
@@ -18,7 +19,7 @@ public class Mapa {
     }
 
     public Mapa(String nombre, String suelo, String pared, ArrayList<ArrayList<Integer>> mapa) {
-        this.nivel++;
+        this.nivel=++contador;
         this.nombre = nombre;
         this.suelo = suelo;
         this.pared = pared;

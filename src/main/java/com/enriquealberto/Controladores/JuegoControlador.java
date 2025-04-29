@@ -26,30 +26,30 @@ public class JuegoControlador implements Observer {
 
     GridPane gridPane;
     GestorMapas gestorMapas;
+    VBox vbox; // Variable VBox para contener el título y el mapa
+    Label titulo; // Variable para el título del nivel
 
     @FXML
     public void initialize() {
         gestorMapas = Proveedor.getInstance().getGestorMapas();
         gestorMapas.subscribe(this);
 
-        VBox vbox = new VBox();
+        vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(7));
         vbox.setAlignment(Pos.CENTER);
 
-        StackPane stackPane = new StackPane();
-        Label titulo = new Label("NIVEL " + gestorMapas.getMapaActual().getNivel() + " : " + gestorMapas.getMapaActual().getNombre());
+        titulo = new Label(); // Crear el Label para el título
         titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-        stackPane.getChildren().add(titulo);
 
         gridPane = new GridPane();
         gridPane.setPrefWidth(600); // Ancho fijo
         gridPane.setPrefHeight(600); // Alto fijo
 
-        vbox.getChildren().addAll(stackPane, gridPane);
+        vbox.getChildren().addAll(titulo, gridPane); // Agregar el título y el GridPane al VBox
 
-        anchorPane.setPrefWidth(800); //
-        anchorPane.setPrefHeight(600); //
+        anchorPane.setPrefWidth(800);
+        anchorPane.setPrefHeight(600);
 
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
@@ -70,6 +70,9 @@ public class JuegoControlador implements Observer {
         ArrayList<ArrayList<Integer>> matriz = mapaActual.getMapa();
         int filas = matriz.size();
         int columnas = matriz.get(0).size();
+
+        // Actualizar el título del nivel
+        titulo.setText("NIVEL " + mapaActual.getNivel() + " : " + mapaActual.getNombre());
 
         // Calcular el tamaño de las celdas 
         double anchoCelda = gridPane.getPrefWidth() / columnas;
@@ -105,7 +108,6 @@ public class JuegoControlador implements Observer {
 
     public void cambiarMapa() {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
-
         if (haySiguiente) {
             onChange();
         } else {
@@ -117,10 +119,6 @@ public class JuegoControlador implements Observer {
     public void onChange() {
         // Actualizar el mapa actual
         LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
-        /*ArrayList<Mapa> listaMapas = new ArrayList<>(mapas.values());
-        int indiceActual = listaMapas.indexOf(gestorMapas.getMapaActual());
-        Mapa mapaActual = listaMapas.get(indiceActual);
-        mapaActual.setSuelo(null);*/
         generarMapa(mapas);
     }
 }
