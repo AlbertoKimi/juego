@@ -30,15 +30,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // Obtener el número de filas y columnas del mapa
         GestorMapas gestorMapas = Proveedor.getInstance().getGestorMapas();
         Mapa primerMapa = gestorMapas.getMapaActual();
         int filas = primerMapa.getMapa().size();
         int columnas = primerMapa.getMapa().get(0).size();
 
         // Definir el tamaño de las celdas
-        double anchoCelda = 100; // Puedes ajustar este valor según tus necesidades
-        double altoCelda = 70; // Puedes ajustar este valor según tus necesidades
+        double anchoCelda = 100; 
+        double altoCelda = 70; 
 
         // Calcular el tamaño del Stage
         double anchoVentana = columnas * anchoCelda;

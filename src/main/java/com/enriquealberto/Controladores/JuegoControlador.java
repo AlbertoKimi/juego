@@ -66,19 +66,18 @@ public class JuegoControlador implements Observer {
 
     public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
         gridPane.getChildren().clear();
-        Mapa primerMapa = Proveedor.getInstance().getGestorMapas().getMapaActual();
-        ArrayList<ArrayList<Integer>> matriz = primerMapa.getMapa();
+        Mapa mapaActual = gestorMapas.getMapaActual(); 
+        ArrayList<ArrayList<Integer>> matriz = mapaActual.getMapa();
         int filas = matriz.size();
         int columnas = matriz.get(0).size();
 
-        // Calcular el tamaño de las celdas basado en las dimensiones fijas del GridPane
+        // Calcular el tamaño de las celdas 
         double anchoCelda = gridPane.getPrefWidth() / columnas;
         double altoCelda = gridPane.getPrefHeight() / filas;
 
-        Image suelo = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getSuelo()));
-        Image pared = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getPared()));
-        Image sueloLava = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getSueloLava()));
-        Image lava = new Image(getClass().getResourceAsStream(mapas.values().iterator().next().getLava()));
+        // Cargar las imágenes de suelo y pared del mapa actual
+        Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
+        Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
 
         for (int fila = 0; fila < filas; fila++) {
             ArrayList<Integer> filaMapa = matriz.get(fila);
@@ -87,12 +86,8 @@ public class JuegoControlador implements Observer {
                 ImageView imageView;
                 if (valor == 0) {
                     imageView = new ImageView(suelo);
-                } else if (valor==1){
+                } else {
                     imageView = new ImageView(pared);
-                } else if (valor==6){
-                    imageView =new ImageView(sueloLava);
-                } else{
-                    imageView =new ImageView(lava);
                 }
                 imageView.setFitWidth(anchoCelda);
                 imageView.setFitHeight(altoCelda);
@@ -109,14 +104,11 @@ public class JuegoControlador implements Observer {
     }
 
     public void cambiarMapa() {
-        // Intentar avanzar al siguiente mapa
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
 
         if (haySiguiente) {
-            // Si hay un siguiente mapa, simplemente actualiza la vista
             onChange();
         } else {
-            // Si no hay más mapas, mostrar un mensaje
             System.out.println("No hay más mapas disponibles.");
         }
     }

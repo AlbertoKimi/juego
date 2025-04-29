@@ -14,28 +14,40 @@ public class LectorMapa {
                 LectorMapa.class.getResourceAsStream("/com/enriquealberto/archivos/escenarios.quive")))) {
             String linea;
             String nombreEscenario = null;
+            String suelo = null;
+            String pared = null;
             ArrayList<ArrayList<Integer>> matriz = null;
 
             while ((linea = br.readLine()) != null) {
                 linea = linea.trim();
 
-                // Detectar cabecera
+                // Cabecera
                 if (linea.startsWith("#")) {
-                    if (nombreEscenario != null && matriz != null) {
-                        // Guardar el escenario en el ArrayList
-                        Mapa mapa = new Mapa();
-                        mapa.setNombre(nombreEscenario);
-                        mapa.setMapa(matriz);
-                        mapas.add(mapa);
-                    }
+                    if (linea.startsWith("#suelo:")) {
+                        suelo = linea.split(":", 2)[1].trim();
+                    } else if (linea.startsWith("#pared:")) {
+                        pared = linea.split(":", 2)[1].trim();
+                    } else if (linea.startsWith("#escenario")) {
+                        if (nombreEscenario != null && matriz != null) {
+                            // Guardar el escenario
+                            Mapa mapa = new Mapa();
+                            mapa.setNombre(nombreEscenario);
+                            mapa.setMapa(matriz);
+                            mapa.setSuelo(suelo);
+                            mapa.setPared(pared);
+                            mapas.add(mapa);
+                        }
 
-                    // Procesar nueva cabecera
-                    String[] partes = linea.split(":");
-                    if (partes.length < 2) {
-                        continue; // Saltar líneas mal formadas
+                        // Nueva cabecera
+                        String[] partes = linea.split(":");
+                        if (partes.length < 2) {
+                            continue; // Saltar líneas mal formadas
+                        }
+                        nombreEscenario = partes[1].trim();
+                        matriz = new ArrayList<>();
+                        suelo = null; 
+                        pared = null; 
                     }
-                    nombreEscenario = partes[1].trim();
-                    matriz = new ArrayList<>();
                 } else if (!linea.isEmpty() && matriz != null) {
                     // Procesar líneas de la matriz
                     ArrayList<Integer> filaNumeros = new ArrayList<>();
@@ -46,11 +58,13 @@ public class LectorMapa {
                 }
             }
 
-            // Guardar el último escenario procesado
+            // Guardar mapa
             if (nombreEscenario != null && matriz != null) {
                 Mapa mapa = new Mapa();
                 mapa.setNombre(nombreEscenario);
                 mapa.setMapa(matriz);
+                mapa.setSuelo(suelo);
+                mapa.setPared(pared);
                 mapas.add(mapa);
             }
         } catch (IOException e) {
@@ -58,17 +72,4 @@ public class LectorMapa {
         }
         return mapas;
     }
-
-    // Método de prueba para verificar la lectura de mapas
-    /*public static void main(String[] args) {
-        ArrayList<Mapa> mapas = LectorMapa.leerMapas();
-        for (Mapa mapa : mapas) {
-            System.out.println("Nombre del escenario: " + mapa.getNombre());
-            System.out.println("Matriz:");
-            for (ArrayList<Integer> fila : mapa.getMapa()) {
-                System.out.println(fila);
-            }
-            System.out.println("-------------------------");
-        }
-    }*/
 }
