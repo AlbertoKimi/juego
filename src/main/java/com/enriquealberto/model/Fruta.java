@@ -1,5 +1,6 @@
 package com.enriquealberto.model;
 import java.util.ArrayList;
+
 import com.enriquealberto.interfaces.Observer;
 
 public class Fruta {

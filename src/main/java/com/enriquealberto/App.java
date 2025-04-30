@@ -9,6 +9,10 @@ import com.enriquealberto.model.Proveedor;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
+
+
+
+
 /**
  * JavaFX App
  */
@@ -73,7 +77,7 @@ public class App extends Application {
         
         
         // Carga la escena principal
-        sm.loadScene(EscenaID.PORTADA);
+        sm.loadScene(EscenaID.JUEGO);
     }
 
     /**
@@ -85,5 +89,7 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    // Removed duplicate start(Stage) method to resolve the compile error.
 
 }

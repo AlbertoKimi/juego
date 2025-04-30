@@ -7,5 +7,5 @@ module com.enriquealberto {
     opens com.enriquealberto.Controladores to javafx.fxml;
     requires javafx.media;
 
-    exports com.enriquealberto;
+    
 }
