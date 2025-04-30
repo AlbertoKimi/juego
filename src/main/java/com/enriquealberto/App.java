@@ -38,19 +38,10 @@ public class App extends Application {
         int filas = primerMapa.getMapa().size();
         int columnas = primerMapa.getMapa().get(0).size();
 
-        // Definir el tamaño de las celdas
-        double anchoCelda = 100; 
-        double altoCelda = 70; 
-
-        // Calcular el tamaño del Stage
-        double anchoVentana = columnas * anchoCelda;
-        double altoVentana = filas * altoCelda;
-
         // Establece el título de la ventana
         stage.setTitle("Mazmorras frutales");
         stage.setResizable(false); // Evita que la ventana sea redimensionable
-        stage.setWidth(anchoVentana); // Establece el ancho de la ventana
-        stage.setHeight(altoVentana); // Establece la altura de la ventana
+       
 
         // Establece el icono de la ventana
         

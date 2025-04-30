@@ -77,7 +77,9 @@ public class JuegoControlador implements Observer {
 
         // Calcular el tamaño de las celdas 
         double anchoCelda = gridPane.getPrefWidth() / columnas;
+        System.out.println("Ancho celda: " + anchoCelda);
         double altoCelda = gridPane.getPrefHeight() / filas;
+        System.out.println("Ancho celda: " + altoCelda);
 
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
