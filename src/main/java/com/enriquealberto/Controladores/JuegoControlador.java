@@ -83,6 +83,7 @@ public class JuegoControlador implements Observer {
 
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
+        Image platano= new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/platanoZombie.png"));
 
         for (int fila = 0; fila < filas; fila++) {
             ArrayList<Integer> filaMapa = matriz.get(fila);
@@ -90,19 +91,32 @@ public class JuegoControlador implements Observer {
                 int valor = filaMapa.get(columna);
                 ImageView imageView;
                 if (valor == 0) {
-                    imageView = new ImageView(suelo);
+                    imageView = new ImageView(suelo); // Imagen de suelo
                 } else {
-                    imageView = new ImageView(pared);
+                    imageView = new ImageView(pared); // Imagen de pared
                 }
                 imageView.setFitWidth(anchoCelda);
                 imageView.setFitHeight(altoCelda);
                 imageView.setPreserveRatio(false);
                 imageView.setSmooth(true);
 
+                // Crear el StackPane con suelo o pared
                 StackPane stackPane = new StackPane(imageView);
                 stackPane.setPrefWidth(anchoCelda);
                 stackPane.setPrefHeight(altoCelda);
 
+                // Añadir el plátano solo en la posición (0, 0)
+                if (fila == 0 && columna == 0) {
+                    ImageView platanoView = new ImageView(platano);
+                    platanoView.setFitWidth(anchoCelda); // Ajustar el tamaño del plátano
+                    platanoView.setFitHeight(altoCelda); // Ajustar el tamaño del plátano
+                    platanoView.setPreserveRatio(true);
+                    platanoView.setSmooth(true);
+
+                    stackPane.getChildren().add(platanoView); // Añadir el plátano al StackPane
+                }
+
+                // Añadir el StackPane al GridPane
                 gridPane.add(stackPane, columna, fila);
             }
         }

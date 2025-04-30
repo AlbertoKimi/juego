@@ -30,10 +30,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        GestorMapas gestorMapas = Proveedor.getInstance().getGestorMapas();
-        Mapa primerMapa = gestorMapas.getMapaActual();
-        int filas = primerMapa.getMapa().size();
-        int columnas = primerMapa.getMapa().get(0).size();
+     
 
         // Establece el título de la ventana
         stage.setTitle("Mazmorras frutales");
