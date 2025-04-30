@@ -1,16 +1,17 @@
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/Controladores/JuegoControlador.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/Lectores/LectorHeroes.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/App.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/module-info.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/Controladores/SelectionControlador.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/Controladores/PortadaControlador.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/ManagerEscenas.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/Lectores/LectorMapa.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/model/Enemigo.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/Lectores/LectorMostruo.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/model/Heroe.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/model/Juego.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/interfaces/Observer.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/EscenaID.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/interfaces/Interaccion.java
-/Users/enriqueambronavalverde/Library/CloudStorage/GoogleDrive-enriquealbuera60@gmail.com/Mi unidad/ciclo/programacion/3ºEvaluacion/juego/juego/src/main/java/com/enriquealberto/model/Fruta.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/model/Juego.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/interfaces/Interaccion.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/EscenaID.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/Lectores/LectorMostruo.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/model/Heroe.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/App.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/ManagerEscenas.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/model/Fruta.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/model/Enemigo.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/Lectores/LectorMapa.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/module-info.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/Lectores/LectorHeroes.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/Controladores/JuegoControlador.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/Controladores/PortadaControlador.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/interfaces/Observer.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/model/Personaje.java
+/Users/enriqueambronavalverde/Desktop/juego/src/main/java/com/enriquealberto/Controladores/SelectionControlador.java

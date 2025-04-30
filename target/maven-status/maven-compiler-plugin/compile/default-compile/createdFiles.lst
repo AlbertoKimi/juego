@@ -1,6 +1,7 @@
 com/enriquealberto/interfaces/Observer.class
 com/enriquealberto/Controladores/JuegoControlador.class
 com/enriquealberto/Lectores/LectorMostruo.class
+com/enriquealberto/model/Personaje.class
 com/enriquealberto/ManagerEscenas.class
 com/enriquealberto/Lectores/LectorHeroes.class
 com/enriquealberto/App.class

@@ -41,7 +41,7 @@ public class App extends Application {
         sm.setScene(EscenaID.SELECTION, "selection", 800, 500);
         
         // Carga la escena principal
-        sm.loadScene(EscenaID.SELECTION);
+        sm.loadScene(EscenaID.PORTADA);
     }
 
     /**

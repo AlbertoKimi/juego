@@ -1,64 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox fx:id="m_perso" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <!-- Nombre del personaje -->
-      <Label fx:id="p_nombre" text="Nombre del Personaje" />
-
-      <!-- Foto del personaje -->
-      <ImageView fx:id="p_foto" fitWidth="100" fitHeight="100" preserveRatio="true" />
-
-      <!-- Vida -->
-      <HBox fx:id="p_vida" spacing="5">
-         <children>
-            <Label fx:id="vida_etiqueta" text="Vida" />
-            <ImageView fx:id="vf1" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="vf2" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="vf3" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="vf4" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="vf5" fitWidth="30" fitHeight="30" preserveRatio="true" />
-         </children>
-      </HBox>
-
-      <!-- Ataque -->
-      <HBox fx:id="p_ataque" spacing="5">
-         <children>
-            <Label fx:id="ataque_etiqueta" text="Ataque" />
-            <ImageView fx:id="af1" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="af2" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="af3" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="af4" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="af5" fitWidth="30" fitHeight="30" preserveRatio="true" />
-         </children>
-      </HBox>
-
-      <!-- Defensa -->
-      <HBox fx:id="p_defensa" spacing="5">
-         <children>
-            <Label fx:id="defensa_etiqueta" text="Defensa" />
-            <ImageView fx:id="df1" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="df2" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="df3" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="df4" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="df5" fitWidth="30" fitHeight="30" preserveRatio="true" />
-         </children>
-      </HBox>
-
-      <!-- Velocidad -->
-      <HBox fx:id="p_velocidad" spacing="5">
-         <children>
-            <Label fx:id="velocidad_etiqueta" text="Velocidad" />
-            <ImageView fx:id="sf1" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="sf2" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="sf3" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="sf4" fitWidth="30" fitHeight="30" preserveRatio="true" />
-            <ImageView fx:id="sf5" fitWidth="30" fitHeight="30" preserveRatio="true" />
-         </children>
-      </HBox>
-   </children>
+<VBox fx:id="m_perso" xmlns="http://javafx.com/javafx/23.0.1" 
+      xmlns:fx="http://javafx.com/fxml/1"
+      styleClass="m_perso" spacing="10" alignment="TOP_CENTER">
+    
+    <!-- Nombre del personaje -->
+    <Label fx:id="p_nombre" text="Nombre del Personaje" 
+           style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
+    
+    <!-- Foto del personaje -->
+    <ImageView fx:id="p_foto" fitWidth="120" fitHeight="120" 
+              preserveRatio="true"/>
+    
+    <!-- Atributos -->
+    <VBox spacing="8" alignment="TOP_LEFT">
+        <!-- Vida -->
+        <HBox fx:id="p_vida" spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="vida_etiqueta" text="Vida" 
+                   style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
+            <HBox spacing="3">
+                <ImageView fx:id="vf1" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="vf2" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="vf3" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="vf4" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="vf5" fitWidth="25" fitHeight="25"/>
+            </HBox>
+        </HBox>
+        
+        <!-- Ataque -->
+        <HBox fx:id="p_ataque" spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="ataque_etiqueta" text="Ataque" 
+                   style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
+            <HBox spacing="3">
+                <ImageView fx:id="af1" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="af2" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="af3" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="af4" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="af5" fitWidth="25" fitHeight="25"/>
+            </HBox>
+        </HBox>
+        
+        <!-- Defensa -->
+        <HBox fx:id="p_defensa" spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="defensa_etiqueta" text="Defensa" 
+                   style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
+            <HBox spacing="3">
+                <ImageView fx:id="df1" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="df2" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="df3" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="df4" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="df5" fitWidth="25" fitHeight="25"/>
+            </HBox>
+        </HBox>
+        
+        <!-- Velocidad -->
+        <HBox fx:id="p_velocidad" spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="velocidad_etiqueta" text="Velocidad" 
+                   style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
+            <HBox spacing="3">
+                <ImageView fx:id="sf1" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="sf2" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="sf3" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="sf4" fitWidth="25" fitHeight="25"/>
+                <ImageView fx:id="sf5" fitWidth="25" fitHeight="25"/>
+            </HBox>
+        </HBox>
+    </VBox>
 </VBox>
