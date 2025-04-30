@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -63,6 +64,11 @@ public class ManagerEscenas {
      * @param height el alto de la escena.
      */
     public void setScene(EscenaID sceneID, String fxml/*,int width, int height*/){
+                Screen screen = Screen.getPrimary();
+
+        // Obtener el tamaño de la pantalla
+        double screenWidth = screen.getBounds().getWidth();
+        double screenHeight = screen.getBounds().getHeight();
        
         try {
             // Carga el archivo FXML
@@ -71,7 +77,7 @@ public class ManagerEscenas {
                 throw new IllegalStateException("No se pudo encontrar el archivo FXML: " + fxml + ".fxml");
             }
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root/*, width, height*/); // Crea la escena con el tamaño especificado
+            Scene scene = new Scene(root, screenWidth*0.62, screenHeight*0.75); // Crea la escena con el tamaño especificado
             scenes.put(sceneID, scene); // Almacena la escena en el mapa con el identificador correspondiente
         } catch (IOException e) {
             e.printStackTrace(); // En caso de error al cargar el FXML

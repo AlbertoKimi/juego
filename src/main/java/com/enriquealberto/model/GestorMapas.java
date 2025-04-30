@@ -80,26 +80,4 @@ public class GestorMapas {
         }
     }
 
-    /*public boolean avanzarAlSiguienteMapa() {
-        // Obtener el iterador de los mapas
-        var iterador = mapas.values().iterator();
-        boolean haySiguiente = false;
-        
-        // Buscar el mapa actual y avanzar al siguiente
-        while (iterador.hasNext()) {
-            Mapa mapa = iterador.next();
-            if (mapa.equals(mapaActual)) {
-                if (iterador.hasNext()) {
-                    mapaActual = iterador.next();
-                    haySiguiente = true;
-                } else {
-                    haySiguiente = false; // No hay más mapas disponibles
-                }
-                break;
-            }
-        }
-        
-        notifyObservers(); // Notificar a los observadores sobre el cambio
-        return haySiguiente;
-    }*/
 }
