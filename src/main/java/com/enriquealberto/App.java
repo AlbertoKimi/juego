@@ -6,10 +6,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.enriquealberto.model.GestorMapas;
-import com.enriquealberto.model.Mapa;
-import com.enriquealberto.model.Proveedor;
-
 /**
  * JavaFX App
  */
