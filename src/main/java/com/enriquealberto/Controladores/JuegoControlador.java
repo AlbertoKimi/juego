@@ -26,8 +26,8 @@ public class JuegoControlador implements Observer {
 
     GridPane gridPane;
     GestorMapas gestorMapas;
-    VBox vbox; // Variable VBox para contener el título y el mapa
-    Label titulo; // Variable para el título del nivel
+    VBox vbox; 
+    Label titulo; 
 
     @FXML
     public void initialize() {
@@ -39,14 +39,14 @@ public class JuegoControlador implements Observer {
         vbox.setPadding(new Insets(7));
         vbox.setAlignment(Pos.CENTER);
 
-        titulo = new Label(); // Crear el Label para el título
+        titulo = new Label(); 
         titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         gridPane = new GridPane();
         gridPane.setPrefWidth(600); // Ancho fijo
         gridPane.setPrefHeight(600); // Alto fijo
 
-        vbox.getChildren().addAll(titulo, gridPane); // Agregar el título y el GridPane al VBox
+        vbox.getChildren().addAll(titulo, gridPane); 
 
         anchorPane.setPrefWidth(800);
         anchorPane.setPrefHeight(600);
@@ -62,6 +62,7 @@ public class JuegoControlador implements Observer {
         gridPane.setOnMouseClicked(event -> {
             cambiarMapa();
         });
+       
     }
 
     public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
@@ -78,7 +79,6 @@ public class JuegoControlador implements Observer {
         double anchoCelda = gridPane.getPrefWidth() / columnas;
         double altoCelda = gridPane.getPrefHeight() / filas;
 
-        // Cargar las imágenes de suelo y pared del mapa actual
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
 
