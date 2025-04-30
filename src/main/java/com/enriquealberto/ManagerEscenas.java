@@ -62,22 +62,20 @@ public class ManagerEscenas {
      * @param width el ancho de la escena.
      * @param height el alto de la escena.
      */
-    public void setScene(EscenaID sceneID, String fxml,int width, int height){
-       
+    public void setScene(EscenaID sceneID, String fxml) {
         try {
-            // Carga el archivo FXML
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/com/enriquealberto/vistas/" + fxml + ".fxml"));
-            if (fxmlLoader.getLocation() == null) { // Verificar si la ubicación es nula
+            if (fxmlLoader.getLocation() == null) {
                 throw new IllegalStateException("No se pudo encontrar el archivo FXML: " + fxml + ".fxml");
             }
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, width, height); // Crea la escena con el tamaño especificado
-            scenes.put(sceneID, scene); // Almacena la escena en el mapa con el identificador correspondiente
+            Scene scene = new Scene(root); // SIN ancho y alto fijos
+            scenes.put(sceneID, scene);
         } catch (IOException e) {
-            e.printStackTrace(); // En caso de error al cargar el FXML
+            e.printStackTrace();
         }
     }
-
+    
     /**
      * Elimina una escena previamente almacenada usando su identificador.
      * 

@@ -36,9 +36,9 @@ public class App extends Application {
         sm.init(stage);
         
         // Configura las escenas con identificadores y tamaños
-       
-        sm.setScene(EscenaID.PORTADA, "Portada", 800, 500);
-        sm.setScene(EscenaID.SELECTION, "selection", 800, 500);
+        sm.setScene(EscenaID.PORTADA, "Portada");
+        sm.setScene(EscenaID.SELECTION, "selection");
+        
         
         // Carga la escena principal
         sm.loadScene(EscenaID.PORTADA);
