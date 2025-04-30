@@ -5,5 +5,10 @@ module com.enriquealberto {
 
     opens com.enriquealberto to javafx.fxml;
     opens com.enriquealberto.Controladores to javafx.fxml;
-    exports com.enriquealberto;
+    requires javafx.media;
+    exports com.enriquealberto; // Exporta el paquete principal
+    exports com.enriquealberto.Controladores; // Exporta los controladores si los usas en FXML
+    exports com.enriquealberto.model;
+
+    
 }

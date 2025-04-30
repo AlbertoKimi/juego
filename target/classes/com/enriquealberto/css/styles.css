@@ -1,0 +1,141 @@
+/* Estilos generales */
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 20px;
+}
+
+/* Título principal - Manteniendo tu estilo exacto */
+#titulo {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 27px;
+    -fx-text-fill: #000000; /* Negro puro como en tu original */
+    -fx-alignment: center;
+}
+
+/* Contenedor de personajes */
+#cont_perso {
+    -fx-spacing: 30px;
+    -fx-alignment: center;
+    -fx-padding: 15px;
+    -fx-background-color: transparent;
+}
+
+/* Tarjeta de personaje - Manteniendo simplicidad original pero con mejor estructura */
+.m_perso {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+    -fx-min-width: 180px;
+    -fx-max-width: 180px;
+}
+
+/* Nombre del personaje - Estilo original */
+#p_nombre {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 16px;
+    -fx-text-fill: #000000;
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* Imagen del personaje */
+#p_foto {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 1);
+}
+
+/* Contenedores de atributos */
+#p_vida, #p_ataque, #p_defensa, #p_velocidad {
+    -fx-alignment: center-left;
+    -fx-spacing: 5px;
+}
+
+/* Etiquetas de atributos - Manteniendo tu fuente */
+#vida_etiqueta, #ataque_etiqueta, #defensa_etiqueta, #velocidad_etiqueta {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 12px;
+    -fx-text-fill: #000000;
+    -fx-min-width: 70px;
+}
+
+/* Sección de formulario inferior */
+.form-section {
+    -fx-background-color: transparent;
+    -fx-padding: 15px;
+    -fx-spacing: 15px;
+    -fx-alignment: center;
+}
+
+/* Campos de texto */
+.text-field {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-background-color: rgb(0, 0, 0);
+    -fx-border-color: #cccccc;
+}
+
+/* Etiquetas del formulario - Manteniendo tu estilo */
+.form-label {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 15px;
+    -fx-text-fill: #000000;
+}
+
+/* Selector de dificultad */
+.difficulty-selector {
+    -fx-spacing: 5px;
+    -fx-alignment: center;
+}
+
+/* Iconos de dificultad */
+.difficulty-icon {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 0);
+    -fx-cursor: hand;
+}
+
+/* Asegurar que TODOS los textos sean negros y visibles */
+#p_nombre,
+#vida_etiqueta, 
+#ataque_etiqueta, 
+#defensa_etiqueta, 
+#velocidad_etiqueta,
+.form-label,
+.text-field {
+    -fx-text-fill: #000000 !important; /* Negro sólido */
+    -fx-font-family: "Hoefler Text Black" !important;
+}
+
+/* Especificar para cada tipo de elemento */
+/* Nombre del personaje */
+#p_nombre {
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+}
+
+/* Etiquetas de estadísticas */
+#vida_etiqueta, 
+#ataque_etiqueta, 
+#defensa_etiqueta, 
+#velocidad_etiqueta {
+    -fx-font-size: 14px;
+    -fx-min-width: 80px;
+}
+
+/* Etiquetas del formulario inferior */
+.form-label {
+    -fx-font-size: 15px;
+}
+
+/* Campo de texto */
+.text-field {
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+}

@@ -138,3 +138,4 @@ public class JuegoControlador implements Observer {
         generarMapa(mapas);
     }
 }
+

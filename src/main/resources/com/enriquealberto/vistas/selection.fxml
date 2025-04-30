@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox fx:id="fondo" xmlns="http://javafx.com/javafx/23.0.1" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.enriquealberto.Controladores.SelectionControlador"
+      stylesheets="@com/enriquealberto/css/styles.css"
+      spacing="20" alignment="TOP_CENTER"
+      prefHeight="600" prefWidth="800">
+    
+    <!-- Título principal - Manteniendo tu configuración exacta -->
+    <Label fx:id="titulo" text="Selecciona Personaje" 
+           alignment="CENTER" prefWidth="334.0">
+         <font>
+            <Font name="Hoefler Text Black" size="27.0" />
+         </font>
+    </Label>
+    
+    <!-- Contenedor de personajes -->
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" 
+                style="-fx-background: transparent; -fx-background-color: transparent;">
+        <HBox fx:id="cont_perso" alignment="CENTER" 
+              styleClass="character-container"/>
+    </ScrollPane>
+    
+    <!-- Sección inferior de formulario -->
+    <HBox styleClass="form-section" alignment="CENTER" spacing="40">
+        <!-- Campo nombre jugador -->
+        <VBox alignment="CENTER_LEFT" spacing="5">
+            <Label text="Nombre:" styleClass="form-label">
+                <font>
+                    <Font name="Hoefler Text Black" size="15.0" />
+                </font>
+            </Label>
+            <TextField fx:id="nom_jugador" styleClass="text-field" 
+                      prefWidth="192.0" prefHeight="26.0"/>
+        </VBox>
+        
+        <!-- Selector dificultad -->
+        <VBox alignment="CENTER" spacing="5">
+            <Label text="Dificultad:" styleClass="form-label">
+                <font>
+                    <Font name="Hoefler Text Black" size="17.0" />
+                </font>
+            </Label>
+            <HBox styleClass="difficulty-selector">
+                <ImageView fx:id="fd1" styleClass="difficulty-icon" 
+                          fitWidth="26.0" fitHeight="26.0"/>
+                <ImageView fx:id="fd2" styleClass="difficulty-icon" 
+                          fitWidth="26.0" fitHeight="26.0"/>
+                <ImageView fx:id="fd3" styleClass="difficulty-icon" 
+                          fitWidth="26.0" fitHeight="26.0"/>
+                <ImageView fx:id="fd4" styleClass="difficulty-icon" 
+                          fitWidth="26.0" fitHeight="26.0"/>
+                <ImageView fx:id="fd5" styleClass="difficulty-icon" 
+                          fitWidth="26.0" fitHeight="26.0"/>
+            </HBox>
+        </VBox>
+    </HBox>
+</VBox>
