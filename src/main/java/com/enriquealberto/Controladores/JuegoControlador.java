@@ -1,6 +1,5 @@
 package com.enriquealberto.Controladores;
 
-<<<<<<< HEAD
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 
@@ -122,10 +121,5 @@ public class JuegoControlador implements Observer {
         LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
         generarMapa(mapas);
     }
-=======
-public class JuegoControlador {
-
-
->>>>>>> enrique
 }
 
