@@ -1,10 +1,9 @@
 package com.enriquealberto;
 
-import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
 import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 
 /**
@@ -28,7 +27,7 @@ public class App extends Application {
         stage.setTitle("Estructura base de una aplicación en JAVAFX");
         
         // Establece el icono de la ventana
-        stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));
+        //stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));
         
         // Obtiene la instancia del SceneManager
         ManagerEscenas sm = ManagerEscenas.getInstance();
@@ -37,12 +36,12 @@ public class App extends Application {
         sm.init(stage);
         
         // Configura las escenas con identificadores y tamaños
-        sm.setScene(EscenaID.JUEGO, "Juego",800, 500);
+       
         sm.setScene(EscenaID.PORTADA, "Portada", 800, 500);
-        sm.setScene(EscenaID.SELECTION, "Selection", 800, 500);
+        sm.setScene(EscenaID.SELECTION, "selection", 800, 500);
         
         // Carga la escena principal
-        sm.loadScene(EscenaID.PORTADA);
+        sm.loadScene(EscenaID.SELECTION);
     }
 
     /**
