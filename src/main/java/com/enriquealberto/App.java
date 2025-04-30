@@ -1,14 +1,16 @@
 package com.enriquealberto;
 
-import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 
+<<<<<<< HEAD
 import com.enriquealberto.model.GestorMapas;
 import com.enriquealberto.model.Mapa;
 import com.enriquealberto.model.Proveedor;
+=======
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+>>>>>>> enrique
 
 /**
  * JavaFX App
@@ -50,6 +52,10 @@ public class App extends Application {
         stage.setHeight(altoVentana); // Establece la altura de la ventana
 
         // Establece el icono de la ventana
+<<<<<<< HEAD
+=======
+        //stage.getIcons().add(new Image(App.class.getResource("/com/alberto/imagenes/icono.jpg").toExternalForm()));
+>>>>>>> enrique
         
         stage.getIcons().add(new Image(App.class.getResource("/com/enriquealberto/imagenes/icono.png").toExternalForm()));
          
@@ -61,6 +67,7 @@ public class App extends Application {
         sm.init(stage);
 
         // Configura las escenas con identificadores y tamaños
+<<<<<<< HEAD
         sm.setScene(EscenaID.JUEGO, "Juego"/* ,900,600 */);
         sm.setScene(EscenaID.ESTADISTICAS, "estadisticas"/* ,900,600 */);
         sm.setScene(EscenaID.CONTENEDOR, "contenedor"/* ,900,600 */);
@@ -69,6 +76,12 @@ public class App extends Application {
          * sm.setScene(EscenaID.SELECTION, "Selection", 800, 500);
          */
 
+=======
+        sm.setScene(EscenaID.PORTADA, "Portada");
+        sm.setScene(EscenaID.SELECTION, "selection");
+        
+        
+>>>>>>> enrique
         // Carga la escena principal
         sm.loadScene(EscenaID.CONTENEDOR);
     }
