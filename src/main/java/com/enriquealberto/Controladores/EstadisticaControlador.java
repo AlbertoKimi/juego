@@ -12,7 +12,7 @@ import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+
 
 import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Heroe;

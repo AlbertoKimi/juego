@@ -32,13 +32,14 @@ public class JuegoControlador implements Observer {
     GestorMapas gestorMapas;
     VBox vbox;
     Label titulo;
-    Heroe heroe; 
+    Heroe heroe;
     Enemigo enemigo;
 
     @FXML
     public void initialize() {
         gestorMapas = Proveedor.getInstance().getGestorMapas();
         gestorMapas.subscribe(this);
+
         heroe = new Heroe("manolo", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 10);
         enemigo = new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2);
 
@@ -67,20 +68,25 @@ public class JuegoControlador implements Observer {
 
         generarMapa(gestorMapas.getMapas());
         pintarPersonaje(0, 0, heroe); // Cambia
-                                                                                                                
-        pintarPersonaje(0, 1,enemigo);
+
+        pintarPersonaje(0, 1, enemigo);
 
         anchorPane.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case DOWN:
-                    System.out.println("Ataque realizado"); // Aquí puedes llamar a tu lógica de ataque
-                    heroe.atacar(heroe,enemigo);
+                    System.out.println("Ataque realizado");
+                    heroe.atacar(heroe, enemigo);
+                    break;
+                case UP:
+                    System.out.println("Ataque realizado");
+                    enemigo.atacar(heroe, enemigo);
                     break;
                 default:
                     break;
             }
         });
 
+        // Habilitar el foco en el AnchorPane para recibir eventos de teclado
         anchorPane.setFocusTraversable(true);
         anchorPane.requestFocus();
 
@@ -106,10 +112,6 @@ public class JuegoControlador implements Observer {
 
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
-        /*
-         * Image platano= new Image(getClass().getResourceAsStream(
-         * "/com/enriquealberto/imagenes/platanoZombie.png"));
-         */
 
         for (int fila = 0; fila < filas; fila++) {
             ArrayList<Integer> filaMapa = matriz.get(fila);
@@ -130,19 +132,6 @@ public class JuegoControlador implements Observer {
                 StackPane stackPane = new StackPane(imageView);
                 stackPane.setPrefWidth(anchoCelda);
                 stackPane.setPrefHeight(altoCelda);
-
-                // Añadir el plátano solo en la posición (0, 0)
-                /*
-                 * if (fila == 0 && columna == 0) {
-                 * ImageView platanoView = new ImageView(platano);
-                 * platanoView.setFitWidth(anchoCelda); // Ajustar el tamaño del plátano
-                 * platanoView.setFitHeight(altoCelda); // Ajustar el tamaño del plátano
-                 * platanoView.setPreserveRatio(true);
-                 * platanoView.setSmooth(true);
-                 * 
-                 * stackPane.getChildren().add(platanoView); // Añadir el plátano al StackPane
-                 * }
-                 */
 
                 // Añadir el StackPane al GridPane
                 gridPane.add(stackPane, columna, fila);
