@@ -154,6 +154,7 @@ public class JuegoControlador implements Observer {
         // Actualizar el mapa actual
         LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
         generarMapa(mapas);
+        pintarPersonaje(0, 1, new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0,2,2));
     }
 }
 
