@@ -62,6 +62,8 @@ public class JuegoControlador implements Observer {
 
         generarMapa(gestorMapas.getMapas());
         pintarPersonaje(0, 0, new Enemigo("pepe", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 0,2,2)); // Cambia la ruta de la imagen según sea necesario
+        pintarPersonaje(0, 1, new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0,2,2));
+    
         gridPane.setOnMouseClicked(event -> {
             cambiarMapa();
         });
@@ -145,8 +147,14 @@ public class JuegoControlador implements Observer {
 
         // Añadir el ImageView del personaje al StackPane
         stackPane.getChildren().add(personajeView);
+    }
 
-     
+    public void eliminarPersonaje(int x, int y) {
+        // Obtener la celda correspondiente en el GridPane
+        StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
+
+        // Buscar y eliminar solo el ImageView del personaje
+        stackPane.getChildren().removeIf(node -> node instanceof ImageView && !node.equals(stackPane.getChildren().get(0)));
     }
 
     @Override
@@ -154,7 +162,9 @@ public class JuegoControlador implements Observer {
         // Actualizar el mapa actual
         LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
         generarMapa(mapas);
+        pintarPersonaje(0, 0, new Enemigo("pepe", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 0,2,2));
         pintarPersonaje(0, 1, new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0,2,2));
+        eliminarPersonaje(0, 1);
     }
 }
 
