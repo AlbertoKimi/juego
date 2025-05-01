@@ -14,7 +14,7 @@ public class Juego {
     public Juego(ArrayList<Heroe> heroes, ArrayList<Enemigo> enemigos) {
         this.heroes = LectorHeroes.leerHeroes();
         this.enemigos = LectorMostruo.leerMostruo();
-        this.jugador = null;
+        this.jugador = new Heroe("Manoli", "/com/enriquealberto/imagenes/piñaMaga.jpg", 100, 10, 5, 2,10);
     
     }
     public static Juego getInstance(){
