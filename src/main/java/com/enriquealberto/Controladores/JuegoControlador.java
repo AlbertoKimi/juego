@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import com.enriquealberto.interfaces.Observer;
 
 import com.enriquealberto.model.GestorMapas;
+
 import com.enriquealberto.model.Proveedor;
 import com.enriquealberto.model.Mapa;
+import com.enriquealberto.model.Enemigo; 
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -24,6 +26,7 @@ public class JuegoControlador implements Observer {
     @FXML
     AnchorPane anchorPane;
 
+    
     GridPane gridPane;
     GestorMapas gestorMapas;
     VBox vbox; 
@@ -58,7 +61,7 @@ public class JuegoControlador implements Observer {
         anchorPane.getChildren().add(vbox);
 
         generarMapa(gestorMapas.getMapas());
-
+        pintarPersonaje(0, 0, new Enemigo("pepe", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 0,2,2)); // Cambia la ruta de la imagen según sea necesario
         gridPane.setOnMouseClicked(event -> {
             cambiarMapa();
         });
@@ -77,13 +80,11 @@ public class JuegoControlador implements Observer {
 
         // Calcular el tamaño de las celdas 
         double anchoCelda = gridPane.getPrefWidth() / columnas;
-        System.out.println("Ancho celda: " + anchoCelda);
         double altoCelda = gridPane.getPrefHeight() / filas;
-        System.out.println("Ancho celda: " + altoCelda);
 
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
-        Image platano= new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/platanoZombie.png"));
+        /*Image platano= new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/platanoZombie.png"));*/
 
         for (int fila = 0; fila < filas; fila++) {
             ArrayList<Integer> filaMapa = matriz.get(fila);
@@ -106,7 +107,7 @@ public class JuegoControlador implements Observer {
                 stackPane.setPrefHeight(altoCelda);
 
                 // Añadir el plátano solo en la posición (0, 0)
-                if (fila == 0 && columna == 0) {
+                /*if (fila == 0 && columna == 0) {
                     ImageView platanoView = new ImageView(platano);
                     platanoView.setFitWidth(anchoCelda); // Ajustar el tamaño del plátano
                     platanoView.setFitHeight(altoCelda); // Ajustar el tamaño del plátano
@@ -114,7 +115,7 @@ public class JuegoControlador implements Observer {
                     platanoView.setSmooth(true);
 
                     stackPane.getChildren().add(platanoView); // Añadir el plátano al StackPane
-                }
+                }*/
 
                 // Añadir el StackPane al GridPane
                 gridPane.add(stackPane, columna, fila);
@@ -129,6 +130,23 @@ public class JuegoControlador implements Observer {
         } else {
             System.out.println("No hay más mapas disponibles.");
         }
+    }
+
+    public void pintarPersonaje(int x, int y,Enemigo personaje) {
+        // Obtener la celda correspondiente en el GridPane
+        StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
+        
+        // Crear un nuevo ImageView para el personaje
+        ImageView personajeView = new ImageView(new Image(getClass().getResourceAsStream(personaje.getImagen())));
+        personajeView.setFitWidth(stackPane.getPrefWidth());
+        personajeView.setFitHeight(stackPane.getPrefHeight());
+        personajeView.setPreserveRatio(true);
+        personajeView.setSmooth(true);
+
+        // Añadir el ImageView del personaje al StackPane
+        stackPane.getChildren().add(personajeView);
+
+     
     }
 
     @Override

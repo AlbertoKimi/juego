@@ -9,6 +9,7 @@ module com.enriquealberto {
     exports com.enriquealberto; // Exporta el paquete principal
     exports com.enriquealberto.Controladores; // Exporta los controladores si los usas en FXML
     exports com.enriquealberto.model;
+    exports com.enriquealberto.interfaces; // Exporta las interfaces si las usas en FXML
 
     
 }
