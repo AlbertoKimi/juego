@@ -229,8 +229,7 @@ public class SelectionControlador implements Observer{
                     personajeBox.getStyleClass().add("selected-personaje");
                 
                     // Guardar el personaje seleccionado en el juego
-                    juego.setJugador(p);
-                
+                    Juego.getInstance().setJugador(p);
                     // Actualizar etiquetas
                     onChange();
                 });
