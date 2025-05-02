@@ -13,7 +13,7 @@ import com.enriquealberto.App;
 import com.enriquealberto.model.Enemigo;
 public class LectorMostruo {
      public static ArrayList<Enemigo> leerMostruo(){
-        ArrayList<Enemigo> enemigos = new ArrayList<>();
+         ArrayList<Enemigo> enemigos = new ArrayList<>();
 
         try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(App.class.getResource("/com/enriquealberto/archivos/monstruos.csv").toURI())),StandardCharsets.UTF_8))) {
             String linea = br.readLine();

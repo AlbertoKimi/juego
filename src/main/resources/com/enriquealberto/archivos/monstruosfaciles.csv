@@ -1,0 +1,4 @@
+Nombre,Imagen,Vida,Ataque,Defensa,Velocidad,Porcentaje,Tipo,Percepcion
+Uva,com/enriquealberto/imagenes/uvaluchador.png,1,1,1,1,0,1,2
+Pasa,com/enriquealberto/imagenes/pasazombie.png,1,2,1,2,0,1,2
+Fresa,com/enriquealberto/imagenes/fresamaga.png,2,1,2,1,0,1,2

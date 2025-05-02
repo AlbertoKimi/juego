@@ -14,15 +14,26 @@ public class Juego {
     private Heroe jugador;
     private int dificultad;
     private String nombre;
-    
+
+    private ArrayList<Fruta> entidades;
+
+    private ArrayList<Enemigo> enemigosF= new ArrayList<>();
+    private ArrayList<Enemigo> enemigosM= new ArrayList<>();
+    private ArrayList<Enemigo> enemigosD= new ArrayList<>();
+
+
     
     public Juego(ArrayList<Heroe> heroes, ArrayList<Enemigo> enemigos) {
         this.observers = new ArrayList<>();
         this.heroes = LectorHeroes.leerHeroes();
         this.enemigos = LectorMostruo.leerMostruo();
+        clasificarEnemigos();
         this.jugador = null;
     
     }
+
+
+
     public static Juego getInstance(){
         if(instance == null){
             instance = new Juego(LectorHeroes.leerHeroes(), LectorMostruo.leerMostruo());
@@ -49,6 +60,7 @@ public class Juego {
         this.jugador = jugador;
         notifyObservers();
     }
+
     public ArrayList<Heroe> getHeroes() {
         return heroes;
     }
@@ -77,6 +89,21 @@ public class Juego {
     public void setNombre(String nombre) {
         this.nombre = nombre;
         notifyObservers();
+    }
+
+    public void clasificarEnemigos(){
+        for(Enemigo enemigo: enemigos){
+            switch (enemigo.getT_enemigo()){
+                case 1:
+                    enemigosF.add(enemigo);
+                    break;
+                case 2:
+                    enemigosM.add(enemigo);
+                    break;
+                case 3:
+                    enemigosD.add(enemigo);
+            };
+        }
     }
 
 
