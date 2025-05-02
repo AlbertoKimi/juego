@@ -1,18 +1,13 @@
 package com.enriquealberto.Controladores;
 
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
-
 import com.enriquealberto.interfaces.Observer;
-
 import com.enriquealberto.model.GestorMapas;
-
 import com.enriquealberto.model.Proveedor;
 import com.enriquealberto.model.Mapa;
 import com.enriquealberto.model.Enemigo;
-import com.enriquealberto.model.Heroe; // Ensure Heroe is imported
-import com.enriquealberto.model.Personaje; // Import Personaje class
-
+import com.enriquealberto.model.Heroe; 
+import com.enriquealberto.model.Personaje; 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -99,9 +94,9 @@ public class JuegoControlador implements Observer {
     public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
         gridPane.getChildren().clear();
         Mapa mapaActual = gestorMapas.getMapaActual();
-        ArrayList<ArrayList<Integer>> matriz = mapaActual.getMapa();
-        int filas = matriz.size();
-        int columnas = matriz.get(0).size();
+        int[][] matriz = mapaActual.getMapa();
+        int filas = matriz.length;
+        int columnas = matriz[0].length;
 
         // Actualizar el título del nivel
         titulo.setText("NIVEL " + mapaActual.getNivel() + " : " + mapaActual.getNombre());
@@ -114,9 +109,9 @@ public class JuegoControlador implements Observer {
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
 
         for (int fila = 0; fila < filas; fila++) {
-            ArrayList<Integer> filaMapa = matriz.get(fila);
+            int [] filaMapa = matriz[fila]; // Obtener la fila del mapa actual
             for (int columna = 0; columna < columnas; columna++) {
-                int valor = filaMapa.get(columna);
+                int valor = filaMapa[columna];
                 ImageView imageView;
                 if (valor == 0) {
                     imageView = new ImageView(suelo); // Imagen de suelo

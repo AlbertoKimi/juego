@@ -1,6 +1,8 @@
 #escenario:Ciudad
 #suelo:/com/enriquealberto/imagenes/SueloCiudad.jpg
 #pared:/com/enriquealberto/imagenes/casa1.png
+#tamanoX:10
+#tamanoY:10
 0000000000
 0000000000
 0111100000
@@ -14,6 +16,8 @@
 #escenario:Bosque
 #suelo:/com/enriquealberto/imagenes/hierba.png
 #pared:/com/enriquealberto/imagenes/arbol1.png
+#tamanoX:10
+#tamanoY:10
 0000000000
 0110000000
 0110011100
@@ -27,6 +31,8 @@
 #escenario:Pantano
 #suelo:/com/enriquealberto/imagenes/losaPuente.png
 #pared:/com/enriquealberto/imagenes/agua2.jpg
+#tamanoX:10
+#tamanoY:10
 0000000000
 1111111110
 0000000000
@@ -40,6 +46,8 @@
 #escenario:Cueva
 #suelo:/com/enriquealberto/imagenes/suelocueva.jpg
 #pared:/com/enriquealberto/imagenes/roca.png
+#tamanoX:10
+#tamanoY:10
 0010000000
 0110000010
 0110010010
@@ -53,6 +61,8 @@
 #escenario:Lava
 #suelo:/com/enriquealberto/imagenes/lava.jpg
 #pared:/com/enriquealberto/imagenes/lavapared.jpg
+#tamanoX:10
+#tamanoY:10
 0100000111
 0000000011
 1011111001
@@ -63,5 +73,4 @@
 0100000010
 0100011001
 1110011000
-
 

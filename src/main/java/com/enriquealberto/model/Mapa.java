@@ -1,24 +1,22 @@
 package com.enriquealberto.model;
 
-import java.util.ArrayList;
-
 public class Mapa {
     private String nombre;
     private String suelo;
     private String pared;
     private int nivel;
     private static int contador=0;
-    private  ArrayList<ArrayList<Integer>> mapa;
+    private  int [][] mapa;
 
-    public Mapa(){
+    /*public Mapa(){
         this.nivel=++contador;
         this.nombre = "Mapa por defecto";
         this.suelo = "suelo por defecto";
         this.pared = "pared por defecto";
-        this.mapa = new ArrayList<>();
-    }
+        this.mapa = new int [0][0];
+    }*/
 
-    public Mapa(String nombre, String suelo, String pared, ArrayList<ArrayList<Integer>> mapa) {
+    public Mapa(String nombre, String suelo, String pared, int [][] mapa) {
         this.nivel=++contador;
         this.nombre = nombre;
         this.suelo = suelo;
@@ -50,11 +48,11 @@ public class Mapa {
         this.pared = pared;
     }
 
-    public  ArrayList<ArrayList<Integer>> getMapa() {
+    public  int[][] getMapa() {
         return this.mapa;
     }
 
-    public void setMapa( ArrayList<ArrayList<Integer>> mapa) {
+    public void setMapa( int[][] mapa) {
         this.mapa = mapa;
     }
 
