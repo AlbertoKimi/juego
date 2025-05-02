@@ -4,37 +4,64 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Heroe;
 import com.enriquealberto.model.Juego;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class SelectionControlador {
+public class SelectionControlador implements Observer{
 
     @FXML
     private HBox cont_perso;
 
     @FXML
     private ImageView fd1, fd2, fd3, fd4, fd5;
-
     private int selectedDifficulty = 0; // 0 significa ninguna seleccionada
     private ArrayList<Heroe> heroes;
     private final double ACTIVE_OPACITY = 1.0;
     private final double INACTIVE_OPACITY = 0.3;
     private boolean isHovering = false;
     private int currentHoverLevel = 0;
+    @FXML
+    private TextField nom_jugador;
+    @FXML
+    private Label c_nombre;
+    @FXML
+    private Label c_PERSONAJE;
+    @FXML
+    private Label c_DIFICULTAD;
 
+    private Juego juego;
+
+    @Override
+    public void onChange() {
+        c_nombre.setText(juego.getNombre());
+        c_PERSONAJE.setText(juego.getJugador().getNombre());
+        c_DIFICULTAD.setText("" +juego.getDificultad());
+    }
     @FXML
     public void initialize() {
-        heroes = Juego.getInstance().getHeroes();
+        juego=Juego.getInstance();
+        heroes =juego.getHeroes();
+        juego.suscribe(this);
+        onChange();
+
         cargarPersonajes(heroes);
         setupDifficultySelector();
+
+        nom_jugador.setOnAction(event -> {
+            juego.setNombre(nom_jugador.getText());
+            System.out.println("Cadena actualizada a: " + nom_jugador.getText());
+        });
+
     }
 
     private void setupDifficultySelector() {
@@ -133,10 +160,7 @@ public class SelectionControlador {
     private void setSelectedDifficulty(int level) {
         selectedDifficulty = level;
         updateSelectionEffect();
-
-        // Aquí puedes guardar la dificultad seleccionada en tu modelo Juego si es
-        // necesario
-        // Juego.getInstance().setDificultad(level);
+        Juego.getInstance().setDificultad(level);
     }
 
     private void updateSelectionEffect() {
@@ -180,6 +204,19 @@ public class SelectionControlador {
                 asignarAtributo(personajeBox, "sf", p.getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
 
                 cont_perso.getChildren().add(personajeBox);
+                personajeBox.setOnMouseClicked(e -> {
+                    // Deseleccionar todos los estilos previos
+                    cont_perso.getChildren().forEach(node -> node.getStyleClass().remove("selected-personaje"));
+                
+                    // Aplicar la clase de estilo al personaje seleccionado
+                    personajeBox.getStyleClass().add("selected-personaje");
+                
+                    // Guardar el personaje seleccionado en el juego
+                    juego.setJugador(p);
+                
+                    // Actualizar etiquetas
+                    onChange();
+                });
 
             } catch (IOException e) {
                 e.printStackTrace();

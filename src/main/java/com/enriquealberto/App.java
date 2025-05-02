@@ -32,7 +32,7 @@ public class App extends Application {
         sm.setScene(EscenaID.CONTENEDOR, "contenedor"); // Este carga Juego + Estadísticas internamente
 
         // Cargar la PORTADA primero (pantalla inicial)
-        sm.loadScene(EscenaID.CONTENEDOR);
+        sm.loadScene(EscenaID.SELECTION);
     }
 
     public static void main(String[] args) {

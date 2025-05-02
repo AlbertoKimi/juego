@@ -139,3 +139,9 @@
     -fx-background-color: white;
     -fx-border-color: #cccccc;
 }
+
+.selected-personaje {
+    -fx-border-color: gold;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
+}
