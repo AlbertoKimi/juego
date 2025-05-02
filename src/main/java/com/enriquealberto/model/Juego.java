@@ -20,7 +20,7 @@ public class Juego {
         this.observers = new ArrayList<>();
         this.heroes = LectorHeroes.leerHeroes();
         this.enemigos = LectorMostruo.leerMostruo();
-        this.jugador = new Heroe("Manoli", "/com/enriquealberto/imagenes/piñaMaga.jpg", 100, 10, 5, 2,10);
+        this.jugador = null;
     
     }
     public static Juego getInstance(){

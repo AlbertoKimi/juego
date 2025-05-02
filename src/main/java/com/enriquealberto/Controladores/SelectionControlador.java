@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.enriquealberto.EscenaID;
+import com.enriquealberto.ManagerEscenas;
 import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Heroe;
 import com.enriquealberto.model.Juego;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -38,14 +41,20 @@ public class SelectionControlador implements Observer{
     private Label c_PERSONAJE;
     @FXML
     private Label c_DIFICULTAD;
+    @FXML
+    private Label fallo;
+    @FXML
+    private Button start;
+
 
     private Juego juego;
 
     @Override
     public void onChange() {
-        c_nombre.setText(juego.getNombre());
-        c_PERSONAJE.setText(juego.getJugador().getNombre());
-        c_DIFICULTAD.setText("" +juego.getDificultad());
+        c_nombre.setText(juego.getNombre() != null ? juego.getNombre() : "");
+        Heroe jugador = juego.getJugador();
+        c_PERSONAJE.setText(jugador != null ? jugador.getNombre() : "Sin personaje"); 
+        c_DIFICULTAD.setText(String.valueOf(juego.getDificultad()));
     }
     @FXML
     public void initialize() {
@@ -60,6 +69,14 @@ public class SelectionControlador implements Observer{
         nom_jugador.setOnAction(event -> {
             juego.setNombre(nom_jugador.getText());
             System.out.println("Cadena actualizada a: " + nom_jugador.getText());
+        });
+
+        start.setOnAction(event -> {
+            if(c_nombre != null && juego.getDificultad()!=0 && juego.getJugador()!=null){
+                ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR);
+            }else{
+                fallo.setText("Por favor completa todos los campos");
+            }
         });
 
     }
