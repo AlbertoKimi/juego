@@ -46,8 +46,6 @@
                 <ImageView fx:id="fd1" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
                 <ImageView fx:id="fd2" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
                 <ImageView fx:id="fd3" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                <ImageView fx:id="fd4" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                <ImageView fx:id="fd5" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
             </HBox>
         </VBox>
     </HBox>

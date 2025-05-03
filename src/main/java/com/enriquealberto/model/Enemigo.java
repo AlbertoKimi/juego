@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import com.enriquealberto.interfaces.Interaccion;
 import com.enriquealberto.interfaces.Observer;
 
-public class Enemigo extends Personaje{
-     private ArrayList<Observer> observers;
+public class Enemigo extends Personaje implements Cloneable {
+
      private int t_enemigo;
      private int percepcion;
 
@@ -81,4 +81,13 @@ public class Enemigo extends Personaje{
     }
 
 
+    @Override
+    public Enemigo clone() {
+        try {
+            Enemigo clone = (Enemigo) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 }

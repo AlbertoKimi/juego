@@ -53,7 +53,7 @@ public class SelectionControlador implements Observer{
     public void onChange() {
         c_nombre.setText(juego.getNombre() != null ? juego.getNombre() : "");
         Heroe jugador = juego.getJugador();
-        c_PERSONAJE.setText(jugador != null ? jugador.getNombre() : "Sin personaje"); 
+        c_PERSONAJE.setText(jugador != null ? jugador.getNombre() : "Sin personaje");
         c_DIFICULTAD.setText(String.valueOf(juego.getDificultad()));
     }
     @FXML
@@ -88,8 +88,6 @@ public class SelectionControlador implements Observer{
         fd1.setImage(difficultyImage);
         fd2.setImage(difficultyImage);
         fd3.setImage(difficultyImage);
-        fd4.setImage(difficultyImage);
-        fd5.setImage(difficultyImage);
 
         // Establecer transparencia inicial
         resetDifficultyOpacity();
@@ -103,8 +101,6 @@ public class SelectionControlador implements Observer{
         fd1.setOpacity(INACTIVE_OPACITY);
         fd2.setOpacity(INACTIVE_OPACITY);
         fd3.setOpacity(INACTIVE_OPACITY);
-        fd4.setOpacity(INACTIVE_OPACITY);
-        fd5.setOpacity(INACTIVE_OPACITY);
     }
 
     private void setupDifficultyHoverEvents() {
@@ -123,28 +119,16 @@ public class SelectionControlador implements Observer{
             currentHoverLevel = 3;
             updateHoverEffect(3);
         });
-        fd4.setOnMouseEntered(e -> {
-            isHovering = true;
-            currentHoverLevel = 4;
-            updateHoverEffect(4);
-        });
-        fd5.setOnMouseEntered(e -> {
-            isHovering = true;
-            currentHoverLevel = 5;
-            updateHoverEffect(5);
-        });
 
         // Cuando el ratón sale de una imagen individual
         fd1.setOnMouseExited(e -> checkHoverStatus());
         fd2.setOnMouseExited(e -> checkHoverStatus());
         fd3.setOnMouseExited(e -> checkHoverStatus());
-        fd4.setOnMouseExited(e -> checkHoverStatus());
-        fd5.setOnMouseExited(e -> checkHoverStatus());
     }
 
     private void checkHoverStatus() {
         // Verificar si el ratón todavía está en alguna imagen
-        isHovering = fd1.isHover() || fd2.isHover() || fd3.isHover() || fd4.isHover() || fd5.isHover();
+        isHovering = fd1.isHover() || fd2.isHover() || fd3.isHover();
         if (!isHovering) {
             updateSelectionEffect();
         }
@@ -154,8 +138,6 @@ public class SelectionControlador implements Observer{
         fd1.setOnMouseClicked(e -> setSelectedDifficulty(1));
         fd2.setOnMouseClicked(e -> setSelectedDifficulty(2));
         fd3.setOnMouseClicked(e -> setSelectedDifficulty(3));
-        fd4.setOnMouseClicked(e -> setSelectedDifficulty(4));
-        fd5.setOnMouseClicked(e -> setSelectedDifficulty(5));
     }
 
     private void updateHoverEffect(int hoveredLevel) {
@@ -168,10 +150,6 @@ public class SelectionControlador implements Observer{
             fd2.setOpacity(ACTIVE_OPACITY);
         if (hoveredLevel >= 3)
             fd3.setOpacity(ACTIVE_OPACITY);
-        if (hoveredLevel >= 4)
-            fd4.setOpacity(ACTIVE_OPACITY);
-        if (hoveredLevel >= 5)
-            fd5.setOpacity(ACTIVE_OPACITY);
     }
 
     private void setSelectedDifficulty(int level) {
@@ -191,10 +169,6 @@ public class SelectionControlador implements Observer{
                 fd2.setOpacity(ACTIVE_OPACITY);
             if (selectedDifficulty >= 3)
                 fd3.setOpacity(ACTIVE_OPACITY);
-            if (selectedDifficulty >= 4)
-                fd4.setOpacity(ACTIVE_OPACITY);
-            if (selectedDifficulty >= 5)
-                fd5.setOpacity(ACTIVE_OPACITY);
         }
     }
 
@@ -224,10 +198,10 @@ public class SelectionControlador implements Observer{
                 personajeBox.setOnMouseClicked(e -> {
                     // Deseleccionar todos los estilos previos
                     cont_perso.getChildren().forEach(node -> node.getStyleClass().remove("selected-personaje"));
-                
+
                     // Aplicar la clase de estilo al personaje seleccionado
                     personajeBox.getStyleClass().add("selected-personaje");
-                
+
                     // Guardar el personaje seleccionado en el juego
                     Juego.getInstance().setJugador(p);
                     // Actualizar etiquetas
