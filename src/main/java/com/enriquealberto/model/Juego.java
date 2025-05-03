@@ -128,30 +128,78 @@ public class Juego {
             return 0;
         }
     }
+
     public void iniciarentidades(){
         Random random = new Random();
         entidades.clear();
+        jugador.setPosicion(new Posicion(0, 0));
         entidades.add(jugador);
+        entidadesMapa.put(jugador.getPosicion(), jugador);
         int cantidadF = (int) Math.ceil((2.0 + mapaActual.getNivel()) / 2.0) + (dificultad - 1);
         int cantidadM = (int) (mapaActual.getNivel() / 2.0) + dificultad;
         int cantidadD = (int) (mapaActual.getNivel() / 2.0) + (dificultad - 2);
         for (int i = 0; i < cantidadF; i++) {
-            Enemigo original = enemigosF.get(random.nextInt(enemigosF.size()));
-            entidades.add(original.clone());
+            Enemigo copia = enemigosF.get(random.nextInt(enemigosF.size())).clone();
+            colocarEnemigoEnPosicionAleatoria(copia);
+            entidades.add(copia);
+
         }
         for (int i = 0; i < cantidadM; i++) {
-            Enemigo original = enemigosM.get(random.nextInt(enemigosM.size()));
-            entidades.add(original.clone());
+            Enemigo copia = enemigosM.get(random.nextInt(enemigosM.size())).clone();
+            colocarEnemigoEnPosicionAleatoria(copia);
+            entidades.add(copia);
         }
         for (int i = 0; i < cantidadD; i++) {
-            Enemigo original = enemigosD.get(random.nextInt(enemigosD.size()));
-            entidades.add(original.clone());
+            Enemigo copia = enemigosD.get(random.nextInt(enemigosD.size())).clone();
+            colocarEnemigoEnPosicionAleatoria(copia);
+            entidades.add(copia);
         }
         Collections.sort(entidades);
-
-
-
+    }
+    private void colocarEnemigoEnPosicionAleatoria(Enemigo enemigo) {
+        Random random = new Random();
+        int x, y;
+        do {
+            y = random.nextInt(MatrizMapa.size());
+            x = random.nextInt(MatrizMapa.get(0).size());
+        } while (comprobarposicion(x, y) != 2);
+        enemigo.setPosicion(new Posicion(x, y));
+        entidadesMapa.put(enemigo.getPosicion(), enemigo);
     }
 
+    private void moverDerecha(Personaje p){
+        mover(p, 1, 0);
+    }
+    private void moverIzquierda(Personaje p){
+        mover(p, -1, 0);
+    }
+    private void moverArriba(Personaje p){
+        mover(p, 0, 1);
+    }
+    private void moverAbajo(Personaje p){
+        mover(p, 0, -1);
+    }
+
+    private void mover(Personaje p, int x, int y) {
+        Posicion antigua = p.getPosicion();
+        int xNueva = antigua.getX() + x;
+        int yNueva = antigua.getY() + y;
+        int resultado = comprobarposicion(xNueva, yNueva);
+
+        switch (resultado) {
+            case 0:
+                System.out.println("Colisión");
+                break;
+            case 1:
+                // atacar
+                break;
+            case 2:
+                Posicion nueva = new Posicion(xNueva, yNueva);
+                p.setPosicion(nueva);
+                entidadesMapa.remove(antigua);
+                entidadesMapa.put(nueva, p);
+                break;
+        }
+    }
     
 }

@@ -10,25 +10,14 @@ public class Enemigo extends Personaje implements Cloneable {
      private int t_enemigo;
      private int percepcion;
 
-     public Enemigo(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje, int t_enemigo, int percepcion) {
+    public Enemigo(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje, int t_enemigo, int percepcion) {
         super(nombre, imagen, vida, ataque, defensa, velocidad, porcentaje);
         this.t_enemigo = t_enemigo;
         this.percepcion = percepcion;
-    }
-
-    public Enemigo(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje, int t_enemigo, int percepcion, int x, int y) {
-        super(nombre, imagen, vida, ataque, defensa, velocidad, porcentaje);
-        this.t_enemigo = t_enemigo;
-        this.percepcion = percepcion;
-        this.posicion[0] = x;
-        this.posicion[1] = y;
     }
 
    
-    public void setPosicion(int x, int y) {
-        this.posicion[0] = x;
-        this.posicion[1] = y;
-    }
+
     public void setVida(int vida) {
         this.vida = vida;
 
@@ -73,11 +62,6 @@ public class Enemigo extends Personaje implements Cloneable {
         } else {
             System.out.println("El heroe tiene " + heroe.getVida() + " de vida restante.");
         }
-    }
-
-    //@Override
-    public void desplazarse(int x, int y){
-
     }
 
 
