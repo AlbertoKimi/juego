@@ -16,7 +16,12 @@ public class Enemigo extends Personaje implements Cloneable {
         this.percepcion = percepcion;
     }
 
-   
+   public int getPercepcion() {
+        return percepcion;
+   }
+   public void setPercepcion(int percepcion) {
+        this.percepcion = percepcion;
+   }
 
     public void setVida(int vida) {
         this.vida = vida;

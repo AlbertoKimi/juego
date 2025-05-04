@@ -235,10 +235,68 @@ public class Juego {
 
         int dx = posJugador.getX() - posActual.getX();
         int dy = posJugador.getY() - posActual.getY();
-
-
-
+        boolean movido = false;
+        if(Math.abs(dx) > Math.abs(dy)){
+            if(dx > 0){
+                movido=moverDerecha(p);
+                if(!movido){
+                    if(dy>0){
+                        movido= moverAbajo(p);
+                    }else{
+                        movido= moverArriba(p);
+                    }
+                }
+            }else{
+                movido=moverIzquierda(p);
+                if(!movido){
+                    if(dy>0){
+                        movido= moverAbajo(p);
+                    }else{
+                        movido= moverArriba(p);
+                    }
+                }
+            }
+        }else{
+            if(dy>0){
+               movido= moverAbajo(p);
+               if(!movido){
+                   if(dx>0){
+                       movido=  moverDerecha(p);
+                   }else{
+                       movido=  moverIzquierda(p);
+                   }
+               }
+            }else{
+                movido= moverArriba(p);
+                if(!movido){
+                    if(dx>0){
+                        movido=  moverDerecha(p);
+                    }else{
+                        movido=  moverIzquierda(p);
+                    }
+                }
+            }
+        }
+        if(!movido){
+            moverAleatorio(p);
+        }
     }
 
-    
+    private void moverenemigo(Enemigo e){
+        Posicion posActual = e.getPosicion();
+        Posicion posJugador = jugador.getPosicion();
+
+        int dx = posJugador.getX() - posActual.getX();
+        int dy = posJugador.getY() - posActual.getY();
+        
+        if(Math.abs(dx)==1 || Math.abs(dx) ==1) {
+            //atacar
+        }else{
+            if(Math.abs(dx) <= e.getPercepcion() || Math.abs(dy) <= e.getPercepcion()) {
+                moverGuiado(e);
+            }else{
+                moverAleatorio(e);
+            }
+        }
+    }
 }
