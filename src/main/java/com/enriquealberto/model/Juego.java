@@ -156,7 +156,7 @@ public class Juego {
         }
         Collections.sort(entidades);
     }
-    private void colocarEnemigoEnPosicionAleatoria(Enemigo enemigo) {
+    public void colocarEnemigoEnPosicionAleatoria(Enemigo enemigo) {
         Random random = new Random();
         int x, y;
         do {
@@ -167,20 +167,20 @@ public class Juego {
         entidadesMapa.put(enemigo.getPosicion(), enemigo);
     }
 
-    private boolean moverDerecha(Personaje p){
+    public boolean moverDerecha(Personaje p){
       return   mover(p, 1, 0);
     }
-    private boolean moverIzquierda(Personaje p){
+    public boolean moverIzquierda(Personaje p){
        return mover(p, -1, 0);
     }
-    private boolean moverArriba(Personaje p){
+    public boolean moverArriba(Personaje p){
        return mover(p, 0, 1);
     }
-    private boolean moverAbajo(Personaje p){
+    public boolean moverAbajo(Personaje p){
         return mover(p, 0, -1);
     }
 
-    private boolean mover(Personaje p, int x, int y) {
+    public boolean mover(Personaje p, int x, int y) {
         Posicion antigua = p.getPosicion();
         int xNueva = antigua.getX() + x;
         int yNueva = antigua.getY() + y;
@@ -205,7 +205,7 @@ public class Juego {
         }
     }
 
-    private void moverAleatorio(Personaje p) {
+    public void moverAleatorio(Personaje p) {
         Random rand = new Random();
         boolean movido = false;
         do {
@@ -229,7 +229,7 @@ public class Juego {
         }while (!movido);
     }
 
-    private void moverGuiado(Personaje p) {
+    public void moverGuiado(Personaje p) {
         Posicion posActual = p.getPosicion();
         Posicion posJugador = jugador.getPosicion();
 
@@ -282,7 +282,7 @@ public class Juego {
         }
     }
 
-    private void moverenemigo(Enemigo e){
+    public void moverenemigo(Enemigo e){
         Posicion posActual = e.getPosicion();
         Posicion posJugador = jugador.getPosicion();
 
