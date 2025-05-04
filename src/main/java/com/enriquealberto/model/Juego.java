@@ -204,5 +204,41 @@ public class Juego {
                 return false;
         }
     }
+
+    private void moverAleatorio(Personaje p) {
+        Random rand = new Random();
+        boolean movido = false;
+        do {
+            int numero = rand.nextInt(4);
+            switch (numero) {
+                case 0:
+                    movido = moverAbajo(p);
+                    break;
+
+                case 1:
+                    movido = moverArriba(p);
+                    break;
+                case 2:
+                    movido = moverDerecha(p);
+                    break;
+
+                case 3:
+                    movido = moverIzquierda(p);
+                    break;
+            }
+        }while (!movido);
+    }
+
+    private void moverGuiado(Personaje p) {
+        Posicion posActual = p.getPosicion();
+        Posicion posJugador = jugador.getPosicion();
+
+        int dx = posJugador.getX() - posActual.getX();
+        int dy = posJugador.getY() - posActual.getY();
+
+
+
+    }
+
     
 }
