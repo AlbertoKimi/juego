@@ -167,20 +167,20 @@ public class Juego {
         entidadesMapa.put(enemigo.getPosicion(), enemigo);
     }
 
-    private void moverDerecha(Personaje p){
-        mover(p, 1, 0);
+    private boolean moverDerecha(Personaje p){
+      return   mover(p, 1, 0);
     }
-    private void moverIzquierda(Personaje p){
-        mover(p, -1, 0);
+    private boolean moverIzquierda(Personaje p){
+       return mover(p, -1, 0);
     }
-    private void moverArriba(Personaje p){
-        mover(p, 0, 1);
+    private boolean moverArriba(Personaje p){
+       return mover(p, 0, 1);
     }
-    private void moverAbajo(Personaje p){
-        mover(p, 0, -1);
+    private boolean moverAbajo(Personaje p){
+        return mover(p, 0, -1);
     }
 
-    private void mover(Personaje p, int x, int y) {
+    private boolean mover(Personaje p, int x, int y) {
         Posicion antigua = p.getPosicion();
         int xNueva = antigua.getX() + x;
         int yNueva = antigua.getY() + y;
@@ -189,16 +189,19 @@ public class Juego {
         switch (resultado) {
             case 0:
                 System.out.println("Colisión");
-                break;
+                return false;
             case 1:
                 // atacar
-                break;
+                return true;
             case 2:
                 Posicion nueva = new Posicion(xNueva, yNueva);
                 p.setPosicion(nueva);
                 entidadesMapa.remove(antigua);
                 entidadesMapa.put(nueva, p);
-                break;
+                return true;
+
+                default:
+                return false;
         }
     }
     
