@@ -18,6 +18,7 @@ import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Heroe;
 
 import com.enriquealberto.model.Juego;
+import javafx.scene.shape.Sphere;
 
 public class EstadisticaControlador implements Observer {
     @FXML
@@ -25,13 +26,21 @@ public class EstadisticaControlador implements Observer {
 
     VBox vBox;
     Label titulo;
-    Heroe heroe;
+    private Heroe heroe;
 
     @FXML
     public void initialize() {
-        heroe = Juego.getInstance().getJugador();
-        heroe.suscribe(this);
+        Juego juego = Juego.getInstance();
+        heroe = juego.getJugador();
+        if (heroe == null) {
+            System.err.println("ERROR: El héroe no ha sido inicializado.");
+            return;
+        }
+        juego.suscribe(this);
 
+
+
+        System.out.println(heroe.getNombre());
         vBox = new VBox();
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(7));
@@ -42,7 +51,6 @@ public class EstadisticaControlador implements Observer {
 
         vBox.getChildren().add(titulo);
         anchorPane.getChildren().add(vBox);
-
         cargarPersonajes(heroe);
 
     }
@@ -56,15 +64,9 @@ public class EstadisticaControlador implements Observer {
             Label nombre = (Label) personajeBox.lookup("#p_nombre");
             ImageView foto = (ImageView) personajeBox.lookup("#p_foto");
 
-            nombre.setText("Héroe: " + heroe.getNombre());
 
-            if (personaje.getImagen() != null) {
-                URL imagenUrl = getClass().getResource(personaje.getImagen());
-                if (imagenUrl == null) {
-                    System.err.println("No se encontró la imagen: " + personaje.getImagen());
-                } else {
-                    foto.setImage(new Image(imagenUrl.toExternalForm()));
-                }
+            if (heroe.getImagen() != null) {
+                foto.setImage(new Image(getClass().getResource("/" + heroe.getImagen()).toExternalForm()));
             }
 
             asignarAtributo(personajeBox, "vf", personaje.getVida(), "/com/enriquealberto/imagenes/vida.png");

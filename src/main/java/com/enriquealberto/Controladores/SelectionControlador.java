@@ -59,8 +59,9 @@ public class SelectionControlador implements Observer{
     @FXML
     public void initialize() {
         juego=Juego.getInstance();
-        heroes =juego.getHeroes();
         juego.suscribe(this);
+        heroes =juego.getHeroes();
+
         onChange();
 
         cargarPersonajes(heroes);
@@ -72,9 +73,19 @@ public class SelectionControlador implements Observer{
         });
 
         start.setOnAction(event -> {
-            if(c_nombre != null && juego.getDificultad()!=0 && juego.getJugador()!=null){
+            // Verificar que todos los campos estén completados
+            if (juego.getNombre() != null && !juego.getNombre().isEmpty() && juego.getDificultad() != 0 && juego.getJugador() != null) {
+                // Cargar la escena CONTENEDOR y luego cargar los paneles
                 ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR);
-            }else{
+
+                // Llamar al método para cargar los paneles cuando la escena se ha cargado
+                ContenedorControlador controlador = (ContenedorControlador) ManagerEscenas.getInstance().getController(EscenaID.CONTENEDOR);
+                controlador.cargarPaneles();
+
+                System.out.println("Dificultad seleccionada: " + juego.getDificultad());
+                System.out.println("Jugador seleccionado: " + juego.getJugador().getNombre());
+            } else {
+                // Mostrar un mensaje de error si algo falta
                 fallo.setText("Por favor completa todos los campos");
             }
         });

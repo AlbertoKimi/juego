@@ -37,6 +37,7 @@ public class Juego {
         this.gestorMapas=new GestorMapas();
         this.mapaActual=gestorMapas.getMapaActual();
         this.MatrizMapa= mapaActual.getMapa();
+        this.entidades = new ArrayList<>();
     }
 
 
@@ -132,6 +133,7 @@ public class Juego {
     public void iniciarentidades(){
         Random random = new Random();
         entidades.clear();
+        entidadesMapa.clear();
         jugador.setPosicion(new Posicion(0, 0));
         entidades.add(jugador);
         entidadesMapa.put(jugador.getPosicion(), jugador);
