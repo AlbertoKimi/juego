@@ -8,7 +8,7 @@ public abstract class Personaje implements Comparable<Personaje> {
     protected int defensa;
     protected int velocidad;
     protected int porcentaje;
-    protected int[] posicion = new int[2];
+    protected Posicion posicion;
 
     public Personaje(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje) {
         this.nombre = nombre;
@@ -76,13 +76,12 @@ public abstract class Personaje implements Comparable<Personaje> {
         this.porcentaje = porcentaje;
     }
 
-    public int[] getPosicion() {
+    public Posicion getPosicion() {
         return posicion;
     }
 
-    public void setPosicion(int x, int y) {
-        this.posicion[0] = x;
-        this.posicion[1] = y;
+    public void setPosicion(Posicion posicion) {
+        this.posicion = posicion;
     }
 
     @Override

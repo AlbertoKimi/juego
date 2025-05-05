@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.enriquealberto.EscenaID;
+import com.enriquealberto.ManagerEscenas;
 import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Heroe;
 import com.enriquealberto.model.Juego;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -38,20 +41,27 @@ public class SelectionControlador implements Observer{
     private Label c_PERSONAJE;
     @FXML
     private Label c_DIFICULTAD;
+    @FXML
+    private Label fallo;
+    @FXML
+    private Button start;
+
 
     private Juego juego;
 
     @Override
     public void onChange() {
-        c_nombre.setText(juego.getNombre());
-        c_PERSONAJE.setText(juego.getJugador().getNombre());
-        c_DIFICULTAD.setText("" +juego.getDificultad());
+        c_nombre.setText(juego.getNombre() != null ? juego.getNombre() : "");
+        Heroe jugador = juego.getJugador();
+        c_PERSONAJE.setText(jugador != null ? jugador.getNombre() : "Sin personaje");
+        c_DIFICULTAD.setText(String.valueOf(juego.getDificultad()));
     }
     @FXML
     public void initialize() {
         juego=Juego.getInstance();
-        heroes =juego.getHeroes();
         juego.suscribe(this);
+        heroes =juego.getHeroes();
+
         onChange();
 
         cargarPersonajes(heroes);
@@ -60,6 +70,24 @@ public class SelectionControlador implements Observer{
         nom_jugador.setOnAction(event -> {
             juego.setNombre(nom_jugador.getText());
             System.out.println("Cadena actualizada a: " + nom_jugador.getText());
+        });
+
+        start.setOnAction(event -> {
+            // Verificar que todos los campos estén completados
+            if (juego.getNombre() != null && !juego.getNombre().isEmpty() && juego.getDificultad() != 0 && juego.getJugador() != null) {
+                // Cargar la escena CONTENEDOR y luego cargar los paneles
+                ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR);
+
+                // Llamar al método para cargar los paneles cuando la escena se ha cargado
+                ContenedorControlador controlador = (ContenedorControlador) ManagerEscenas.getInstance().getController(EscenaID.CONTENEDOR);
+                controlador.cargarPaneles();
+
+                System.out.println("Dificultad seleccionada: " + juego.getDificultad());
+                System.out.println("Jugador seleccionado: " + juego.getJugador().getNombre());
+            } else {
+                // Mostrar un mensaje de error si algo falta
+                fallo.setText("Por favor completa todos los campos");
+            }
         });
 
     }
@@ -71,8 +99,6 @@ public class SelectionControlador implements Observer{
         fd1.setImage(difficultyImage);
         fd2.setImage(difficultyImage);
         fd3.setImage(difficultyImage);
-        fd4.setImage(difficultyImage);
-        fd5.setImage(difficultyImage);
 
         // Establecer transparencia inicial
         resetDifficultyOpacity();
@@ -86,8 +112,6 @@ public class SelectionControlador implements Observer{
         fd1.setOpacity(INACTIVE_OPACITY);
         fd2.setOpacity(INACTIVE_OPACITY);
         fd3.setOpacity(INACTIVE_OPACITY);
-        fd4.setOpacity(INACTIVE_OPACITY);
-        fd5.setOpacity(INACTIVE_OPACITY);
     }
 
     private void setupDifficultyHoverEvents() {
@@ -106,28 +130,16 @@ public class SelectionControlador implements Observer{
             currentHoverLevel = 3;
             updateHoverEffect(3);
         });
-        fd4.setOnMouseEntered(e -> {
-            isHovering = true;
-            currentHoverLevel = 4;
-            updateHoverEffect(4);
-        });
-        fd5.setOnMouseEntered(e -> {
-            isHovering = true;
-            currentHoverLevel = 5;
-            updateHoverEffect(5);
-        });
 
         // Cuando el ratón sale de una imagen individual
         fd1.setOnMouseExited(e -> checkHoverStatus());
         fd2.setOnMouseExited(e -> checkHoverStatus());
         fd3.setOnMouseExited(e -> checkHoverStatus());
-        fd4.setOnMouseExited(e -> checkHoverStatus());
-        fd5.setOnMouseExited(e -> checkHoverStatus());
     }
 
     private void checkHoverStatus() {
         // Verificar si el ratón todavía está en alguna imagen
-        isHovering = fd1.isHover() || fd2.isHover() || fd3.isHover() || fd4.isHover() || fd5.isHover();
+        isHovering = fd1.isHover() || fd2.isHover() || fd3.isHover();
         if (!isHovering) {
             updateSelectionEffect();
         }
@@ -137,8 +149,6 @@ public class SelectionControlador implements Observer{
         fd1.setOnMouseClicked(e -> setSelectedDifficulty(1));
         fd2.setOnMouseClicked(e -> setSelectedDifficulty(2));
         fd3.setOnMouseClicked(e -> setSelectedDifficulty(3));
-        fd4.setOnMouseClicked(e -> setSelectedDifficulty(4));
-        fd5.setOnMouseClicked(e -> setSelectedDifficulty(5));
     }
 
     private void updateHoverEffect(int hoveredLevel) {
@@ -151,10 +161,6 @@ public class SelectionControlador implements Observer{
             fd2.setOpacity(ACTIVE_OPACITY);
         if (hoveredLevel >= 3)
             fd3.setOpacity(ACTIVE_OPACITY);
-        if (hoveredLevel >= 4)
-            fd4.setOpacity(ACTIVE_OPACITY);
-        if (hoveredLevel >= 5)
-            fd5.setOpacity(ACTIVE_OPACITY);
     }
 
     private void setSelectedDifficulty(int level) {
@@ -174,10 +180,6 @@ public class SelectionControlador implements Observer{
                 fd2.setOpacity(ACTIVE_OPACITY);
             if (selectedDifficulty >= 3)
                 fd3.setOpacity(ACTIVE_OPACITY);
-            if (selectedDifficulty >= 4)
-                fd4.setOpacity(ACTIVE_OPACITY);
-            if (selectedDifficulty >= 5)
-                fd5.setOpacity(ACTIVE_OPACITY);
         }
     }
 
@@ -207,13 +209,12 @@ public class SelectionControlador implements Observer{
                 personajeBox.setOnMouseClicked(e -> {
                     // Deseleccionar todos los estilos previos
                     cont_perso.getChildren().forEach(node -> node.getStyleClass().remove("selected-personaje"));
-                
+
                     // Aplicar la clase de estilo al personaje seleccionado
                     personajeBox.getStyleClass().add("selected-personaje");
-                
+
                     // Guardar el personaje seleccionado en el juego
-                    juego.setJugador(p);
-                
+                    Juego.getInstance().setJugador(p);
                     // Actualizar etiquetas
                     onChange();
                 });

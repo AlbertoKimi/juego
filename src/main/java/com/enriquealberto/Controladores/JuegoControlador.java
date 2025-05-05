@@ -1,13 +1,15 @@
 package com.enriquealberto.Controladores;
 
+import java.io.InputStream;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import com.enriquealberto.interfaces.Observer;
-import com.enriquealberto.model.GestorMapas;
-import com.enriquealberto.model.Proveedor;
-import com.enriquealberto.model.Mapa;
-import com.enriquealberto.model.Enemigo;
-import com.enriquealberto.model.Heroe; 
-import com.enriquealberto.model.Personaje; 
+
+import com.enriquealberto.model.*;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.util.Duration;
 
 public class JuegoControlador implements Observer {
     @FXML
@@ -27,15 +30,25 @@ public class JuegoControlador implements Observer {
     GestorMapas gestorMapas;
     VBox vbox;
     Label titulo;
-    Heroe heroe;
     Enemigo enemigo;
+    Juego juego;
 
+    private Heroe heroe;
+    private int contador=0;
     @FXML
     public void initialize() {
-        gestorMapas = Proveedor.getInstance().getGestorMapas();
-        gestorMapas.subscribe(this);
+        juego = Juego.getInstance();
+        heroe = juego.getJugador();
+        if (heroe == null) {
+            System.err.println("ERROR: El héroe no ha sido inicializado en ventana juego.");
+            return;
+        }
+        juego.suscribe(this);
+        juego.iniciarentidades();
+        System.out.println("controlador de juego inicializado");
+        gestorMapas=juego.getGestorMapas();
 
-        heroe = new Heroe("manolo", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 10);
+        heroe = juego.getJugador();
         enemigo = new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2);
 
         vbox = new VBox();
@@ -61,25 +74,40 @@ public class JuegoControlador implements Observer {
         AnchorPane.setRightAnchor(vbox, 0.0);
         anchorPane.getChildren().add(vbox);
 
-        generarMapa(gestorMapas.getMapas());
-        pintarPersonaje(0, 0, heroe); // Cambia
 
-        pintarPersonaje(0, 1, enemigo);
+        pintarPersonajes();
+        actualizarTurno(); // empieza el primer turno
 
         anchorPane.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case DOWN:
-                    System.out.println("Ataque realizado");
-                    heroe.atacar(heroe, enemigo);
-                    break;
-                case UP:
-                    System.out.println("Ataque realizado");
-                    enemigo.atacar(heroe, enemigo);
-                    break;
-                default:
-                    break;
+            Personaje actual = juego.getPersonajeActual();
+            if (actual instanceof Heroe) {  // Solo procesar teclas si es el turno del héroe
+                boolean movimientoRealizado = false;
+
+                switch (event.getCode()) {
+                    case W:
+                        movimientoRealizado = juego.moverArriba(actual);
+                        break;
+                    case A:
+                        movimientoRealizado = juego.moverIzquierda(actual);
+                        break;
+                    case S:
+                        movimientoRealizado = juego.moverAbajo(actual);
+                        break;
+                    case D:
+                        movimientoRealizado = juego.moverDerecha(actual);
+                        break;
+                    default:
+                        return;
+                }
+
+                if (movimientoRealizado) {
+                    pintarPersonajes();
+                    juego.pasarTurno();
+                    actualizarTurno(); // Pasa el turno a los enemigos
+                }
             }
         });
+        System.out.println(contador);
 
         // Habilitar el foco en el AnchorPane para recibir eventos de teclado
         anchorPane.setFocusTraversable(true);
@@ -148,7 +176,13 @@ public class JuegoControlador implements Observer {
         StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
 
         // Crear un nuevo ImageView para el personaje
-        ImageView personajeView = new ImageView(new Image(getClass().getResourceAsStream(personaje.getImagen())));
+        InputStream is = getClass().getResourceAsStream("/" + personaje.getImagen());
+        if (is == null) {
+            System.err.println("No se encontró la imagen: " + personaje.getImagen());
+            return;
+        }
+        ImageView personajeView = new ImageView(new Image(is));
+        //ImageView personajeView = new ImageView(new Image(getClass().getResourceAsStream(personaje.getImagen())));
         personajeView.setFitWidth(stackPane.getPrefWidth());
         personajeView.setFitHeight(stackPane.getPrefHeight());
         personajeView.setPreserveRatio(true);
@@ -157,7 +191,12 @@ public class JuegoControlador implements Observer {
         // Añadir el ImageView del personaje al StackPane
         stackPane.getChildren().add(personajeView);
     }
-
+    public void pintarPersonajes(){
+        generarMapa(gestorMapas.getMapas());
+        for(Personaje p : juego.getEntidades()){
+            pintarPersonaje(p.getPosicion().getX(),p.getPosicion().getY(),p);
+        }
+    }
     public void eliminarPersonaje(int x, int y) {
         // Obtener la celda correspondiente en el GridPane
         StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
@@ -166,16 +205,22 @@ public class JuegoControlador implements Observer {
         stackPane.getChildren()
                 .removeIf(node -> node instanceof ImageView && !node.equals(stackPane.getChildren().get(0)));
     }
+    private void actualizarTurno() {
+        Personaje actual = juego.getPersonajeActual();
 
+
+        if (actual instanceof Enemigo) {
+            new Timeline(new KeyFrame(Duration.millis(200), e -> {
+                juego.moverenemigo((Enemigo) actual);
+                pintarPersonajes();
+                juego.pasarTurno();
+                actualizarTurno();
+            })).play();
+        }
+        // Si es el héroe, no hacemos nada y esperamos input del usuario
+    }
     @Override
     public void onChange() {
-        // Actualizar el mapa actual
-        LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
-        generarMapa(mapas);
-        pintarPersonaje(0, 0,
-                new Enemigo("pepe", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 0, 2, 2));
-        pintarPersonaje(0, 1,
-                new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2));
-        eliminarPersonaje(0, 1);
+
     }
 }
