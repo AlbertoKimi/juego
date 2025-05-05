@@ -9,6 +9,9 @@ import com.enriquealberto.interfaces.Observer;
 
 import com.enriquealberto.model.*;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.util.Duration;
 
 public class JuegoControlador implements Observer {
     @FXML
@@ -32,7 +36,7 @@ public class JuegoControlador implements Observer {
     Juego juego;
 
     private Heroe heroe;
-
+    private int contador=0;
     @FXML
     public void initialize() {
         juego = Juego.getInstance();
@@ -78,30 +82,34 @@ public class JuegoControlador implements Observer {
 
         anchorPane.setOnKeyPressed(event -> {
             Personaje actual = juego.getPersonajeActual();
-            if (actual instanceof Heroe) {
+            if (actual instanceof Heroe) {  // Solo procesar teclas si es el turno del héroe
+                boolean movimientoRealizado = false;
+
                 switch (event.getCode()) {
                     case W:
-                        juego.moverArriba(actual);
+                        movimientoRealizado = juego.moverArriba(actual);
                         break;
                     case A:
-                        juego.moverIzquierda(actual);
+                        movimientoRealizado = juego.moverIzquierda(actual);
                         break;
                     case S:
-                        juego.moverAbajo(actual);
+                        movimientoRealizado = juego.moverAbajo(actual);
                         break;
                     case D:
-                        juego.moverDerecha(actual);
+                        movimientoRealizado = juego.moverDerecha(actual);
                         break;
                     default:
                         return;
                 }
 
-                pintarPersonajes();
-                juego.pasarTurno();
-                actualizarTurno(); // llama a enemigos si toca
+                if (movimientoRealizado) {
+                    pintarPersonajes();
+                    juego.pasarTurno();
+                    actualizarTurno(); // Pasa el turno a los enemigos
+                }
             }
         });
-
+        System.out.println(contador);
 
         // Habilitar el foco en el AnchorPane para recibir eventos de teclado
         anchorPane.setFocusTraversable(true);
@@ -202,26 +210,19 @@ public class JuegoControlador implements Observer {
     private void actualizarTurno() {
         Personaje actual = juego.getPersonajeActual();
 
-        if (actual.getClass() == Enemigo.class) {
-            Enemigo enemigo = (Enemigo) actual;
-            juego.moverenemigo(enemigo);
-            pintarPersonajes();
-            juego.pasarTurno();
 
-            // Si hay más enemigos seguidos, seguir automáticamente
-            actualizarTurno();
+        if (actual instanceof Enemigo) {
+            new Timeline(new KeyFrame(Duration.millis(200), e -> {
+                juego.moverenemigo((Enemigo) actual);
+                pintarPersonajes();
+                juego.pasarTurno();
+                actualizarTurno();
+            })).play();
         }
-        // Si es el héroe, se queda esperando tecla — ya está cubierto con el KeyPressed
+        // Si es el héroe, no hacemos nada y esperamos input del usuario
     }
     @Override
     public void onChange() {
-        // Actualizar el mapa actual
-        LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
-        generarMapa(mapas);
-        pintarPersonaje(0, 0,
-                new Enemigo("pepe", "/com/enriquealberto/imagenes/cocoTanque.png", 100, 10, 5, 2, 0, 2, 2));
-        pintarPersonaje(0, 1,
-                new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2));
-        eliminarPersonaje(0, 1);
+
     }
 }

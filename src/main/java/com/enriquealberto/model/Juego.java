@@ -193,7 +193,7 @@ public class Juego {
 
         switch (resultado) {
             case 0:
-                System.out.println("Colisión");
+                System.out.println("Colisión de personaje: "+ p.getNombre());
                 return false;
             case 1:
                 // atacar
