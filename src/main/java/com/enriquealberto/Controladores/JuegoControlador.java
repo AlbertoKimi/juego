@@ -34,7 +34,8 @@ public class JuegoControlador implements Observer {
     Juego juego;
 
     private Heroe heroe;
-    private int contador=0;
+    private int contador = 0;
+
     @FXML
     public void initialize() {
         juego = Juego.getInstance();
@@ -46,7 +47,7 @@ public class JuegoControlador implements Observer {
         juego.suscribe(this);
         juego.iniciarentidades();
         System.out.println("controlador de juego inicializado");
-        gestorMapas=juego.getGestorMapas();
+        gestorMapas = juego.getGestorMapas();
 
         heroe = juego.getJugador();
         enemigo = new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2);
@@ -74,13 +75,12 @@ public class JuegoControlador implements Observer {
         AnchorPane.setRightAnchor(vbox, 0.0);
         anchorPane.getChildren().add(vbox);
 
-
         pintarPersonajes();
         actualizarTurno(); // empieza el primer turno
 
         anchorPane.setOnKeyPressed(event -> {
             Personaje actual = juego.getPersonajeActual();
-            if (actual instanceof Heroe) {  // Solo procesar teclas si es el turno del héroe
+            if (actual instanceof Heroe) { // Solo procesar teclas si es el turno del héroe
                 boolean movimientoRealizado = false;
 
                 switch (event.getCode()) {
@@ -137,7 +137,7 @@ public class JuegoControlador implements Observer {
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
 
         for (int fila = 0; fila < filas; fila++) {
-            int [] filaMapa = matriz[fila]; // Obtener la fila del mapa actual
+            int[] filaMapa = matriz[fila]; // Obtener la fila del mapa actual
             for (int columna = 0; columna < columnas; columna++) {
                 int valor = filaMapa[columna];
                 ImageView imageView;
@@ -182,7 +182,8 @@ public class JuegoControlador implements Observer {
             return;
         }
         ImageView personajeView = new ImageView(new Image(is));
-        //ImageView personajeView = new ImageView(new Image(getClass().getResourceAsStream(personaje.getImagen())));
+        // ImageView personajeView = new ImageView(new
+        // Image(getClass().getResourceAsStream(personaje.getImagen())));
         personajeView.setFitWidth(stackPane.getPrefWidth());
         personajeView.setFitHeight(stackPane.getPrefHeight());
         personajeView.setPreserveRatio(true);
@@ -191,12 +192,14 @@ public class JuegoControlador implements Observer {
         // Añadir el ImageView del personaje al StackPane
         stackPane.getChildren().add(personajeView);
     }
-    public void pintarPersonajes(){
+
+    public void pintarPersonajes() {
         generarMapa(gestorMapas.getMapas());
-        for(Personaje p : juego.getEntidades()){
-            pintarPersonaje(p.getPosicion().getX(),p.getPosicion().getY(),p);
+        for (Personaje p : juego.getEntidades()) {
+            pintarPersonaje(p.getPosicion().getX(), p.getPosicion().getY(), p);
         }
     }
+
     public void eliminarPersonaje(int x, int y) {
         // Obtener la celda correspondiente en el GridPane
         StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
@@ -205,9 +208,9 @@ public class JuegoControlador implements Observer {
         stackPane.getChildren()
                 .removeIf(node -> node instanceof ImageView && !node.equals(stackPane.getChildren().get(0)));
     }
+
     private void actualizarTurno() {
         Personaje actual = juego.getPersonajeActual();
-
 
         if (actual instanceof Enemigo) {
             new Timeline(new KeyFrame(Duration.millis(200), e -> {
@@ -219,8 +222,10 @@ public class JuegoControlador implements Observer {
         }
         // Si es el héroe, no hacemos nada y esperamos input del usuario
     }
+
     @Override
     public void onChange() {
-
+        LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
+        generarMapa(mapas);
     }
 }
