@@ -12,7 +12,10 @@ public class Juego {
     private ArrayList<Heroe> heroes;
     private ArrayList<Enemigo> enemigos;
     private String nombre;
+    private int turnoIndex = 0;
+
     private GestorMapas gestorMapas;
+
 
 
     //atributos para cada partida
@@ -176,10 +179,10 @@ public class Juego {
        return mover(p, -1, 0);
     }
     public boolean moverArriba(Personaje p){
-       return mover(p, 0, 1);
+       return mover(p, 0, -1);
     }
     public boolean moverAbajo(Personaje p){
-        return mover(p, 0, -1);
+        return mover(p, 0, 1);
     }
 
     public boolean mover(Personaje p, int x, int y) {
@@ -300,5 +303,28 @@ public class Juego {
                 moverAleatorio(e);
             }
         }
+    }
+    public GestorMapas getGestorMapas() {
+        return gestorMapas;
+    }
+
+    public void setGestorMapas(GestorMapas gestorMapas) {
+        this.gestorMapas = gestorMapas;
+    }
+    public ArrayList<Personaje> getEntidades() {
+        return entidades;
+    }
+
+    public void setEntidades(ArrayList<Personaje> entidades) {
+        this.entidades = entidades;
+    }
+    public Personaje getPersonajeActual() {
+        if (entidades.isEmpty()) return null;
+        return entidades.get(turnoIndex);
+    }
+
+    public void pasarTurno() {
+        if (entidades.isEmpty()) return;
+        turnoIndex = (turnoIndex + 1) % entidades.size();
     }
 }

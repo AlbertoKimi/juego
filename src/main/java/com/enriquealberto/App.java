@@ -30,7 +30,7 @@ public class App extends Application {
         sm.setScene(EscenaID.CONTENEDOR, "contenedor"); // Solo configurar, no cargar todavía
 
         // Cargar la PORTADA primero (pantalla inicial)
-        sm.loadScene(EscenaID.SELECTION);
+        sm.loadScene(EscenaID.PORTADA);
     }
 
     public static void main(String[] args) {
