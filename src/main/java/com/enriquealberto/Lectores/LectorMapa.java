@@ -39,37 +39,51 @@ public class LectorMapa {
                     } else if (linea.startsWith("#tamanoY:")) {
                         y = Integer.parseInt(extraerValor(linea));
                         matriz = new int[y][x];
-
                     } else if (linea.startsWith("#escenario")) {
                         nombreEscenario = extraerValor(linea);
-
                     }
                 } else if (!linea.isEmpty()) {
-                    for (int i = 0; i < y; i++) {
-                        matriz[lineaMapa][i] = Character.getNumericValue(linea.charAt(i));
-                    }
-                    lineaMapa++;
-                    if (lineaMapa == y) {
-                        matrizCompleta = true;
+                    // Verificar que la línea tenga la longitud esperada
+                    if (linea.length() >= x) {
+                        for (int i = 0; i < x; i++) {
+                            matriz[lineaMapa][i] = Character.getNumericValue(linea.charAt(i));
+                        }
+                        lineaMapa++;
+                        if (lineaMapa == y) {
+                            matrizCompleta = true;
+                        }
+                    } else {
+                        System.err.println("Línea demasiado corta: " + linea);
                     }
                 }
+
                 // Guardar mapa
                 if (matrizCompleta) {
                     Mapa mapa = new Mapa(nombreEscenario, suelo, pared, matriz);
                     mapas.add(mapa);
-                    lineaMapa = 0; 
-                    matriz = null; 
+                    lineaMapa = 0;
+                    matriz = null;
                     matrizCompleta = false;
                 }
             }
 
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Error al convertir un valor numérico: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error inesperado: " + e.getMessage());
         }
         return mapas;
     }
 
     private static String extraerValor(String linea) {
-        return linea.split(":")[1].trim();
+        String[] partes = linea.split(":");
+        if (partes.length > 1) {
+            return partes[1].trim();
+        } else {
+            System.err.println("Formato incorrecto en la línea: " + linea);
+            return "";
+        }
     }
 }
