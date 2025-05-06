@@ -243,7 +243,12 @@ public class JuegoControlador implements Observer {
     @Override
     // MODIFICAR ESTO, NO PASA DEL SEGUNDO MAPA, ME DICE QUE NO HAY MAS MAPAS
     public void onChange() {
-      notificarVictoria();
+     
+      if(juego.getEntidades().size()<2){
+        notificarVictoria();
+      }
+
+      //POner que se vuelva a la vida anterior de los heroes y enemigos.
 
     }
 }

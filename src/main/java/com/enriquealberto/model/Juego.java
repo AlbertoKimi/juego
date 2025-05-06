@@ -120,8 +120,6 @@ public class Juego {
         }
     }
 
-
-
     public void iniciarentidades() {
         Random random = new Random();
         entidades.clear();
@@ -176,6 +174,7 @@ public class Juego {
     public boolean moverAbajo(Personaje p) {
         return mover(p, 0, 1);
     }
+
     public int comprobarposicion(int x, int y) {
         if (x < 0 || x >= MatrizMapa[0].length || y < 0 || y >= MatrizMapa.length) {
             return 0;
@@ -192,6 +191,7 @@ public class Juego {
             return 0;
         }
     }
+
     public boolean mover(Personaje p, int x, int y) {
         Posicion antigua = p.getPosicion();
         int xNueva = antigua.getX() + x;
@@ -222,7 +222,7 @@ public class Juego {
                         if (verificarVictoria()) {
                             notifyObservers();
                         }
-                       
+
                     }
                 }
                 return true;
@@ -301,15 +301,14 @@ public class Juego {
         int dx = posJugador.getX() - posActual.getX();
         int dy = posJugador.getY() - posActual.getY();
 
-        if ((Math.abs(dx) == 1 && Math.abs(dy) == 0 )|| (Math.abs(dx) == 0 && Math.abs(dy) == 1)) {
-            // MODIFICAR. ESTÁ MAL O NO HACE LO QUE DEBE HACER.
-            if (comprobarposicion(dx, dy) == 1 && entidadesMapa instanceof Heroe) {
-                e.atacar(jugador, e);
-                if (jugador.getVida() <= 0) {
-                    System.out.println("El heroe " + jugador.getNombre() + " ha sido derrotado.");
-                    entidadesMapa.remove(posJugador); // Eliminar al enemigo del mapa
-                    entidades.remove(jugador); // Eliminar al enemigo de la lista de entidades
-                }
+        if ((Math.abs(dx) == 1 && Math.abs(dy) == 0) || (Math.abs(dx) == 0 && Math.abs(dy) == 1)) {
+
+            e.atacar(jugador, e);
+            if (jugador.getVida() <= 0) {
+                System.out.println("El heroe " + jugador.getNombre() + " ha sido derrotado.");
+                entidadesMapa.remove(posJugador); // Eliminar al enemigo del mapa
+                entidades.remove(jugador); // Eliminar al enemigo de la lista de entidades
+                
             }
 
         } else {
@@ -334,7 +333,9 @@ public class Juego {
             mapaActual = gestorMapas.getMapaActual(); // Actualizar el mapa actual
             MatrizMapa = mapaActual.getMapa(); // Actualizar la matriz del mapa
             iniciarentidades(); // Reiniciar las entidades en el nuevo mapa
-            /*notifyObservers(); // Notificar a los observadores para actualizar la vista*/
+            /*
+             * notifyObservers(); // Notificar a los observadores para actualizar la vista
+             */
         } else {
             System.out.println("¡Has completado todos los mapas! Fin del juego.");
         }
