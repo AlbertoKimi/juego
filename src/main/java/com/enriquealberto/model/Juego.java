@@ -120,22 +120,7 @@ public class Juego {
         }
     }
 
-    public int comprobarposicion(int x, int y) {
-        if (x < 0 || x >= MatrizMapa[0].length || y < 0 || y >= MatrizMapa.length) {
-            return 0;
-        }
-        if (MatrizMapa[y][x] == 1) {
-            return 0;
-        }
-        if (entidadesMapa.containsKey(new Posicion(x, y))) {
-            return 1;
-        }
-        if (MatrizMapa[y][x] == 0) {
-            return 2;
-        } else {
-            return 0;
-        }
-    }
+
 
     public void iniciarentidades() {
         Random random = new Random();
@@ -191,7 +176,22 @@ public class Juego {
     public boolean moverAbajo(Personaje p) {
         return mover(p, 0, 1);
     }
-
+    public int comprobarposicion(int x, int y) {
+        if (x < 0 || x >= MatrizMapa[0].length || y < 0 || y >= MatrizMapa.length) {
+            return 0;
+        }
+        if (MatrizMapa[y][x] == 1) {
+            return 0;
+        }
+        if (entidadesMapa.containsKey(new Posicion(x, y))) {
+            return 1;
+        }
+        if (MatrizMapa[y][x] == 0) {
+            return 2;
+        } else {
+            return 0;
+        }
+    }
     public boolean mover(Personaje p, int x, int y) {
         Posicion antigua = p.getPosicion();
         int xNueva = antigua.getX() + x;
@@ -274,10 +274,10 @@ public class Juego {
         int dx = posJugador.getX() - posActual.getX();
         int dy = posJugador.getY() - posActual.getY();
 
-        if (Math.abs(dx) == 1 || Math.abs(dy) == 1) {
+        if ((Math.abs(dx) == 1 && Math.abs(dy) == 0 )|| (Math.abs(dx) == 0 && Math.abs(dy) == 1)) {
             // atacar
         } else {
-            if (Math.abs(dx) <= e.getPercepcion() || Math.abs(dy) <= e.getPercepcion()) {
+            if (Math.abs(dx) <= e.getPercepcion() && Math.abs(dy) <= e.getPercepcion()) {
                 moverGuiado(e);
             } else {
                 moverAleatorio(e);
