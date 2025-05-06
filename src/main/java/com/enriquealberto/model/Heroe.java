@@ -35,14 +35,30 @@ public class Heroe extends Personaje implements Interaccion {
         System.out.println("Atacando con " + heroe.getNombre() + " con " + heroe.getAtaque() + " de daño.");
         int dañoSobrante = 0;
 
-        if (enemigo.getDefensa() > 0) {
+        if (enemigo.getDefensa() > 0 && heroe.getAtaque() > 0) {
             // Si la defensa del enemigo es mayor que 0
             if (heroe.getAtaque() > enemigo.getDefensa()) {
                 // Si el ataque del héroe es mayor que la defensa del enemigo
                 dañoSobrante = heroe.getAtaque() - enemigo.getDefensa();
                 enemigo.setDefensa(0); // La defensa del enemigo pasa a 0
-                enemigo.setVida(enemigo.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
-                System.out.println("La defensa del enemigo ha sido destruida. Daño sobrante: " + dañoSobrante);
+                if (dañoSobrante > 0) {
+                    System.out.println("La defensa del enemigo ha sido destruida. Daño sobrante: " + dañoSobrante);
+                    enemigo.setVida(enemigo.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
+                    if (enemigo.getVida() <= 0) {
+                        enemigo.setVida(0); // Asegurarse de que la vida no sea negativa
+                        System.out.println("El enemigo no tiene vida.");
+                    } else {
+                        System.out.println("Vida restante del enemigo: " + enemigo.getVida());
+                    }
+                }else{
+                    System.out.println("La defensa ha parado el golpe.");
+                }
+
+            } else if (heroe.getAtaque() == enemigo.getDefensa()) {
+                // Si el ataque del héroe es igual a la defensa del enemigo
+                enemigo.setDefensa(0); // La defensa del enemigo pasa a 0
+                System.out.println("La defensa del enemigo ha sido destruida. No hay daño sobrante.");
+                System.out.println("Vida restante del enemigo: " + enemigo.getVida());
             } else {
                 // Si el ataque del héroe no supera la defensa del enemigo
                 enemigo.setDefensa(enemigo.getDefensa() - heroe.getAtaque());
@@ -51,16 +67,15 @@ public class Heroe extends Personaje implements Interaccion {
         } else {
             // Si la defensa del enemigo es 0
             enemigo.setVida(enemigo.getVida() - heroe.getAtaque());
-            System.out.println("El enemigo no tiene defensa. Vida restante: " + enemigo.getVida());
+            if (enemigo.getVida() <= 0) {
+                enemigo.setVida(0); // Asegurarse de que la vida no sea negativa
+                System.out.println("El enemigo no tiene vida.");
+            } else {
+                System.out.println("El enemigo no tiene defensa. Vida restante: " + enemigo.getVida());
+            }
+
         }
 
-        // Verificar si el enemigo ha sido derrotado
-        if (enemigo.getVida() <= 0) {
-            enemigo.setVida(0);
-            System.out.println("El enemigo ha sido derrotado.");
-        } else {
-            System.out.println("El enemigo tiene " + enemigo.getVida() + " de vida restante.");
-        }
     }
 
 }

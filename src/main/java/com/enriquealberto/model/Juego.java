@@ -203,9 +203,31 @@ public class Juego {
                 System.out.println("Colisión de personaje: " + p.getNombre());
                 return false;
             case 1:
-                // atacar
+                // Si hay un enemigo en la posición a la que intenta moverse
+                Posicion posicionEnemigo = new Posicion(xNueva, yNueva);
+                Personaje enemigo = entidadesMapa.get(posicionEnemigo);
+
+                if (enemigo instanceof Enemigo && p instanceof Heroe) {
+                    Heroe heroe = (Heroe) p;
+                    Enemigo enemigoAtacado = (Enemigo) enemigo;
+
+                    // El héroe ataca al enemigo
+                    heroe.atacar(heroe, enemigoAtacado);
+
+                    // Verificar si el enemigo ha sido derrotado
+                    if (enemigoAtacado.getVida() <= 0) {
+                        System.out.println("El enemigo " + enemigoAtacado.getNombre() + " ha sido derrotado.");
+                        entidadesMapa.remove(posicionEnemigo); // Eliminar al enemigo del mapa
+                        entidades.remove(enemigoAtacado); // Eliminar al enemigo de la lista de entidades
+                        if (verificarVictoria()) {
+                            notifyObservers();
+                        }
+                       
+                    }
+                }
                 return true;
             case 2:
+                // Movimiento válido, actualizar la posición
                 Posicion nueva = new Posicion(xNueva, yNueva);
                 p.setPosicion(nueva);
                 entidadesMapa.remove(antigua);
@@ -249,22 +271,27 @@ public class Juego {
         if (Math.abs(dx) > Math.abs(dy)) {
             if (dx > 0) {
                 movido = moverDerecha(p);
-                if (!movido) movido = dy > 0 ? moverAbajo(p) : moverArriba(p);
+                if (!movido)
+                    movido = dy > 0 ? moverAbajo(p) : moverArriba(p);
             } else {
                 movido = moverIzquierda(p);
-                if (!movido) movido = dy > 0 ? moverAbajo(p) : moverArriba(p);
+                if (!movido)
+                    movido = dy > 0 ? moverAbajo(p) : moverArriba(p);
             }
         } else {
             if (dy > 0) {
                 movido = moverAbajo(p);
-                if (!movido) movido = dx > 0 ? moverDerecha(p) : moverIzquierda(p);
+                if (!movido)
+                    movido = dx > 0 ? moverDerecha(p) : moverIzquierda(p);
             } else {
                 movido = moverArriba(p);
-                if (!movido) movido = dx > 0 ? moverDerecha(p) : moverIzquierda(p);
+                if (!movido)
+                    movido = dx > 0 ? moverDerecha(p) : moverIzquierda(p);
             }
         }
 
-        if (!movido) moverAleatorio(p);
+        if (!movido)
+            moverAleatorio(p);
     }
 
     public void moverenemigo(Enemigo e) {
@@ -275,7 +302,16 @@ public class Juego {
         int dy = posJugador.getY() - posActual.getY();
 
         if (Math.abs(dx) == 1 || Math.abs(dy) == 1) {
-            // atacar
+            // MODIFICAR. ESTÁ MAL O NO HACE LO QUE DEBE HACER.
+            if (comprobarposicion(dx, dy) == 1 && entidadesMapa instanceof Heroe) {
+                e.atacar(jugador, e);
+                if (jugador.getVida() <= 0) {
+                    System.out.println("El heroe " + jugador.getNombre() + " ha sido derrotado.");
+                    entidadesMapa.remove(posJugador); // Eliminar al enemigo del mapa
+                    entidades.remove(jugador); // Eliminar al enemigo de la lista de entidades
+                }
+            }
+
         } else {
             if (Math.abs(dx) <= e.getPercepcion() || Math.abs(dy) <= e.getPercepcion()) {
                 moverGuiado(e);
@@ -283,6 +319,28 @@ public class Juego {
                 moverAleatorio(e);
             }
         }
+    }
+
+    public boolean verificarVictoria() {
+        for (Personaje p : entidadesMapa.values()) {
+            if (p instanceof Enemigo) {
+                return false; // Si hay al menos un enemigo, no hay victoria
+            }
+        }
+
+        // Si no quedan enemigos, cambiar al siguiente mapa
+        System.out.println("¡Victoria! Cambiando al siguiente mapa...");
+        boolean haySiguienteMapa = gestorMapas.avanzarAlSiguienteMapa();
+        if (haySiguienteMapa) {
+            mapaActual = gestorMapas.getMapaActual(); // Actualizar el mapa actual
+            MatrizMapa = mapaActual.getMapa(); // Actualizar la matriz del mapa
+            iniciarentidades(); // Reiniciar las entidades en el nuevo mapa
+            notifyObservers(); // Notificar a los observadores para actualizar la vista
+        } else {
+            System.out.println("¡Has completado todos los mapas! Fin del juego.");
+        }
+
+        return true; // Indicar que se ha alcanzado la victoria
     }
 
     public GestorMapas getGestorMapas() {
@@ -302,13 +360,14 @@ public class Juego {
     }
 
     public Personaje getPersonajeActual() {
-        if (entidades.isEmpty()) return null;
+        if (entidades.isEmpty())
+            return null;
         return entidades.get(turnoIndex);
     }
 
     public void pasarTurno() {
-        if (entidades.isEmpty()) return;
+        if (entidades.isEmpty())
+            return;
         turnoIndex = (turnoIndex + 1) % entidades.size();
     }
 }
-

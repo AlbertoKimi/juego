@@ -1,11 +1,9 @@
 package com.enriquealberto.model;
 
-import java.util.ArrayList;
-
 import com.enriquealberto.interfaces.Interaccion;
-import com.enriquealberto.interfaces.Observer;
 
-public class Enemigo extends Personaje implements Cloneable {
+
+public class Enemigo extends Personaje implements Cloneable, Interaccion {
 
      private int t_enemigo;
      private int percepcion;
@@ -36,36 +34,49 @@ public class Enemigo extends Personaje implements Cloneable {
     }
 
 
-    //@Override
+    @Override
     public void atacar(Heroe heroe, Enemigo enemigo) {
         System.out.println("Atacando con " + enemigo.getNombre() + " con " + enemigo.getAtaque() + " de daño.");
         int dañoSobrante = 0;
 
-        if (heroe.getDefensa() > 0) {
-            // Si la defensa del h es mayor que 0
+        if (heroe.getDefensa() > 0 && enemigo.getAtaque() > 0) {
+            // Si la defensa del héroe es mayor que 0
             if (enemigo.getAtaque() > heroe.getDefensa()) {
-                // Si el ataque del héroe es mayor que la defensa del enemigo
+                // Si el ataque del enemigo es mayor que la defensa del héroe
                 dañoSobrante = enemigo.getAtaque() - heroe.getDefensa();
-                heroe.setDefensa(0); // La defensa del enemigo pasa a 0
-                heroe.setVida(heroe.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
-                System.out.println("La defensa del heroe ha sido destruida. Daño sobrante: " + dañoSobrante);
+                heroe.setDefensa(0); // La defensa del héroe pasa a 0
+                if (dañoSobrante > 0) {
+                    System.out.println("La defensa del héroe ha sido destruida. Daño sobrante: " + dañoSobrante);
+                    heroe.setVida(heroe.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
+                    if (heroe.getVida() <= 0) {
+                        heroe.setVida(0); // Asegurarse de que la vida no sea negativa
+                        System.out.println("El héroe no tiene vida.");
+                    } else {
+                        System.out.println("Vida restante del héroe: " + heroe.getVida());
+                    }
+                } else {
+                    System.out.println("La defensa ha parado el golpe.");
+                }
+
+            } else if (enemigo.getAtaque() == heroe.getDefensa()) {
+                // Si el ataque del enemigo es igual a la defensa del héroe
+                heroe.setDefensa(0); // La defensa del héroe pasa a 0
+                System.out.println("La defensa del héroe ha sido destruida. No hay daño sobrante.");
+                System.out.println("Vida restante del héroe: " + heroe.getVida());
             } else {
-                // Si el ataque del héroe no supera la defensa del enemigo
+                // Si el ataque del enemigo no supera la defensa del héroe
                 heroe.setDefensa(heroe.getDefensa() - enemigo.getAtaque());
                 System.out.println("El ataque fue absorbido por la defensa. Defensa restante: " + heroe.getDefensa());
             }
         } else {
-            // Si la defensa del enemigo es 0
+            // Si la defensa del héroe es 0
             heroe.setVida(heroe.getVida() - enemigo.getAtaque());
-            System.out.println("El heroe no tiene defensa. Vida restante: " + heroe.getVida());
-        }
-
-        // Verificar si el enemigo ha sido derrotado
-        if (heroe.getVida() <= 0) {
-            heroe.setVida(0);
-            System.out.println("El heroe ha sido derrotado.");
-        } else {
-            System.out.println("El heroe tiene " + heroe.getVida() + " de vida restante.");
+            if (heroe.getVida() <= 0) {
+                heroe.setVida(0); // Asegurarse de que la vida no sea negativa
+                System.out.println("El héroe no tiene vida.");
+            } else {
+                System.out.println("El héroe no tiene defensa. Vida restante: " + heroe.getVida());
+            }
         }
     }
 

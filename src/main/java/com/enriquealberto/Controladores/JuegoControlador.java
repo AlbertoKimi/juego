@@ -113,9 +113,11 @@ public class JuegoControlador implements Observer {
         anchorPane.setFocusTraversable(true);
         anchorPane.requestFocus();
 
-        gridPane.setOnMouseClicked(event -> {
-            cambiarMapa();
-        });
+        /*
+         * gridPane.setOnMouseClicked(event -> {
+         * cambiarMapa();
+         * });
+         */
 
     }
 
@@ -164,8 +166,14 @@ public class JuegoControlador implements Observer {
 
     public void cambiarMapa() {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
+        
         if (haySiguiente) {
-            onChange();
+            LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
+            mapas.clear();
+            generarMapa(mapas);
+            juego.iniciarentidades();
+            pintarPersonajes();
+            actualizarTurno();
         } else {
             System.out.println("No hay más mapas disponibles.");
         }
@@ -218,14 +226,24 @@ public class JuegoControlador implements Observer {
                 pintarPersonajes();
                 juego.pasarTurno();
                 actualizarTurno();
+                
+
             })).play();
         }
         // Si es el héroe, no hacemos nada y esperamos input del usuario
     }
 
+    public void notificarVictoria() {
+        if (juego.verificarVictoria()) {
+            System.out.println("¡Has derrotado a todos los enemigos! Cambiando al siguiente mapa...");
+            cambiarMapa();
+        }
+    }
+
     @Override
+    // MODIFICAR ESTO, NO PASA DEL SEGUNDO MAPA, ME DICE QUE NO HAY MAS MAPAS
     public void onChange() {
-        LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
-        generarMapa(mapas);
+      cambiarMapa();
+
     }
 }
