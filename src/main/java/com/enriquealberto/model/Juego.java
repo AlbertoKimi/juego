@@ -327,7 +327,6 @@ public class Juego {
                 return false; // Si hay al menos un enemigo, no hay victoria
             }
         }
-
         // Si no quedan enemigos, cambiar al siguiente mapa
         System.out.println("¡Victoria! Cambiando al siguiente mapa...");
         boolean haySiguienteMapa = gestorMapas.avanzarAlSiguienteMapa();
@@ -335,7 +334,7 @@ public class Juego {
             mapaActual = gestorMapas.getMapaActual(); // Actualizar el mapa actual
             MatrizMapa = mapaActual.getMapa(); // Actualizar la matriz del mapa
             iniciarentidades(); // Reiniciar las entidades en el nuevo mapa
-            notifyObservers(); // Notificar a los observadores para actualizar la vista
+            /*notifyObservers(); // Notificar a los observadores para actualizar la vista*/
         } else {
             System.out.println("¡Has completado todos los mapas! Fin del juego.");
         }
