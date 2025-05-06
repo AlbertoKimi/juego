@@ -67,9 +67,9 @@ public class SelectionControlador implements Observer{
         cargarPersonajes(heroes);
         setupDifficultySelector();
 
-        nom_jugador.setOnAction(event -> {
-            juego.setNombre(nom_jugador.getText());
-            System.out.println("Cadena actualizada a: " + nom_jugador.getText());
+        nom_jugador.textProperty().addListener((observable, oldValue, newValue) -> {
+            juego.setNombre(newValue);
+            System.out.println("Cadena actualizada a: " + newValue);
         });
 
         start.setOnAction(event -> {

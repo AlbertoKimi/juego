@@ -221,7 +221,7 @@ public class JuegoControlador implements Observer {
         Personaje actual = juego.getPersonajeActual();
 
         if (actual instanceof Enemigo) {
-            new Timeline(new KeyFrame(Duration.millis(200), e -> {
+            new Timeline(new KeyFrame(Duration.millis(100), e -> {
                 juego.moverenemigo((Enemigo) actual);
                 pintarPersonajes();
                 juego.pasarTurno();
