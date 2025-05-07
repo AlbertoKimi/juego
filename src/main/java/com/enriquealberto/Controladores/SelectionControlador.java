@@ -19,6 +19,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class SelectionControlador implements Observer{
 
@@ -45,6 +48,8 @@ public class SelectionControlador implements Observer{
     private Label fallo;
     @FXML
     private Button start;
+    @FXML
+    private MediaView mediaView;
 
 
     private Juego juego;
@@ -66,6 +71,26 @@ public class SelectionControlador implements Observer{
 
         cargarPersonajes(heroes);
         setupDifficultySelector();
+        String videoPath = getClass().getResource("/com/enriquealberto/imagenes/fondo.mp4").toExternalForm();
+
+        //falta añadir que se desenfoque el video
+        Media media = new Media(videoPath);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetición infinita
+        mediaPlayer.setMute(true); // Silenciar
+        mediaPlayer.play();
+
+        // Asignar el MediaPlayer a la MediaView
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaView.setPreserveRatio(false); // Que se estire al tamaño completo
+
+        // Ajustar tamaño del video según el tamaño de la ventana
+        mediaView.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                mediaView.fitWidthProperty().bind(newScene.widthProperty());
+                mediaView.fitHeightProperty().bind(newScene.heightProperty());
+            }
+        });
 
         nom_jugador.textProperty().addListener((observable, oldValue, newValue) -> {
             juego.setNombre(newValue);
