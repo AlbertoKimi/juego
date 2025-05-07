@@ -76,7 +76,8 @@ public class GestorMapas {
             notifyObservers(); 
             return true;
         } else {
-            return false; 
+            return false;
+             
         }
     }
 

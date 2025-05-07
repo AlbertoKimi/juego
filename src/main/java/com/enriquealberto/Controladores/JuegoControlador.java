@@ -3,6 +3,9 @@ package com.enriquealberto.Controladores;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+
+import com.enriquealberto.EscenaID;
+import com.enriquealberto.ManagerEscenas;
 import com.enriquealberto.interfaces.Observer;
 
 import com.enriquealberto.model.*;
@@ -11,12 +14,15 @@ import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -33,6 +39,7 @@ public class JuegoControlador implements Observer {
     Enemigo enemigo;
     Juego juego;
 
+    private boolean juegoEnPausa = false;
     private Heroe heroe;
     private int contador = 0;
 
@@ -113,12 +120,6 @@ public class JuegoControlador implements Observer {
         anchorPane.setFocusTraversable(true);
         anchorPane.requestFocus();
 
-        /*
-         * gridPane.setOnMouseClicked(event -> {
-         * cambiarMapa();
-         * });
-         */
-
     }
 
     public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
@@ -166,7 +167,7 @@ public class JuegoControlador implements Observer {
 
     public void cambiarMapa() {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
-        
+
         if (haySiguiente) {
             LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
             mapas.clear();
@@ -175,7 +176,23 @@ public class JuegoControlador implements Observer {
             pintarPersonajes();
             actualizarTurno();
         } else {
-            System.out.println("No hay más mapas disponibles.");
+            try {
+                juegoEnPausa = true; // Pausar el juego antes de mostrar la ventana emergente
+                Stage stage = new Stage();
+                stage.setTitle("Victoria");
+                stage.setResizable(false);
+
+                // Cargar una nueva instancia del archivo FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/Victoria.fxml"));
+                VBox root = loader.load();
+                Scene scene = new Scene(root, 300, 300); // Tamaño de la ventana emergente
+                stage.setScene(scene);
+                // Mostrar la ventana emergente
+                stage.show();
+            } catch (Exception e) {
+                System.err.println("Error al cargar la escena de victoria: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -218,6 +235,10 @@ public class JuegoControlador implements Observer {
     }
 
     private void actualizarTurno() {
+
+        if(juegoEnPausa){
+            return;
+        }
         Personaje actual = juego.getPersonajeActual();
 
         if (actual instanceof Enemigo) {
@@ -226,7 +247,6 @@ public class JuegoControlador implements Observer {
                 pintarPersonajes();
                 juego.pasarTurno();
                 actualizarTurno();
-                
 
             })).play();
         }
@@ -240,15 +260,39 @@ public class JuegoControlador implements Observer {
         }
     }
 
+    public void reanudarJuego() {
+        juegoEnPausa = false;
+        actualizarTurno(); // Reanudar los turnos
+    }
+
     @Override
-    // MODIFICAR ESTO, NO PASA DEL SEGUNDO MAPA, ME DICE QUE NO HAY MAS MAPAS
+
     public void onChange() {
-     
-      if(juego.getEntidades().size()<2){
-        notificarVictoria();
-      }
 
-      //POner que se vuelva a la vida anterior de los heroes y enemigos.
+        if (juego.getEntidades().size() == 1 && juego.getEntidades().get(0) instanceof Heroe) {
+            notificarVictoria();
+        }
 
+        if (juego.verificarDerrota()) {
+            System.out.println("Has sido derrotado. Fin del juego.");
+            try {
+                juegoEnPausa = true; // Pausar el juego antes de mostrar la ventana emergente
+                Stage stage = new Stage();
+                stage.setTitle("Derrota");
+                stage.setResizable(false);
+
+                // Cargar una nueva instancia del archivo FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/Derrota.fxml"));
+                VBox root = loader.load();
+                Scene scene = new Scene(root, 300, 300); // Tamaño de la ventana emergente
+                stage.setScene(scene);
+
+                // Mostrar la ventana emergente
+                stage.show();
+            } catch (Exception e) {
+                System.err.println("Error al cargar la escena de derrota: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }

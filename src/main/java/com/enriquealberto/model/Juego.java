@@ -221,8 +221,14 @@ public class Juego {
                         entidades.remove(enemigoAtacado); // Eliminar al enemigo de la lista de entidades
                         if (verificarVictoria()) {
                             notifyObservers();
+                        } else {
+                            if (heroe.getVida() < 10) {
+                                heroe.setVida(heroe.getVida() + 1);
+                                System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
+                            } else {
+                                System.out.println("El Héroe no puede ganar más vida. Su vida es " + heroe.getVida());
+                            }
                         }
-
                     }
                 }
                 return true;
@@ -306,9 +312,11 @@ public class Juego {
             e.atacar(jugador, e);
             if (jugador.getVida() <= 0) {
                 System.out.println("El heroe " + jugador.getNombre() + " ha sido derrotado.");
-                entidadesMapa.remove(posJugador); // Eliminar al enemigo del mapa
-                entidades.remove(jugador); // Eliminar al enemigo de la lista de entidades
-                
+                entidadesMapa.remove(posJugador); // Eliminar al heroe del mapa
+                entidades.remove(jugador); // Eliminar al heroe de la lista de entidades
+                if (verificarDerrota()) {
+                    notifyObservers();
+                }
             }
 
         } else {
@@ -333,14 +341,22 @@ public class Juego {
             mapaActual = gestorMapas.getMapaActual(); // Actualizar el mapa actual
             MatrizMapa = mapaActual.getMapa(); // Actualizar la matriz del mapa
             iniciarentidades(); // Reiniciar las entidades en el nuevo mapa
-            /*
-             * notifyObservers(); // Notificar a los observadores para actualizar la vista
-             */
+
         } else {
             System.out.println("¡Has completado todos los mapas! Fin del juego.");
         }
 
-        return true; // Indicar que se ha alcanzado la victoria
+        return true;
+    }
+
+    public boolean verificarDerrota() {
+        for (Personaje p : entidadesMapa.values()) {
+            if (p instanceof Heroe) {
+                return false; // Si hay heroe, no hay derrota
+            }
+        }
+
+        return true;
     }
 
     public GestorMapas getGestorMapas() {
