@@ -166,7 +166,7 @@ public class JuegoControlador implements Observer {
 
     public void cambiarMapa() {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
-        
+
         if (haySiguiente) {
             LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
             mapas.clear();
@@ -226,7 +226,6 @@ public class JuegoControlador implements Observer {
                 pintarPersonajes();
                 juego.pasarTurno();
                 actualizarTurno();
-                
 
             })).play();
         }
@@ -241,14 +240,11 @@ public class JuegoControlador implements Observer {
     }
 
     @Override
-    // MODIFICAR ESTO, NO PASA DEL SEGUNDO MAPA, ME DICE QUE NO HAY MAS MAPAS
+
     public void onChange() {
-     
-      if(juego.getEntidades().size()<2){
-        notificarVictoria();
-      }
 
-      //POner que se vuelva a la vida anterior de los heroes y enemigos.
-
+        if (juego.getEntidades().size() < 2) {
+            notificarVictoria();
+        }
     }
 }

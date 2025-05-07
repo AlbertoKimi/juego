@@ -221,6 +221,9 @@ public class Juego {
                         entidades.remove(enemigoAtacado); // Eliminar al enemigo de la lista de entidades
                         if (verificarVictoria()) {
                             notifyObservers();
+                        } else {
+                            heroe.setVida(heroe.getVida() + 1);
+                            System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
                         }
 
                     }
@@ -308,7 +311,7 @@ public class Juego {
                 System.out.println("El heroe " + jugador.getNombre() + " ha sido derrotado.");
                 entidadesMapa.remove(posJugador); // Eliminar al enemigo del mapa
                 entidades.remove(jugador); // Eliminar al enemigo de la lista de entidades
-                
+
             }
 
         } else {
