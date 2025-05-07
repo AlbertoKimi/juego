@@ -43,6 +43,7 @@ public class ManagerEscenas {
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root, screenWidth * 0.62, screenHeight * 0.75);
+            scene.getStylesheets().add(App.class.getResource("/com/enriquealberto/css/styles.css").toExternalForm());
             scenes.put(sceneID, scene); // Almacena la escena en el mapa
 
             // Guardar el controlador de la escena

@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,50 +11,39 @@
 <?import javafx.scene.text.Font?>
 
 <!-- añadirmos esto para poder poner video de fondo tambien -->
-<AnchorPane fx:id="portada" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.SelectionControlador">
+
+<AnchorPane fx:id="portada" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.SelectionControlador">
    <children>
-      <MediaView fx:id="mediaView" fitHeight="600.0" fitWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <VBox fx:id="fondo" alignment="TOP_CENTER" prefHeight="600" prefWidth="800" spacing="20" stylesheets="@com/enriquealberto/css/styles.css">
-          
+      <MediaView fx:id="mediaView" fitHeight="400.0" fitWidth="700.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+       <VBox fx:id="fondo" alignment="CENTER" spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
 
           <Label fx:id="titulo" alignment="CENTER" prefWidth="334.0" text="Selecciona Personaje">
                <font>
                   <Font name="Hoefler Text Black" size="27.0" />
                </font>
           </Label>
-          
-          <!-- Contenedor de personajes -->
-          <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: transparent; -fx-background-color: transparent;">
-              <HBox fx:id="cont_perso" alignment="CENTER" styleClass="character-container" />
-          </ScrollPane>
+           <HBox fx:id="cont_perso" alignment="CENTER" prefHeight="0.0" prefWidth="800.0" styleClass="character-container" />
           
           <!-- Sección inferior de formulario -->
           <HBox alignment="CENTER" spacing="40" styleClass="form-section">
-              <!-- Campo nombre jugador -->
-              <VBox alignment="CENTER_LEFT" spacing="5">
-                  <Label styleClass="form-label" text="Nombre:">
-                      <font>
-                          <Font name="Hoefler Text Black" size="15.0" />
-                      </font>
-                  </Label>
-                  <TextField fx:id="nom_jugador" prefHeight="26.0" prefWidth="192.0" styleClass="text-field" />
-              </VBox>
-              
-              <!-- Selector dificultad -->
-              <VBox alignment="CENTER" spacing="5">
-                  <Label styleClass="form-label" text="Dificultad:">
-                      <font>
-                          <Font name="Hoefler Text Black" size="17.0" />
-                      </font>
-                  </Label>
-                  <HBox styleClass="difficulty-selector">
-                      <ImageView fx:id="fd1" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                      <ImageView fx:id="fd2" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                      <ImageView fx:id="fd3" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                  </HBox>
-              </VBox>
+               <Label styleClass="form-label" text="Nombre:">
+                   <font>
+                       <Font name="Hoefler Text Black" size="15.0" />
+                   </font>
+               </Label>
+               <TextField fx:id="nom_jugador" prefHeight="26.0" prefWidth="192.0" styleClass="text-field" />
+               <Label styleClass="form-label" text="Dificultad:">
+                   <font>
+                       <Font name="Hoefler Text Black" size="17.0" />
+                   </font>
+               </Label>
+               <HBox styleClass="difficulty-selector">
+                   <ImageView fx:id="fd1" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
+                   <ImageView fx:id="fd2" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
+                   <ImageView fx:id="fd3" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
+               </HBox>
           </HBox>
-         <HBox prefHeight="100.0" prefWidth="200.0">
+         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="65.0" text="NOMBRE:" textAlignment="CENTER">
                   <font>
