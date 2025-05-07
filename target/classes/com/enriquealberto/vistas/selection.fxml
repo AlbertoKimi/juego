@@ -11,13 +11,13 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-
+<!-- añadirmos esto para poder poner video de fondo tambien -->
 <AnchorPane fx:id="portada" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.SelectionControlador">
    <children>
       <MediaView fx:id="mediaView" fitHeight="600.0" fitWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <VBox fx:id="fondo" alignment="TOP_CENTER" prefHeight="600" prefWidth="800" spacing="20" stylesheets="@com/enriquealberto/css/styles.css">
           
-          <!-- Título principal - Manteniendo tu configuración exacta -->
+
           <Label fx:id="titulo" alignment="CENTER" prefWidth="334.0" text="Selecciona Personaje">
                <font>
                   <Font name="Hoefler Text Black" size="27.0" />
