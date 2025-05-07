@@ -1,12 +1,13 @@
 package com.enriquealberto.Controladores;
 
-
 import com.enriquealberto.EscenaID;
 import javafx.fxml.FXML;
-import com.enriquealberto.ManagerEscenas; 
+import com.enriquealberto.ManagerEscenas;
+import com.enriquealberto.model.GestorMapas;
+import com.enriquealberto.model.Juego;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
@@ -28,13 +29,21 @@ public class DerrotaControlador {
 
     @FXML
     public void initialize() {
-         botonVolverJugar.setOnAction(event -> {
-            ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR); 
-            ((Stage) botonVolverJugar.getScene().getWindow()).close();
+        /*Juego juego = Juego.getInstance();*/
+        
+        botonVolverJugar.setOnAction(event -> {
+            /*juego.reiniciarMapas();*/
+            if (ManagerEscenas.getInstance().getCurrentScene() != EscenaID.CONTENEDOR) {
+                ManagerEscenas.getInstance().removeScene(EscenaID.DERROTA); // Descarga la vista actual
+                ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR); // Carga la nueva vista
+            }
         });
         botonSelect.setOnAction(event -> {
-            ManagerEscenas.getInstance().loadScene(EscenaID.SELECTION); 
-            ((Stage) botonSelect.getScene().getWindow()).close();
+            /*juego.reiniciarMapas();*/
+            if (ManagerEscenas.getInstance().getCurrentScene() != EscenaID.SELECTION) {
+                ManagerEscenas.getInstance().removeScene(EscenaID.DERROTA); // Descarga la vista actual
+                ManagerEscenas.getInstance().loadScene(EscenaID.SELECTION); // Carga la nueva vista
+            }
         });
     }
 }
