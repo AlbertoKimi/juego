@@ -25,6 +25,8 @@ public class App extends Application {
         sm.setScene(EscenaID.PORTADA, "Portada");
         sm.setScene(EscenaID.SELECTION, "selection");
         sm.setScene(EscenaID.CONTENEDOR, "contenedor"); // Solo configurar, no cargar todavía
+        sm.setScene(EscenaID.DERROTA, "Derrota");
+        sm.setScene(EscenaID.VICTORIA, "Victoria");
 
         // Cargar la PORTADA primero (pantalla inicial)
         sm.loadScene(EscenaID.PORTADA);
