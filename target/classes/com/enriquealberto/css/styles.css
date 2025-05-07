@@ -156,3 +156,86 @@
 .selected-personaje #p_foto {
     -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 15, 0.3, 0, 0);
 }
+
+/* Estilo base */
+.root {
+    -fx-background-color: transparent;
+}
+
+/* Título principal */
+#titulo {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 27px;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 3, 0.5, 0, 0);
+    -fx-alignment: center;
+}
+
+/* Contenedor de personajes */
+#cont_perso {
+    -fx-spacing: 30px;
+    -fx-alignment: center;
+    -fx-padding: 15px;
+    -fx-background-color: transparent;
+}
+
+/* Tarjeta de personaje */
+.m_perso {
+    -fx-background-color: rgba(30, 30, 30, 0.75);
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.15), 8, 0.4, 0, 0);
+    -fx-min-width: 180px;
+    -fx-max-width: 240px;
+}
+
+/* Nombre del personaje */
+#p_nombre {
+    -fx-font-family: "Hoefler Text Black";
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.4), 2, 0.5, 0, 0);
+    -fx-alignment: center;
+    -fx-wrap-text: true;
+}
+
+/* Imagen del personaje */
+#p_foto {
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.2), 6, 0.4, 0, 0);
+}
+
+/* Contenedores de atributos */
+#p_vida, #p_ataque, #p_defensa, #p_velocidad {
+    -fx-alignment: center-left;
+    -fx-spacing: 5px;
+}
+
+/* Etiquetas de atributos */
+#vida_etiqueta, #ataque_etiqueta, #defensa_etiqueta, #velocidad_etiqueta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #eeeeee;
+}
+
+/* Etiqueta de error */
+#fallo {
+    -fx-text-fill: #ff6666;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.6), 3, 0.4, 0, 0);
+}
+
+/* Botón de inicio */
+#start {
+    -fx-background-color: #ffffff10;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.4), 5, 0.3, 0, 0);
+}
+
+#start:hover {
+    -fx-background-color: #ffffff30;
+}

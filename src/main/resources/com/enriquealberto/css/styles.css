@@ -156,3 +156,4 @@
 .selected-personaje #p_foto {
     -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 15, 0.3, 0, 0);
 }
+
