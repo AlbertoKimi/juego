@@ -22,7 +22,7 @@
 
 /* Tarjeta de personaje - Manteniendo simplicidad original pero con mejor estructura */
 .m_perso {
-    -fx-background-color: white;
+    -fx-background-color: rgba(255, 255, 255, 0.78);
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
     -fx-border-color: #dddddd;
@@ -141,7 +141,18 @@
 }
 
 .selected-personaje {
-    -fx-border-color: gold;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
+    -fx-background-color: rgba(255, 255, 255, 0.78);
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0, 0.8), 20, 0.3, 0, 0);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-border-color: linear-gradient(to right, gold, orange, red);
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.selected-personaje #p_foto {
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 15, 0.3, 0, 0);
 }

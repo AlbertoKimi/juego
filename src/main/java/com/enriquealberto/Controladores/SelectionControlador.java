@@ -24,6 +24,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.animation.TranslateTransition;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class SelectionControlador implements Observer{
 
@@ -251,6 +254,7 @@ public class SelectionControlador implements Observer{
 
                     // Aplicar la clase de estilo al personaje seleccionado
                     personajeBox.getStyleClass().add("selected-personaje");
+                    vibrarImagen(foto);
 
                     // Guardar el personaje seleccionado en el juego
                     Juego.getInstance().setJugador(p);
@@ -287,5 +291,22 @@ public class SelectionControlador implements Observer{
                 img.setImage(null); // Limpiar la imagen si no es visible
             }
         }
+    }
+
+
+
+    public void vibrarImagen(ImageView imageView) {
+        TranslateTransition vibracionX = new TranslateTransition(Duration.millis(50), imageView);
+        vibracionX.setByX(3);
+        vibracionX.setCycleCount(4);
+        vibracionX.setAutoReverse(true);
+
+        TranslateTransition vibracionY = new TranslateTransition(Duration.millis(50), imageView);
+        vibracionY.setByY(3);
+        vibracionY.setCycleCount(4);
+        vibracionY.setAutoReverse(true);
+
+        vibracionX.play();
+        vibracionY.play();
     }
 }
