@@ -8,14 +8,6 @@ public class Mapa {
     private static int contador=0;
     private  int [][] mapa;
 
-    /*public Mapa(){
-        this.nivel=++contador;
-        this.nombre = "Mapa por defecto";
-        this.suelo = "suelo por defecto";
-        this.pared = "pared por defecto";
-        this.mapa = new int [0][0];
-    }*/
-
     public Mapa(String nombre, String suelo, String pared, int [][] mapa) {
         this.nivel=++contador;
         this.nombre = nombre;

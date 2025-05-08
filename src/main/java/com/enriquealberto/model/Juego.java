@@ -387,10 +387,4 @@ public class Juego {
         turnoIndex = (turnoIndex + 1) % entidades.size();
     }
 
-    /*public void reiniciarMapas() {
-        gestorMapas = new GestorMapas();
-        mapaActual = gestorMapas.getMapaActual();
-        MatrizMapa = mapaActual.getMapa(); // Asegúrate que sea int[][]}
-        
-    }*/
 }

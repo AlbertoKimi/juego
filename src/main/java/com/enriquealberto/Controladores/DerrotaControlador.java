@@ -29,17 +29,14 @@ public class DerrotaControlador {
 
     @FXML
     public void initialize() {
-        /*Juego juego = Juego.getInstance();*/
-        
+     
         botonVolverJugar.setOnAction(event -> {
-            /*juego.reiniciarMapas();*/
             if (ManagerEscenas.getInstance().getCurrentScene() != EscenaID.CONTENEDOR) {
                 ManagerEscenas.getInstance().removeScene(EscenaID.DERROTA); // Descarga la vista actual
                 ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR); // Carga la nueva vista
             }
         });
         botonSelect.setOnAction(event -> {
-            /*juego.reiniciarMapas();*/
             if (ManagerEscenas.getInstance().getCurrentScene() != EscenaID.SELECTION) {
                 ManagerEscenas.getInstance().removeScene(EscenaID.DERROTA); // Descarga la vista actual
                 ManagerEscenas.getInstance().loadScene(EscenaID.SELECTION); // Carga la nueva vista
