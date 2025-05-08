@@ -65,8 +65,6 @@ public class GestorMapas {
         notifyObservers();
     }
     
-    //¿POSIBLE MÉTODO PARA SELECCIONAR EL SIGUIENTE MAPA?
-
     public boolean avanzarAlSiguienteMapa() {
         ArrayList<Mapa> listaMapas = new ArrayList<>(mapas.values());
         int indiceActual = listaMapas.indexOf(mapaActual);

@@ -51,7 +51,7 @@ public class JuegoControlador implements Observer {
         gestorMapas = juego.getGestorMapas();
 
         heroe = juego.getJugador();
-        enemigo = new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2);
+        
 
         vbox = new VBox();
         vbox.setSpacing(10);
