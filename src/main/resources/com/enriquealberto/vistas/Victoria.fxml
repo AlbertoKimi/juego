@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.VictoriaControlador">
+   <children>
+      <Label fx:id="titulo" alignment="CENTER" contentDisplay="CENTER" text="¡HAS GANADO LA PARTIDA!" textAlignment="CENTER">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <HBox fx:id="hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+         <children>
+            <Button fx:id="botonSelect" mnemonicParsing="false" text="VOLVER A SELECCIÓN" />
+            <Button fx:id="botonVolverJugar" mnemonicParsing="false" text="VOLVER A JUGAR" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></HBox>
+   </children>
+   <padding>
+      <Insets top="30.0" />
+   </padding>
+</VBox>

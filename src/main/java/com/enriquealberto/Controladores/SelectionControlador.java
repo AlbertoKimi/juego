@@ -246,7 +246,6 @@ public class SelectionControlador implements Observer{
                 asignarAtributo(personajeBox, "af", p.getAtaque(), "/com/enriquealberto/imagenes/ataque.png");
                 asignarAtributo(personajeBox, "df", p.getDefensa(), "/com/enriquealberto/imagenes/defensa.png");
                 asignarAtributo(personajeBox, "sf", p.getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
-
                 cont_perso.getChildren().add(personajeBox);
                 personajeBox.setOnMouseClicked(e -> {
                     // Deseleccionar todos los estilos previos
@@ -257,7 +256,8 @@ public class SelectionControlador implements Observer{
                     vibrarImagen(foto);
 
                     // Guardar el personaje seleccionado en el juego
-                    Juego.getInstance().setJugador(p);
+
+                    Juego.getInstance().setJugador(p.clone());
                     // Actualizar etiquetas
                     onChange();
                 });
@@ -269,27 +269,25 @@ public class SelectionControlador implements Observer{
     }
 
     private void asignarAtributo(VBox personajeBox, String prefijo, int cantidad, String iconoRuta) {
-        // Cargar la imagen una sola vez
+        // Buscamos el contenedor HBox que contiene las imágenes
+        HBox contenedor = (HBox) personajeBox.lookup("#" + prefijo.substring(0, 2)); // "vf", "af", etc.
+        if (contenedor == null) {
+            System.err.println("No se encontró el contenedor para: " + prefijo);
+            return;
+        }
+
+        // Limpiamos las imágenes existentes (excepto la etiqueta)
+        contenedor.getChildren().removeIf(node -> node instanceof ImageView);
+
+        // Cargamos la imagen del icono
         Image icono = new Image(getClass().getResource(iconoRuta).toExternalForm());
 
-        for (int i = 1; i <= 5; i++) {
-            String id = "#" + prefijo + i;
-            ImageView img = (ImageView) personajeBox.lookup(id);
-
-            if (img == null) {
-                System.err.println("No se encontró ImageView con ID: " + id);
-                continue;
-            }
-
-            boolean visible = i <= cantidad;
-            img.setVisible(visible);
-            img.setManaged(visible);
-
-            if (visible) {
-                img.setImage(icono);
-            } else {
-                img.setImage(null); // Limpiar la imagen si no es visible
-            }
+        // Añadimos tantas imágenes como indique la cantidad
+        for (int i = 0; i < cantidad; i++) {
+            ImageView img = new ImageView(icono);
+            img.setFitWidth(25);
+            img.setFitHeight(25);
+            contenedor.getChildren().add(img);
         }
     }
 

@@ -5,7 +5,7 @@ import com.enriquealberto.interfaces.Interaccion;
 
 import com.enriquealberto.interfaces.Observer;
 
-public class Heroe extends Personaje implements Interaccion {
+public class Heroe extends Personaje implements Interaccion,Cloneable {
     private ArrayList<Observer> observers;
 
     public Heroe(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje) {
@@ -76,6 +76,14 @@ public class Heroe extends Personaje implements Interaccion {
 
         }
 
+    }
+    public Heroe clone() {
+        try {
+            Heroe clone = (Heroe) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
 }

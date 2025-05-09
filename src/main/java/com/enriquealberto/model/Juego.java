@@ -26,7 +26,7 @@ public class Juego {
     private Mapa mapaActual;
     private int[][] MatrizMapa;
 
-    public Juego(ArrayList<Heroe> heroes, ArrayList<Enemigo> enemigos) {
+    public Juego() {
         this.observers = new ArrayList<>();
         this.heroes = LectorHeroes.leerHeroes();
         this.enemigos = LectorMostruo.leerMostruo();
@@ -40,7 +40,7 @@ public class Juego {
 
     public static Juego getInstance() {
         if (instance == null) {
-            instance = new Juego(LectorHeroes.leerHeroes(), LectorMostruo.leerMostruo());
+            instance = new Juego();
         }
         return instance;
     }
@@ -221,8 +221,14 @@ public class Juego {
                         entidades.remove(enemigoAtacado); // Eliminar al enemigo de la lista de entidades
                         if (verificarVictoria()) {
                             notifyObservers();
+                        } else {
+                            if (heroe.getVida() < 10) {
+                                heroe.setVida(heroe.getVida() + 1);
+                                System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
+                            } else {
+                                System.out.println("El Héroe no puede ganar más vida. Su vida es " + heroe.getVida());
+                            }
                         }
-
                     }
                 }
                 return true;
@@ -306,9 +312,11 @@ public class Juego {
             e.atacar(jugador, e);
             if (jugador.getVida() <= 0) {
                 System.out.println("El heroe " + jugador.getNombre() + " ha sido derrotado.");
-                entidadesMapa.remove(posJugador); // Eliminar al enemigo del mapa
-                entidades.remove(jugador); // Eliminar al enemigo de la lista de entidades
-                
+                entidadesMapa.remove(posJugador); // Eliminar al heroe del mapa
+                entidades.remove(jugador); // Eliminar al heroe de la lista de entidades
+                if (verificarDerrota()) {
+                    notifyObservers();
+                }
             }
 
         } else {
@@ -333,14 +341,22 @@ public class Juego {
             mapaActual = gestorMapas.getMapaActual(); // Actualizar el mapa actual
             MatrizMapa = mapaActual.getMapa(); // Actualizar la matriz del mapa
             iniciarentidades(); // Reiniciar las entidades en el nuevo mapa
-            /*
-             * notifyObservers(); // Notificar a los observadores para actualizar la vista
-             */
+
         } else {
             System.out.println("¡Has completado todos los mapas! Fin del juego.");
         }
 
-        return true; // Indicar que se ha alcanzado la victoria
+        return true;
+    }
+
+    public boolean verificarDerrota() {
+        for (Personaje p : entidadesMapa.values()) {
+            if (p instanceof Heroe) {
+                return false; // Si hay heroe, no hay derrota
+            }
+        }
+
+        return true;
     }
 
     public GestorMapas getGestorMapas() {
@@ -366,8 +382,25 @@ public class Juego {
     }
 
     public void pasarTurno() {
+        notifyObservers();
         if (entidades.isEmpty())
             return;
         turnoIndex = (turnoIndex + 1) % entidades.size();
     }
+
+    public void resetearJuego() {
+        this.gestorMapas.clearMapas();
+        this.gestorMapas = new GestorMapas();
+        this.mapaActual = gestorMapas.getMapaActual();
+        this.MatrizMapa = mapaActual.getMapa(); // Asegúrate que sea int[][]
+        this.entidades = new ArrayList<>();
+        for (Heroe p : heroes) {
+            if (p.getNombre().equals(jugador.getNombre())) {
+                jugador = p.clone();
+
+            }
+        }
+        iniciarentidades();
+    }
+
 }

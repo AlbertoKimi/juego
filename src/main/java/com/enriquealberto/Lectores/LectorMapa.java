@@ -21,6 +21,7 @@ public class LectorMapa {
             String pared = null;
             int x = 0;
             int y = 0;
+            int nivel=0;
             int lineaMapa = 0;
             boolean matrizCompleta = false;
             int[][] matriz = null; // Inicializar matriz como un array vacío
@@ -41,7 +42,9 @@ public class LectorMapa {
                         matriz = new int[y][x];
                     } else if (linea.startsWith("#escenario")) {
                         nombreEscenario = extraerValor(linea);
-                    }
+                    }else if (linea.startsWith("#nivel")) {
+                        nivel = Integer.parseInt(extraerValor(linea));
+                }
                 } else if (!linea.isEmpty()) {
                     // Verificar que la línea tenga la longitud esperada
                     if (linea.length() >= x) {
@@ -59,7 +62,7 @@ public class LectorMapa {
 
                 // Guardar mapa
                 if (matrizCompleta) {
-                    Mapa mapa = new Mapa(nombreEscenario, suelo, pared, matriz);
+                    Mapa mapa = new Mapa(nivel,nombreEscenario, suelo, pared, matriz);
                     mapas.add(mapa);
                     lineaMapa = 0;
                     matriz = null;

@@ -1,14 +1,15 @@
 package com.enriquealberto.Controladores;
 
 import java.io.InputStream;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+
+import com.enriquealberto.EscenaID;
+import com.enriquealberto.ManagerEscenas;
 import com.enriquealberto.interfaces.Observer;
 
 import com.enriquealberto.model.*;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -49,9 +50,6 @@ public class JuegoControlador implements Observer {
         System.out.println("controlador de juego inicializado");
         gestorMapas = juego.getGestorMapas();
 
-        heroe = juego.getJugador();
-        enemigo = new Enemigo("pepe", "/com/enriquealberto/imagenes/uvaLuchador.png", 100, 10, 5, 2, 0, 2, 2);
-
         vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(7));
@@ -85,16 +83,20 @@ public class JuegoControlador implements Observer {
 
                 switch (event.getCode()) {
                     case W:
-                        movimientoRealizado = juego.moverArriba(actual);
+                        juego.moverArriba(actual);
+                        movimientoRealizado = true;
                         break;
                     case A:
-                        movimientoRealizado = juego.moverIzquierda(actual);
+                        juego.moverIzquierda(actual);
+                        movimientoRealizado =true;
                         break;
                     case S:
-                        movimientoRealizado = juego.moverAbajo(actual);
+                        juego.moverAbajo(actual);
+                        movimientoRealizado =true;
                         break;
                     case D:
-                        movimientoRealizado = juego.moverDerecha(actual);
+                        juego.moverDerecha(actual);
+                        movimientoRealizado =true;
                         break;
                     default:
                         return;
@@ -113,17 +115,11 @@ public class JuegoControlador implements Observer {
         anchorPane.setFocusTraversable(true);
         anchorPane.requestFocus();
 
-        /*
-         * gridPane.setOnMouseClicked(event -> {
-         * cambiarMapa();
-         * });
-         */
-
     }
 
-    public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
+    public void generarMapa() {
         gridPane.getChildren().clear();
-        Mapa mapaActual = gestorMapas.getMapaActual();
+        Mapa mapaActual = juego.getGestorMapas().getMapaActual();
         int[][] matriz = mapaActual.getMapa();
         int filas = matriz.length;
         int columnas = matriz[0].length;
@@ -166,16 +162,18 @@ public class JuegoControlador implements Observer {
 
     public void cambiarMapa() {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
-        
+
         if (haySiguiente) {
-            LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
+            LinkedHashMap<String, Mapa> mapas = juego.getGestorMapas().getMapas();
             mapas.clear();
-            generarMapa(mapas);
+            generarMapa();
             juego.iniciarentidades();
             pintarPersonajes();
             actualizarTurno();
         } else {
-            System.out.println("No hay más mapas disponibles.");
+            juego.resetearJuego();
+            ManagerEscenas.getInstance().loadScene(EscenaID.VICTORIA);
+
         }
     }
 
@@ -202,7 +200,7 @@ public class JuegoControlador implements Observer {
     }
 
     public void pintarPersonajes() {
-        generarMapa(gestorMapas.getMapas());
+        generarMapa();
         for (Personaje p : juego.getEntidades()) {
             pintarPersonaje(p.getPosicion().getX(), p.getPosicion().getY(), p);
         }
@@ -218,6 +216,7 @@ public class JuegoControlador implements Observer {
     }
 
     private void actualizarTurno() {
+
         Personaje actual = juego.getPersonajeActual();
 
         if (actual instanceof Enemigo) {
@@ -226,7 +225,6 @@ public class JuegoControlador implements Observer {
                 pintarPersonajes();
                 juego.pasarTurno();
                 actualizarTurno();
-                
 
             })).play();
         }
@@ -241,14 +239,18 @@ public class JuegoControlador implements Observer {
     }
 
     @Override
-    // MODIFICAR ESTO, NO PASA DEL SEGUNDO MAPA, ME DICE QUE NO HAY MAS MAPAS
     public void onChange() {
-     
-      if(juego.getEntidades().size()<2){
-        notificarVictoria();
-      }
 
-      //POner que se vuelva a la vida anterior de los heroes y enemigos.
+        if (juego.getEntidades().size() == 1 && juego.getEntidades().get(0) instanceof Heroe) {
+            notificarVictoria();
 
+        }
+
+        if (juego.verificarDerrota()) {
+            System.out.println("Has sido derrotado. Fin del juego.");
+            juego.resetearJuego();
+            ManagerEscenas.getInstance().loadScene(EscenaID.DERROTA);
+
+        }
     }
 }

@@ -14,6 +14,7 @@ public class ManagerEscenas {
     private Stage stage; // La ventana principal de la aplicación
     private HashMap<EscenaID, Scene> scenes; // Mapa para almacenar las escenas según su identificador
     private HashMap<EscenaID, Object> sceneControllers; // Mapa para almacenar los controladores de las escenas
+    private EscenaID currentScene; // Variable para almacenar la escena actualmente activa
 
     private ManagerEscenas() {
         scenes = new HashMap<>();
@@ -64,6 +65,7 @@ public class ManagerEscenas {
         if (scenes.containsKey(sceneID)){
             stage.setScene(scenes.get(sceneID)); // Establece la escena en la ventana principal
             stage.show();
+            currentScene = sceneID; // Actualiza la escena actualmente activa
         }
     }
 
@@ -78,5 +80,10 @@ public class ManagerEscenas {
 
     public Stage getStage() {
         return this.stage;
+    }
+
+    public EscenaID getCurrentScene() {
+        // Devuelve la escena actualmente activa
+        return currentScene; // Asegúrate de tener una variable que almacene la escena actual
     }
 }

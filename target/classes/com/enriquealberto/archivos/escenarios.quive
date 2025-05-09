@@ -3,6 +3,7 @@
 #pared:/com/enriquealberto/imagenes/casa1.png
 #tamanoX:10
 #tamanoY:10
+#nivel:1
 0000000000
 0000000000
 0111100000
@@ -18,6 +19,7 @@
 #pared:/com/enriquealberto/imagenes/arbol1.png
 #tamanoX:10
 #tamanoY:10
+#nivel:2
 0000000000
 0110000000
 0110011100
@@ -33,6 +35,7 @@
 #pared:/com/enriquealberto/imagenes/agua2.jpg
 #tamanoX:10
 #tamanoY:10
+#nivel:3
 0000000000
 1111111110
 0000000000
@@ -48,6 +51,7 @@
 #pared:/com/enriquealberto/imagenes/roca.png
 #tamanoX:10
 #tamanoY:10
+#nivel:4
 0010000000
 0110000010
 0110010010
@@ -63,6 +67,7 @@
 #pared:/com/enriquealberto/imagenes/lavapared.jpg
 #tamanoX:10
 #tamanoY:10
+#nivel:5
 0100000111
 0000000011
 1011111001
