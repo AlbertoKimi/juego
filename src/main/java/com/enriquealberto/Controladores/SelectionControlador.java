@@ -257,7 +257,8 @@ public class SelectionControlador implements Observer{
                     vibrarImagen(foto);
 
                     // Guardar el personaje seleccionado en el juego
-                    Juego.getInstance().setJugador(p);
+
+                    Juego.getInstance().setJugador(p.clone());
                     // Actualizar etiquetas
                     onChange();
                 });

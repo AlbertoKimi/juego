@@ -26,21 +26,16 @@ public class EstadisticaControlador implements Observer {
 
     VBox vBox;
     Label titulo;
-    private Heroe heroe;
-
+    private Juego juego;
     @FXML
     public void initialize() {
-        Juego juego = Juego.getInstance();
-        heroe = juego.getJugador();
-        if (heroe == null) {
+        juego = Juego.getInstance();
+        if (juego.getJugador() == null) {
             System.err.println("ERROR: El héroe no ha sido inicializado.");
             return;
         }
         juego.suscribe(this);
 
-
-
-        System.out.println(heroe.getNombre());
         vBox = new VBox();
         vBox.setSpacing(10);
         vBox.setPadding(new Insets(7));
@@ -51,11 +46,11 @@ public class EstadisticaControlador implements Observer {
 
         vBox.getChildren().add(titulo);
         anchorPane.getChildren().add(vBox);
-        cargarPersonajes(heroe);
+        cargarPersonajes();
 
     }
 
-    public void cargarPersonajes(Heroe personaje) {
+    public void cargarPersonajes() {
         vBox.getChildren().clear();
 
         try {
@@ -65,14 +60,14 @@ public class EstadisticaControlador implements Observer {
             ImageView foto = (ImageView) personajeBox.lookup("#p_foto");
 
 
-            if (heroe.getImagen() != null) {
-                foto.setImage(new Image(getClass().getResource("/" + heroe.getImagen()).toExternalForm()));
+            if (juego.getJugador().getImagen() != null) {
+                foto.setImage(new Image(getClass().getResource("/" + juego.getJugador().getImagen()).toExternalForm()));
             }
 
-            asignarAtributo(personajeBox, "vf", personaje.getVida(), "/com/enriquealberto/imagenes/vida.png");
-            asignarAtributo(personajeBox, "af", personaje.getAtaque(), "/com/enriquealberto/imagenes/ataque.png");
-            asignarAtributo(personajeBox, "df", personaje.getDefensa(), "/com/enriquealberto/imagenes/defensa.png");
-            asignarAtributo(personajeBox, "sf", personaje.getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
+            asignarAtributo(personajeBox, "vf", juego.getJugador().getVida(), "/com/enriquealberto/imagenes/vida.png");
+            asignarAtributo(personajeBox, "af", juego.getJugador().getAtaque(), "/com/enriquealberto/imagenes/ataque.png");
+            asignarAtributo(personajeBox, "df", juego.getJugador().getDefensa(), "/com/enriquealberto/imagenes/defensa.png");
+            asignarAtributo(personajeBox, "sf", juego.getJugador().getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
 
             vBox.getChildren().add(personajeBox);
 
@@ -109,6 +104,7 @@ public class EstadisticaControlador implements Observer {
 
     @Override
     public void onChange() {
+        cargarPersonajes();
         System.out.println("El mapa ha cambiado");
     }
 }

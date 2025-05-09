@@ -26,7 +26,7 @@ public class Juego {
     private Mapa mapaActual;
     private int[][] MatrizMapa;
 
-    public Juego(ArrayList<Heroe> heroes, ArrayList<Enemigo> enemigos) {
+    public Juego() {
         this.observers = new ArrayList<>();
         this.heroes = LectorHeroes.leerHeroes();
         this.enemigos = LectorMostruo.leerMostruo();
@@ -40,7 +40,7 @@ public class Juego {
 
     public static Juego getInstance() {
         if (instance == null) {
-            instance = new Juego(LectorHeroes.leerHeroes(), LectorMostruo.leerMostruo());
+            instance = new Juego();
         }
         return instance;
     }
@@ -382,9 +382,25 @@ public class Juego {
     }
 
     public void pasarTurno() {
+        notifyObservers();
         if (entidades.isEmpty())
             return;
         turnoIndex = (turnoIndex + 1) % entidades.size();
+    }
+
+    public void resetearJuego() {
+        this.gestorMapas.clearMapas();
+        this.gestorMapas = new GestorMapas();
+        this.mapaActual = gestorMapas.getMapaActual();
+        this.MatrizMapa = mapaActual.getMapa(); // Asegúrate que sea int[][]
+        this.entidades = new ArrayList<>();
+        for (Heroe p : heroes) {
+            if (p.getNombre().equals(jugador.getNombre())) {
+                jugador = p.clone();
+
+            }
+        }
+        iniciarentidades();
     }
 
 }

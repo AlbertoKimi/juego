@@ -50,9 +50,6 @@ public class JuegoControlador implements Observer {
         System.out.println("controlador de juego inicializado");
         gestorMapas = juego.getGestorMapas();
 
-        heroe = juego.getJugador();
-        
-
         vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(7));
@@ -116,9 +113,9 @@ public class JuegoControlador implements Observer {
 
     }
 
-    public void generarMapa(LinkedHashMap<String, Mapa> mapas) {
+    public void generarMapa() {
         gridPane.getChildren().clear();
-        Mapa mapaActual = gestorMapas.getMapaActual();
+        Mapa mapaActual = juego.getGestorMapas().getMapaActual();
         int[][] matriz = mapaActual.getMapa();
         int filas = matriz.length;
         int columnas = matriz[0].length;
@@ -163,14 +160,16 @@ public class JuegoControlador implements Observer {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
 
         if (haySiguiente) {
-            LinkedHashMap<String, Mapa> mapas = gestorMapas.getMapas();
+            LinkedHashMap<String, Mapa> mapas = juego.getGestorMapas().getMapas();
             mapas.clear();
-            generarMapa(mapas);
+            generarMapa();
             juego.iniciarentidades();
             pintarPersonajes();
             actualizarTurno();
         } else {
+            juego.resetearJuego();
             ManagerEscenas.getInstance().loadScene(EscenaID.VICTORIA);
+
         }
     }
 
@@ -197,7 +196,7 @@ public class JuegoControlador implements Observer {
     }
 
     public void pintarPersonajes() {
-        generarMapa(gestorMapas.getMapas());
+        generarMapa();
         for (Personaje p : juego.getEntidades()) {
             pintarPersonaje(p.getPosicion().getX(), p.getPosicion().getY(), p);
         }
@@ -240,11 +239,14 @@ public class JuegoControlador implements Observer {
 
         if (juego.getEntidades().size() == 1 && juego.getEntidades().get(0) instanceof Heroe) {
             notificarVictoria();
+
         }
 
         if (juego.verificarDerrota()) {
             System.out.println("Has sido derrotado. Fin del juego.");
+            juego.resetearJuego();
             ManagerEscenas.getInstance().loadScene(EscenaID.DERROTA);
+
         }
     }
 }

@@ -5,11 +5,11 @@ public class Mapa {
     private String suelo;
     private String pared;
     private int nivel;
-    private static int contador=0;
+    //private static int contador=0;
     private  int [][] mapa;
 
-    public Mapa(String nombre, String suelo, String pared, int [][] mapa) {
-        this.nivel=++contador;
+    public Mapa(int nivel,String nombre, String suelo, String pared, int [][] mapa) {
+        this.nivel=nivel;
         this.nombre = nombre;
         this.suelo = suelo;
         this.pared = pared;
