@@ -1,7 +1,7 @@
 /* Estilos generales */
 .root {
     -fx-background-color: #f4f4f4;
-    -fx-padding: 20px;
+    /*-fx-padding: 20px;*/
 }
 
 /* Título principal - Manteniendo tu estilo exacto */
@@ -22,7 +22,7 @@
 
 /* Tarjeta de personaje - Manteniendo simplicidad original pero con mejor estructura */
 .m_perso {
-    -fx-background-color: white;
+    -fx-background-color: rgba(255, 255, 255, 0.78);
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
     -fx-border-color: #dddddd;
@@ -31,7 +31,7 @@
     -fx-spacing: 10px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
     -fx-min-width: 180px;
-    -fx-max-width: 180px;
+    -fx-max-width: 240px;
 }
 
 /* Nombre del personaje - Estilo original */
@@ -102,9 +102,9 @@
 
 /* Asegurar que TODOS los textos sean negros y visibles */
 #p_nombre,
-#vida_etiqueta, 
-#ataque_etiqueta, 
-#defensa_etiqueta, 
+#vida_etiqueta,
+#ataque_etiqueta,
+#defensa_etiqueta,
 #velocidad_etiqueta,
 .form-label,
 .text-field {
@@ -120,9 +120,9 @@
 }
 
 /* Etiquetas de estadísticas */
-#vida_etiqueta, 
-#ataque_etiqueta, 
-#defensa_etiqueta, 
+#vida_etiqueta,
+#ataque_etiqueta,
+#defensa_etiqueta,
 #velocidad_etiqueta {
     -fx-font-size: 14px;
     -fx-min-width: 80px;
@@ -141,7 +141,19 @@
 }
 
 .selected-personaje {
-    -fx-border-color: gold;
-    -fx-border-width: 3;
-    -fx-border-radius: 10;
+    -fx-background-color: rgba(255, 255, 255, 0.78);
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0, 0.8), 20, 0.3, 0, 0);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-border-color: linear-gradient(to right, gold, orange, red);
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 5px;
+    -fx-transition: all 0.3s ease-in-out;
 }
+
+.selected-personaje #p_foto {
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 15, 0.3, 0, 0);
+}
+
