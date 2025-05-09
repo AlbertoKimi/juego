@@ -42,7 +42,7 @@ public class VictoriaControlador {
                  controladorContenedor.cargarPaneles();
              } else {
                  System.err.println("No se pudo obtener el controlador del contenedor.");
-             } // Cambiar a CajaFuerte.fxml
+             } 
         });
         botonSelect.setOnAction(event -> {
             ManagerEscenas manager = ManagerEscenas.getInstance();
@@ -51,7 +51,7 @@ public class VictoriaControlador {
 
             manager.removeScene(EscenaID.SELECTION);
             manager.setScene(EscenaID.SELECTION, "selection");
-            manager.loadScene(EscenaID.SELECTION);// Cambiar a CajaFuerte.fxml
+            manager.loadScene(EscenaID.SELECTION);
         });
     }
 }
