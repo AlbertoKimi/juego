@@ -220,14 +220,16 @@ public class Juego {
                         entidadesMapa.remove(posicionEnemigo); // Eliminar al enemigo del mapa
                         entidades.remove(enemigoAtacado); // Eliminar al enemigo de la lista de entidades
                         if (verificarVictoria()) {
+                            ganarVida(heroe);
                             notifyObservers();
                         } else {
-                            if (heroe.getVida() < 10) {
+                            ganarVida(heroe);
+                            /*if (heroe.getVida() < 10) {
                                 heroe.setVida(heroe.getVida() + 1);
                                 System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
                             } else {
                                 System.out.println("El Héroe no puede ganar más vida. Su vida es " + heroe.getVida());
-                            }
+                            }*/
                         }
                     }
                 }
@@ -241,6 +243,18 @@ public class Juego {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    public void ganarVida(Personaje p) {
+        if (p instanceof Heroe) {
+            Heroe heroe = (Heroe) p;
+            if (heroe.getVida() < 10) {
+                heroe.setVida(heroe.getVida() + 1);
+                System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
+            } else {
+                System.out.println("El Héroe no puede ganar más vida. Su vida es " + heroe.getVida());
+            }
         }
     }
 

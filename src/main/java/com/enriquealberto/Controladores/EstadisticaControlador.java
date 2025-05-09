@@ -105,6 +105,5 @@ public class EstadisticaControlador implements Observer {
     @Override
     public void onChange() {
         cargarPersonajes();
-        System.out.println("El mapa ha cambiado");
     }
 }
