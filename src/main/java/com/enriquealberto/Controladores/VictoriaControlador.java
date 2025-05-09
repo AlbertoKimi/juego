@@ -2,6 +2,7 @@ package com.enriquealberto.Controladores;
 
 
 import com.enriquealberto.EscenaID;
+import com.enriquealberto.model.Juego;
 import javafx.fxml.FXML;
 import com.enriquealberto.ManagerEscenas; 
 import javafx.scene.control.Button;
@@ -28,10 +29,29 @@ public class VictoriaControlador {
     @FXML
     public void initialize() {
          botonVolverJugar.setOnAction(event -> {
-            ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR); // Cambiar a CajaFuerte.fxml
+             ManagerEscenas manager = ManagerEscenas.getInstance();
+             Juego.getInstance().resetearJuego(); // Limpia estado anterior
+
+             manager.removeScene(EscenaID.CONTENEDOR);
+             manager.setScene(EscenaID.CONTENEDOR, "contenedor");
+             manager.loadScene(EscenaID.CONTENEDOR);
+
+             // Cargar paneles internos del contenedor
+             ContenedorControlador controladorContenedor = (ContenedorControlador) manager.getController(EscenaID.CONTENEDOR);
+             if (controladorContenedor != null) {
+                 controladorContenedor.cargarPaneles();
+             } else {
+                 System.err.println("No se pudo obtener el controlador del contenedor.");
+             } // Cambiar a CajaFuerte.fxml
         });
         botonSelect.setOnAction(event -> {
-            ManagerEscenas.getInstance().loadScene(EscenaID.SELECTION); // Cambiar a CajaFuerte.fxml
+            ManagerEscenas manager = ManagerEscenas.getInstance();
+
+            Juego.getInstance().resetearJuego();
+
+            manager.removeScene(EscenaID.SELECTION);
+            manager.setScene(EscenaID.SELECTION, "selection");
+            manager.loadScene(EscenaID.SELECTION);// Cambiar a CajaFuerte.fxml
         });
     }
 }

@@ -83,16 +83,20 @@ public class JuegoControlador implements Observer {
 
                 switch (event.getCode()) {
                     case W:
-                        movimientoRealizado = juego.moverArriba(actual);
+                        juego.moverArriba(actual);
+                        movimientoRealizado = true;
                         break;
                     case A:
-                        movimientoRealizado = juego.moverIzquierda(actual);
+                        juego.moverIzquierda(actual);
+                        movimientoRealizado =true;
                         break;
                     case S:
-                        movimientoRealizado = juego.moverAbajo(actual);
+                        juego.moverAbajo(actual);
+                        movimientoRealizado =true;
                         break;
                     case D:
-                        movimientoRealizado = juego.moverDerecha(actual);
+                        juego.moverDerecha(actual);
+                        movimientoRealizado =true;
                         break;
                     default:
                         return;

@@ -29,18 +29,35 @@ public class DerrotaControlador {
 
     @FXML
     public void initialize() {
-     
+
         botonVolverJugar.setOnAction(event -> {
-            if (ManagerEscenas.getInstance().getCurrentScene() != EscenaID.CONTENEDOR) {
-                ManagerEscenas.getInstance().removeScene(EscenaID.DERROTA); // Descarga la vista actual
-                ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR); // Carga la nueva vista
+            ManagerEscenas manager = ManagerEscenas.getInstance();
+
+            Juego.getInstance().resetearJuego(); // Limpia estado anterior
+
+            manager.removeScene(EscenaID.CONTENEDOR);
+            manager.setScene(EscenaID.CONTENEDOR, "contenedor");
+            manager.loadScene(EscenaID.CONTENEDOR);
+
+            // Cargar paneles internos del contenedor
+            ContenedorControlador controladorContenedor = (ContenedorControlador) manager.getController(EscenaID.CONTENEDOR);
+            if (controladorContenedor != null) {
+                controladorContenedor.cargarPaneles();
+            } else {
+                System.err.println("No se pudo obtener el controlador del contenedor.");
             }
         });
+
         botonSelect.setOnAction(event -> {
-            if (ManagerEscenas.getInstance().getCurrentScene() != EscenaID.SELECTION) {
-                ManagerEscenas.getInstance().removeScene(EscenaID.DERROTA); // Descarga la vista actual
-                ManagerEscenas.getInstance().loadScene(EscenaID.SELECTION); // Carga la nueva vista
-            }
+            ManagerEscenas manager = ManagerEscenas.getInstance();
+
+            Juego.getInstance().resetearJuego();
+
+            manager.removeScene(EscenaID.SELECTION);
+            manager.setScene(EscenaID.SELECTION, "selection");
+            manager.loadScene(EscenaID.SELECTION);
+
+
         });
     }
 }
