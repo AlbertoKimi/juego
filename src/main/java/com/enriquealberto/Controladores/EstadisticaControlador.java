@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -78,27 +80,82 @@ public class EstadisticaControlador implements Observer {
     }
 
     private void asignarAtributo(VBox personajeBox, String prefijo, int cantidad, String iconoRuta) {
-        // Cargar la imagen una sola vez
+        // Mapeo de prefijos a nombres completos de atributos
+        String nombreAtributo;
+        switch(prefijo) {
+            case "vf": nombreAtributo = "vida"; break;
+            case "af": nombreAtributo = "ataque"; break;
+            case "df": nombreAtributo = "defensa"; break;
+            case "sf": nombreAtributo = "velocidad"; break;
+            default:
+                System.err.println("Prefijo no reconocido: " + prefijo);
+                return;
+        }
+
+        // Buscamos el contenedor padre (HBox que contiene la etiqueta y el contenedor de imágenes)
+        HBox contenedorPadre = (HBox) personajeBox.lookup("#p_" + nombreAtributo);
+        if (contenedorPadre == null) {
+            System.err.println("No se encontró el contenedor padre para: p_" + nombreAtributo);
+            return;
+        }
+
+        // Buscamos el contenedor de imágenes (HBox dentro del contenedor padre)
+        HBox contenedorImagenes = (HBox) personajeBox.lookup("#" + prefijo);
+        if (contenedorImagenes == null) {
+            System.err.println("No se encontró el contenedor de imágenes para: " + prefijo);
+            return;
+        }
+
+        // Limpiamos las imágenes existentes (excepto la etiqueta)
+        contenedorImagenes.getChildren().removeIf(node -> node instanceof ImageView);
+
+        // Caso especial para la vida (vf)
+        if (prefijo.equals("vf")) {
+            manejarVidaMultiFila(contenedorPadre, contenedorImagenes, cantidad, iconoRuta);
+        } else {
+            // Para otros atributos, comportamiento normal
+            agregarIconos(contenedorImagenes, cantidad, iconoRuta);
+        }
+    }
+
+    private void manejarVidaMultiFila(HBox contenedorPadre, HBox primeraFila, int cantidad, String iconoRuta) {
+        // Limpiar el contenedor de imágenes
+        primeraFila.getChildren().clear();
+
+        // Cargar la imagen del corazón
         Image icono = new Image(getClass().getResource(iconoRuta).toExternalForm());
 
-        for (int i = 1; i <= 5; i++) {
-            String id = "#" + prefijo + i;
-            ImageView img = (ImageView) personajeBox.lookup(id);
+        // Mostrar siempre al menos 1 corazón
+        ImageView img = new ImageView(icono);
+        img.setFitWidth(25);
+        img.setFitHeight(25);
+        primeraFila.getChildren().add(img);
 
-            if (img == null) {
-                System.err.println("No se encontró ImageView con ID: " + id);
-                continue;
+        // Si la vida es 5 o menos, mostrar todos los corazones
+        if (cantidad <= 5) {
+            for (int i = 1; i < cantidad; i++) {
+                ImageView corazonExtra = new ImageView(icono);
+                corazonExtra.setFitWidth(25);
+                corazonExtra.setFitHeight(25);
+                primeraFila.getChildren().add(corazonExtra);
             }
+        }
+        // Si la vida es más de 5, mostrar el contador
+        else {
+            Label contador = new Label("×" + cantidad);
+            contador.setStyle("-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black'; -fx-font-size: 16px;");
+            primeraFila.getChildren().add(contador);
+        }
+    }
 
-            boolean visible = i <= cantidad;
-            img.setVisible(visible);
-            img.setManaged(visible);
+    private void agregarIconos(HBox contenedor, int cantidad, String iconoRuta) {
+        Image icono = new Image(getClass().getResource(iconoRuta).toExternalForm());
 
-            if (visible) {
-                img.setImage(icono);
-            } else {
-                img.setImage(null); // Limpiar la imagen si no es visible
-            }
+        for (int i = 0; i < cantidad; i++) {
+            ImageView img = new ImageView(icono);
+            img.setFitWidth(25);
+            img.setFitHeight(25);
+            contenedor.getChildren().add(img);
         }
     }
 

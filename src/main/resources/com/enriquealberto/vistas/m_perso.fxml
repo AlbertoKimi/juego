@@ -19,55 +19,33 @@
     <!-- Atributos -->
     <VBox spacing="8" alignment="TOP_LEFT">
         <!-- Vida -->
+
         <HBox fx:id="p_vida" spacing="8" alignment="CENTER_LEFT">
-            <Label fx:id="vida_etiqueta" text="Vida" 
+            <Label fx:id="vida_etiqueta" text="Vida"
                    style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
-            <HBox spacing="3">
-                <ImageView fx:id="vf1" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="vf2" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="vf3" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="vf4" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="vf5" fitWidth="25" fitHeight="25"/>
-            </HBox>
+            <HBox fx:id="vf" spacing="3" alignment="CENTER_LEFT"/>
         </HBox>
         
+
         <!-- Ataque -->
         <HBox fx:id="p_ataque" spacing="8" alignment="CENTER_LEFT">
-            <Label fx:id="ataque_etiqueta" text="Ataque" 
+            <Label fx:id="ataque_etiqueta" text="Ataque"
                    style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
-            <HBox spacing="3">
-                <ImageView fx:id="af1" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="af2" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="af3" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="af4" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="af5" fitWidth="25" fitHeight="25"/>
-            </HBox>
+            <HBox fx:id="af" spacing="3"/> <!-- Contenedor para las imágenes de ataque -->
         </HBox>
-        
+
         <!-- Defensa -->
         <HBox fx:id="p_defensa" spacing="8" alignment="CENTER_LEFT">
-            <Label fx:id="defensa_etiqueta" text="Defensa" 
+            <Label fx:id="defensa_etiqueta" text="Defensa"
                    style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
-            <HBox spacing="3">
-                <ImageView fx:id="df1" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="df2" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="df3" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="df4" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="df5" fitWidth="25" fitHeight="25"/>
-            </HBox>
+            <HBox fx:id="df" spacing="3"/> <!-- Contenedor para las imágenes de defensa -->
         </HBox>
-        
+
         <!-- Velocidad -->
         <HBox fx:id="p_velocidad" spacing="8" alignment="CENTER_LEFT">
-            <Label fx:id="velocidad_etiqueta" text="Velocidad" 
+            <Label fx:id="velocidad_etiqueta" text="Velocidad"
                    style="-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black';"/>
-            <HBox spacing="3">
-                <ImageView fx:id="sf1" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="sf2" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="sf3" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="sf4" fitWidth="25" fitHeight="25"/>
-                <ImageView fx:id="sf5" fitWidth="25" fitHeight="25"/>
-            </HBox>
+            <HBox fx:id="sf" spacing="3"/> <!-- Contenedor para las imágenes de velocidad -->
         </HBox>
     </VBox>
 </VBox>
