@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="134.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.VictoriaControlador">
+<AnchorPane fx:id="portada" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.VictoriaControlador">
    <children>
-      <Label fx:id="titulo" alignment="CENTER" contentDisplay="CENTER" text="¡HAS GANADO LA PARTIDA!" textAlignment="CENTER">
+      <!-- Vista de video al fondo -->
+      <MediaView fx:id="mediaView" fitHeight="800.0" fitWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutX="65.0" layoutY="293.0" prefHeight="79.0" prefWidth="1103.0" text="¡HAS RESCATADO A LA PRINCESA! " textFill="WHITE">
          <font>
-            <Font size="21.0" />
+            <Font name="Bell MT" size="60.0" />
          </font>
       </Label>
-      <HBox fx:id="hbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="60.0">
-         <children>
-            <Button fx:id="botonSelect" mnemonicParsing="false" text="VOLVER A SELECCIÓN" />
-            <Button fx:id="botonVolverJugar" mnemonicParsing="false" text="VOLVER A JUGAR" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets></HBox>
+
+      <!-- Botón centrado sobre el video -->
+      <Button fx:id="botonVolverJugar" layoutX="280.0" layoutY="520.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="190.0" text="VOLVER A JUGAR">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="botonSelect" layoutX="650.0" layoutY="520.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="190.0" text="SELECCIÓN HÉROE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
-   <padding>
-      <Insets top="30.0" />
-   </padding>
-</VBox>
+</AnchorPane>

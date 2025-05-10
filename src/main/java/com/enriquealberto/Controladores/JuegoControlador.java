@@ -59,13 +59,13 @@ public class JuegoControlador implements Observer {
         titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         gridPane = new GridPane();
-        gridPane.setPrefWidth(600); // Ancho fijo
-        gridPane.setPrefHeight(600); // Alto fijo
+        gridPane.setPrefWidth(710); // Ancho fijo
+        gridPane.setPrefHeight(710); // Alto fijo
 
         vbox.getChildren().addAll(titulo, gridPane);
 
-        anchorPane.setPrefWidth(800);
-        anchorPane.setPrefHeight(600);
+        anchorPane.setPrefWidth(900);
+        anchorPane.setPrefHeight(700);
 
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
@@ -119,42 +119,37 @@ public class JuegoControlador implements Observer {
 
     public void generarMapa() {
         gridPane.getChildren().clear();
+        gridPane.setHgap(0);
+        gridPane.setVgap(0);
+
         Mapa mapaActual = juego.getGestorMapas().getMapaActual();
         int[][] matriz = mapaActual.getMapa();
         int filas = matriz.length;
         int columnas = matriz[0].length;
 
-        // Actualizar el título del nivel
+         // Actualizar el título del nivel
         titulo.setText("NIVEL " + mapaActual.getNivel() + " : " + mapaActual.getNombre());
 
-        // Calcular el tamaño de las celdas
-        double anchoCelda = gridPane.getPrefWidth() / columnas;
-        double altoCelda = gridPane.getPrefHeight() / filas;
+        double anchoCelda = Math.floor(gridPane.getPrefWidth() / columnas);
+        double altoCelda = Math.floor(gridPane.getPrefHeight() / filas);
 
-        Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()));
-        Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()));
+        // Cargar imágenes una vez
+        Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()), anchoCelda, altoCelda, false, true);
+        Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()), anchoCelda, altoCelda, false, true);
 
         for (int fila = 0; fila < filas; fila++) {
-            int[] filaMapa = matriz[fila]; // Obtener la fila del mapa actual
             for (int columna = 0; columna < columnas; columna++) {
-                int valor = filaMapa[columna];
-                ImageView imageView;
-                if (valor == 0) {
-                    imageView = new ImageView(suelo); // Imagen de suelo
-                } else {
-                    imageView = new ImageView(pared); // Imagen de pared
-                }
+                int valor = matriz[fila][columna];
+                ImageView imageView = new ImageView(valor == 0 ? suelo : pared);
                 imageView.setFitWidth(anchoCelda);
                 imageView.setFitHeight(altoCelda);
                 imageView.setPreserveRatio(false);
-                imageView.setSmooth(true);
+                imageView.setSmooth(false);
 
-                // Crear el StackPane con suelo o pared
                 StackPane stackPane = new StackPane(imageView);
                 stackPane.setPrefWidth(anchoCelda);
                 stackPane.setPrefHeight(altoCelda);
 
-                // Añadir el StackPane al GridPane
                 gridPane.add(stackPane, columna, fila);
             }
         }

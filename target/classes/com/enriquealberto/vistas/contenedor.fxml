@@ -3,7 +3,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.6587566844919784" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.ContenedorControlador">
+<SplitPane dividerPositions="0.6370320855614973" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.ContenedorControlador">
   <items>
     <AnchorPane fx:id="juego" minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="439.0" />
     <AnchorPane fx:id="estadistica" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
