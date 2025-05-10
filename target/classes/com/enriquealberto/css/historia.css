@@ -1,0 +1,18 @@
+/* Estilo para el TextFlow */
+.text-flow {
+    -fx-font-size: 18px; /* Tamaño del texto */
+    -fx-text-fill: #ec0c0c; /* Color del texto */
+    -fx-font-family: "Old English Text MT", "Times New Roman", serif; /* Fuente medieval */
+    -fx-text-alignment: center; /* Alineación centrada */
+    -fx-padding: 160px 0 0 0; /* Margen superior de 200px */
+    -fx-line-spacing: 10px; /* Espaciado entre líneas */
+}
+
+.text-flow Text {
+    -fx-fill: #ec0c0c; /* Color del texto en rojo */
+    -fx-opacity: 0; /* Inicialmente invisible */
+}
+
+.text-flow Text:hover {
+    -fx-opacity: 1; /* Mostrar el texto al pasar el ratón */
+}
