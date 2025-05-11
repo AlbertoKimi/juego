@@ -6,6 +6,9 @@ import com.enriquealberto.ManagerEscenas;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -37,6 +40,22 @@ public class HistoriaControlador {
 
         // Añadir la imagen al AnchorPane
         historia.getChildren().add(fondo);
+
+        // Crear el MediaView para el video
+        Media videoPortal = new Media(getClass().getResource("/com/enriquealberto/videos/portal.mp4").toExternalForm());
+        MediaPlayer mediaPlayer = new MediaPlayer(videoPortal);
+        MediaView mediaView = new MediaView(mediaPlayer);
+
+        // Configurar el MediaView para que ocupe toda la ventana
+        mediaView.fitWidthProperty().bind(historia.widthProperty());
+        mediaView.fitHeightProperty().bind(historia.heightProperty());
+        mediaView.setPreserveRatio(false);
+
+        // Ocultar el MediaView inicialmente
+        mediaView.setVisible(false);
+
+        // Añadir el MediaView al AnchorPane
+        historia.getChildren().add(mediaView);
 
         // Crear el TextFlow
         textFlow = new TextFlow();
@@ -119,8 +138,24 @@ public class HistoriaControlador {
                     .allMatch(node -> "-fx-opacity: 1;".equals(node.getStyle()));
 
             if (todoTextoVisible) {
-                ManagerEscenas sm = ManagerEscenas.getInstance();
-                sm.loadScene(EscenaID.SELECTION);
+                // Mostrar el MediaView y reproducir el video
+                mediaView.setVisible(true);
+                mediaPlayer.play();
+
+                // Asegurarse de que el MediaView esté al frente
+                historia.getChildren().remove(mediaView); // Eliminar temporalmente
+                historia.getChildren().add(mediaView);   // Volver a añadirlo al final
+
+                // Detener el video en el último cuadro al finalizar
+                mediaPlayer.setOnEndOfMedia(() -> {
+                    mediaPlayer.pause(); // Pausar en el último cuadro
+                });
+
+                // Permitir hacer clic en el video para cambiar a la escena SELECTION
+                mediaView.setOnMouseClicked(e -> {
+                    ManagerEscenas sm = ManagerEscenas.getInstance();
+                    sm.loadScene(EscenaID.SELECTION);
+                });
             } else {
                 System.out.println("Aún hay texto oculto. Haz visible todo el texto para continuar.");
             }
