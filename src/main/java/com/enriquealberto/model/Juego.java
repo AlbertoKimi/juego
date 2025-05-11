@@ -383,9 +383,10 @@ public class Juego {
             }
         }
         // Si no quedan enemigos, cambiar al siguiente mapa
-        System.out.println("¡Victoria! Cambiando al siguiente mapa...");
+        
         boolean haySiguienteMapa = gestorMapas.avanzarAlSiguienteMapa();
         if (haySiguienteMapa) {
+            System.out.println("¡Victoria! Cambiando al siguiente mapa...");
             mapaActual = gestorMapas.getMapaActual(); // Actualizar el mapa actual
             MatrizMapa = mapaActual.getMapa(); // Actualizar la matriz del mapa
             iniciarentidades(); // Reiniciar las entidades en el nuevo mapa
