@@ -21,7 +21,7 @@ public class HistoriaControlador {
     @FXML
     public void initialize() {
         // Crear el ImageView para la imagen de fondo
-        Image fondoImagen = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/pergamino.jpg"));
+        Image fondoImagen = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/Pergamino.png"));
         ImageView fondo = new ImageView(fondoImagen);
         fondo.setPreserveRatio(false); // Permitir que ocupe toda la ventana
         /* fondo.setSmooth(true); // Suavizar la imagen */

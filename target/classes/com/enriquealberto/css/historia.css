@@ -1,10 +1,10 @@
 /* Estilo para el TextFlow */
 .text-flow {
-    -fx-font-size: 18px; /* Tamaño del texto */
+    -fx-font-size: 16.5px; /* Tamaño del texto */
     -fx-font-family: "Old English Text MT", "Times New Roman", serif; /* Fuente medieval */
     -fx-text-alignment: center; /* Alineación centrada */
-    -fx-padding: 160px 0 0 0; /* Margen superior de 200px */
-    -fx-line-spacing: 10px; /* Espaciado entre líneas */
+    -fx-padding: 170px 0 0 0; /* Margen superior de 200px */
+    -fx-line-spacing: 6px; /* Espaciado entre líneas */
 }
 
 .text-flow Text {
