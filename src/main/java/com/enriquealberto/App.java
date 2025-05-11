@@ -30,7 +30,7 @@ public class App extends Application {
         sm.setScene(EscenaID.HISTORIA, "Historia");
 
         // Cargar la PORTADA primero (pantalla inicial)
-        sm.loadScene(EscenaID.PORTADA);
+        sm.loadScene(EscenaID.HISTORIA);
     }
 
     public static void main(String[] args) {

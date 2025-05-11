@@ -78,8 +78,8 @@ public class PortadaControlador {
                     System.out.println("Tecla presionada: " + event.getCode());
                     switch (event.getCode()) {
                         case ENTER:
-                            System.out.println("Cambiando a la escena SELECTION...");
-                            ManagerEscenas.getInstance().loadScene(EscenaID.SELECTION);
+                            System.out.println("Cambiando a la escena HISTORIA...");
+                            ManagerEscenas.getInstance().loadScene(EscenaID.HISTORIA);
                             break;
                         default:
                             break;
