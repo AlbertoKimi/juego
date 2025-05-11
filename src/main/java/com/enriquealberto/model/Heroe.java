@@ -6,14 +6,14 @@ import com.enriquealberto.interfaces.Interaccion;
 import com.enriquealberto.interfaces.Observer;
 
 public class Heroe extends Personaje implements Interaccion,Cloneable {
-    private ArrayList<Observer> observers;
+    /*private ArrayList<Observer> observers;*/
 
     public Heroe(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje) {
         super(nombre, imagen, vida, ataque, defensa, velocidad, porcentaje);
-        this.observers = new ArrayList<>();
+        /*this.observers = new ArrayList<>();*/
     }
 
-    public void suscribe(Observer observer) {
+    /*public void suscribe(Observer observer) {
         observers.add(observer);
     }
 
@@ -28,7 +28,7 @@ public class Heroe extends Personaje implements Interaccion,Cloneable {
     public void setVida(int vida) {
         this.vida = vida;
         notifyObservers();
-    }
+    }*/
 
     @Override
     public void atacar(Heroe heroe, Enemigo enemigo) {
