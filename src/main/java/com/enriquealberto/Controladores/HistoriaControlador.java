@@ -90,14 +90,21 @@ public class HistoriaControlador {
                 newScene.setCursor(new javafx.scene.ImageCursor(cursorImage));
 
                 // Luz antorcha
-                Circle foco = new Circle(35, javafx.scene.paint.Color.rgb(255, 255, 200, 0.5));
-                foco.setEffect(new javafx.scene.effect.DropShadow(100, javafx.scene.paint.Color.YELLOW));
+                Circle foco = new Circle(60); // Radio del foco
+                foco.setFill(new javafx.scene.paint.RadialGradient(
+                        0, 0, 0.5, 0.5, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
+                        new javafx.scene.paint.Stop(0, javafx.scene.paint.Color.rgb(255, 255, 200, 0.4)), // Centro más brillante
+                        new javafx.scene.paint.Stop(1, javafx.scene.paint.Color.rgb(255, 255, 200, 0.1)) // Bordes menos transparentes
+                ));
 
-                // Hacer que el círculo no intercepte eventos del ratón
+                // Aplicar un efecto de desenfoque para suavizar los bordes
+                foco.setEffect(new javafx.scene.effect.GaussianBlur(40)); // Desenfoque con un radio menor para más intensidad
+
+                // Hacer que el foco no intercepte eventos del ratón
                 foco.setMouseTransparent(true);
                 historia.getChildren().add(foco);
 
-                // Actualizar la posición del círculo según el ratón
+                // Actualizar la posición del foco según el ratón
                 newScene.setOnMouseMoved(event -> {
                     foco.setCenterX(event.getSceneX());
                     foco.setCenterY(event.getSceneY());
