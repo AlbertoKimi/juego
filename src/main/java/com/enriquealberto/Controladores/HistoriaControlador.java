@@ -57,26 +57,23 @@ public class HistoriaControlador {
         // Crear nodos Text para cada fragmento
         for (String fragmento : fragmentos) {
             Text text = new Text(fragmento);
-            text.setStyle("-fx-opacity: 0;"); // Inicialmente invisible
 
             // Evento para mostrar el fragmento al pasar el ratón
             text.setOnMouseEntered(event -> {
-                text.setStyle("-fx-opacity: 1;"); // Hacer el texto visible permanentemente
+                text.setStyle("-fx-opacity: 1;");
             });
 
             textFlow.getChildren().add(text);
         }
 
-        // Centrar el TextFlow dentro del AnchorPane
+        // Centrar el TextFlow
         AnchorPane.setTopAnchor(textFlow, 0.0);
         AnchorPane.setBottomAnchor(textFlow, 0.0);
         AnchorPane.setLeftAnchor(textFlow, 0.0);
         AnchorPane.setRightAnchor(textFlow, 0.0);
-
-        // Añadir el TextFlow al AnchorPane
         historia.getChildren().add(textFlow);
 
-        // Añadir la clase CSS al TextFlow
+        // Añadir css al texto
         historia.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 String cssPath = getClass().getResource("/com/enriquealberto/css/historia.css").toExternalForm();
@@ -92,16 +89,12 @@ public class HistoriaControlador {
                         getClass().getResourceAsStream("/com/enriquealberto/imagenes/Antorcha.png"));
                 newScene.setCursor(new javafx.scene.ImageCursor(cursorImage));
 
-                // Crear un círculo que simule el foco de luz
-                Circle foco = new Circle(35, javafx.scene.paint.Color.rgb(255, 255, 200, 0.5)); // Luz amarilla
-                                                                                                // semitransparente
-                foco.setEffect(new javafx.scene.effect.DropShadow(100, javafx.scene.paint.Color.YELLOW)); // Efecto de
-                                                                                                          // luz
+                // Luz antorcha
+                Circle foco = new Circle(35, javafx.scene.paint.Color.rgb(255, 255, 200, 0.5));
+                foco.setEffect(new javafx.scene.effect.DropShadow(100, javafx.scene.paint.Color.YELLOW));
 
                 // Hacer que el círculo no intercepte eventos del ratón
                 foco.setMouseTransparent(true);
-
-                // Añadir el círculo al AnchorPane
                 historia.getChildren().add(foco);
 
                 // Actualizar la posición del círculo según el ratón
@@ -112,15 +105,15 @@ public class HistoriaControlador {
             }
         });
 
-        // Evento para cambiar a la vista SELECTION al hacer clic, pero solo si todo el texto es visible
+        // Evento para cambiar a la vista SELECTION al hacer clic con texto visible.
         historia.setOnMouseClicked(event -> {
             boolean todoTextoVisible = textFlow.getChildren().stream()
-                .filter(node -> node instanceof Text)
-                .allMatch(node -> "-fx-opacity: 1;".equals(node.getStyle()));
+                    .filter(node -> node instanceof Text)
+                    .allMatch(node -> "-fx-opacity: 1;".equals(node.getStyle()));
 
             if (todoTextoVisible) {
                 ManagerEscenas sm = ManagerEscenas.getInstance();
-                sm.loadScene(EscenaID.SELECTION); // Cambiar a la vista SELECTION
+                sm.loadScene(EscenaID.SELECTION);
             } else {
                 System.out.println("Aún hay texto oculto. Haz visible todo el texto para continuar.");
             }
