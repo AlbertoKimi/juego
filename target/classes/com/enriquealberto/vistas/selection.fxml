@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -10,83 +11,99 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<!-- añadirmos esto para poder poner video de fondo tambien -->
-
 <AnchorPane fx:id="portada" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.SelectionControlador">
-   <children>
-      <MediaView fx:id="mediaView" fitHeight="400.0" fitWidth="700.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-       <VBox fx:id="fondo" alignment="CENTER" spacing="20" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
+    <children>
+        <MediaView fx:id="mediaView" fitHeight="400.0" fitWidth="700.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <VBox fx:id="fondo" alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="titulo" alignment="CENTER" prefWidth="334.0" text="Selecciona Personaje">
+                <font>
+                    <Font name="Hoefler Text Black" size="27.0" />
+                </font>
+            </Label>
+            <HBox fx:id="cont_perso" alignment="CENTER" prefHeight="0.0" prefWidth="800.0" styleClass="character-container" />
 
-          <Label fx:id="titulo" alignment="CENTER" prefWidth="334.0" text="Selecciona Personaje">
-               <font>
-                  <Font name="Hoefler Text Black" size="27.0" />
-               </font>
-          </Label>
-           <HBox fx:id="cont_perso" alignment="CENTER" prefHeight="0.0" prefWidth="800.0" styleClass="character-container" />
-          
-          <!-- Sección inferior de formulario -->
-          <HBox alignment="CENTER" spacing="40" styleClass="form-section">
-               <Label styleClass="form-label" text="Nombre:">
-                   <font>
-                       <Font name="Hoefler Text Black" size="15.0" />
-                   </font>
-               </Label>
-               <TextField fx:id="nom_jugador" prefHeight="26.0" prefWidth="192.0" styleClass="text-field" />
-               <Label styleClass="form-label" text="Dificultad:">
-                   <font>
-                       <Font name="Hoefler Text Black" size="17.0" />
-                   </font>
-               </Label>
-               <HBox styleClass="difficulty-selector">
-                   <ImageView fx:id="fd1" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                   <ImageView fx:id="fd2" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-                   <ImageView fx:id="fd3" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
-               </HBox>
-          </HBox>
-         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-            <children>
-               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="65.0" text="NOMBRE:" textAlignment="CENTER">
-                  <font>
-                     <Font name="Hoefler Text Black" size="11.0" />
-                  </font>
-               </Label>
-               <Label fx:id="c_nombre" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="131.0" textAlignment="CENTER">
-                  <font>
-                     <Font name="Hoefler Text Black" size="11.0" />
-                  </font>
-               </Label>
-               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="96.0" text="PERSONAJE:" textAlignment="CENTER">
-                  <font>
-                     <Font name="Hoefler Text Black" size="11.0" />
-                  </font>
-               </Label>
-               <Label fx:id="c_PERSONAJE" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="131.0" textAlignment="CENTER">
-                  <font>
-                     <Font name="Hoefler Text Black" size="11.0" />
-                  </font>
-               </Label>
-               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="92.0" text="DIFICULTAD:" textAlignment="CENTER">
-                  <font>
-                     <Font name="Hoefler Text Black" size="11.0" />
-                  </font>
-               </Label>
-               <Label fx:id="c_DIFICULTAD" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="131.0" textAlignment="CENTER">
-                  <font>
-                     <Font name="Hoefler Text Black" size="11.0" />
-                  </font>
-               </Label>
-            </children>
-         </HBox>
-         <Button fx:id="start" mnemonicParsing="false" text="Comenzar">
-            <font>
-               <Font name="Hoefler Text Black" size="28.0" />
-            </font>
-         </Button>
-         <Label fx:id="fallo" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="346.0">
-            <font>
-               <Font name="Hoefler Text" size="13.0" />
-            </font>
-         </Label>
-      </VBox>
-   </children>
+            <!-- Sección con imagen de fondo -->
+             <AnchorPane fx:id="formBackground" prefHeight="300" prefWidth="500" styleClass="form-background">
+                <children>
+                    <VBox fx:id="formContent" alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                        <!-- Sección inferior de formulario -->
+                        <HBox alignment="CENTER" spacing="60" styleClass="form-section">
+                            <Label styleClass="form-label" text="Nombre:">
+                                <font>
+                                    <Font name="Hoefler Text Black" size="15.0" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="nom_jugador" prefHeight="26.0" prefWidth="192.0" styleClass="text-field" />
+                            <Label styleClass="form-label" text="Dificultad:">
+                                <font>
+                                    <Font name="Hoefler Text Black" size="17.0" />
+                                </font>
+                            </Label>
+                            <HBox styleClass="difficulty-selector">
+                                <ImageView fx:id="fd1" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
+                                <ImageView fx:id="fd2" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
+                                <ImageView fx:id="fd3" fitHeight="26.0" fitWidth="26.0" styleClass="difficulty-icon" />
+                            </HBox>
+                     <padding>
+                        <Insets top="20.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                        </HBox>
+
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="65.0" text="NOMBRE:" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Hoefler Text Black" size="11.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="c_nombre" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="131.0" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Hoefler Text Black" size="11.0" />
+                                    </font>
+                                </Label>
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="96.0" text="PERSONAJE:" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Hoefler Text Black" size="11.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="c_PERSONAJE" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="131.0" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Hoefler Text Black" size="11.0" />
+                                    </font>
+                                </Label>
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="92.0" text="DIFICULTAD:" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Hoefler Text Black" size="11.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="c_DIFICULTAD" alignment="CENTER" contentDisplay="CENTER" prefHeight="39.0" prefWidth="131.0" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Hoefler Text Black" size="11.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+
+                        <Button fx:id="start" mnemonicParsing="false" text="Comenzar">
+                            <font>
+                                <Font name="Hoefler Text Black" size="28.0" />
+                            </font>
+                        </Button>
+
+                        <Label fx:id="fallo" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="346.0">
+                            <font>
+                                <Font name="Hoefler Text" size="13.0" />
+                            </font>
+                        </Label>
+                  <padding>
+                     <Insets top="40.0" />
+                  </padding>
+                    </VBox>
+                </children>
+            </AnchorPane>
+        </VBox>
+    </children>
 </AnchorPane>

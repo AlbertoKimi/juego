@@ -19,8 +19,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -56,6 +55,8 @@ public class SelectionControlador implements Observer{
     @FXML
     private MediaView mediaView;
 
+    @FXML
+    private AnchorPane formBackground;
 
     private Juego juego;
 
@@ -114,6 +115,28 @@ public class SelectionControlador implements Observer{
             System.out.println("Cadena actualizada a: " + newValue);
         });
 
+        try {
+            String imagePath = getClass().getResource("/com/enriquealberto/imagenes/papiro.png").toExternalForm();
+            Image backgroundImage = new Image(imagePath);
+
+            BackgroundSize bgSize = new BackgroundSize(
+                    690, 300, false, false, false, false
+            );
+
+            BackgroundImage bgImage = new BackgroundImage(
+                    backgroundImage,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    bgSize
+            );
+
+            formBackground.setBackground(new Background(bgImage));
+
+        } catch (Exception e) {
+            System.err.println("Error cargando imagen de fondo: " + e.getMessage());
+            formBackground.setStyle("-fx-background-color: rgba(255,0,0,0.3);");
+        }
         start.setOnAction(event -> {
             // Verificar que todos los campos estén completados
             if (juego.getNombre() != null && !juego.getNombre().isEmpty() && juego.getDificultad() != 0 && juego.getJugador() != null) {
