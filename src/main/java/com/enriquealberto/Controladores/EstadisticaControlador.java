@@ -29,8 +29,6 @@ public class EstadisticaControlador implements Observer {
     private VBox contenedorVidas;
 
     private Juego juego;
-
-    // Caché de imágenes
     private final Map<String, Image> imagenesCache = new HashMap<>();
 
     @FXML
@@ -43,7 +41,6 @@ public class EstadisticaControlador implements Observer {
 
         juego.suscribe(this);
 
-        // Inicializar contenedores
         contenedorJugador = new VBox(10);
         contenedorJugador.setAlignment(Pos.CENTER);
         contenedorJugador.setPadding(new Insets(10));
@@ -86,25 +83,25 @@ public class EstadisticaControlador implements Observer {
     }
 
     public void cargarVidas() {
-
-        List<Personaje> personajes = juego.getEntidades();
         contenedorVidas.getChildren().clear();
-        System.out.println("→ Héroes cargados: " + personajes.size());
-        for (Personaje h : personajes) {
-            System.out.println("   - " + h.getNombre() + " (vida: " + h.getVida() + ")");
-        }
+        List<Personaje> personajes = juego.getEntidades();
+        Personaje actual = juego.getPersonajeActual();
 
         for (Personaje p : personajes) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/min_perso.fxml"));
                 HBox personajeBox = loader.load();
 
+                if (p.equals(actual)) {
+                    personajeBox.getStyleClass().add("selected-personaje");
+                }
+
                 ImageView foto = (ImageView) personajeBox.lookup("#im_per");
                 if (p.getImagen() != null) {
                     foto.setImage(cargarImagen("/" + p.getImagen()));
                 }
 
-                foto.setFitWidth(40);  // Reducido
+                foto.setFitWidth(40);
                 foto.setFitHeight(40);
 
                 Image icono = cargarImagen("/com/enriquealberto/imagenes/vida.png");

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+
+
+<HBox fx:id="min_per" alignment="CENTER_LEFT" spacing="5" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="im_per" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</HBox>

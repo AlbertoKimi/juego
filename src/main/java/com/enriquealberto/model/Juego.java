@@ -430,10 +430,10 @@ public class Juego {
     }
 
     public void pasarTurno() {
-        notifyObservers();
         if (entidades.isEmpty())
             return;
-        turnoIndex = (turnoIndex + 1) % entidades.size();
+        turnoIndex = (turnoIndex + 1) % entidades.size(); // Actualiza primero
+        notifyObservers(); // Luego notifica
     }
 
     public void resetearJuego() {
