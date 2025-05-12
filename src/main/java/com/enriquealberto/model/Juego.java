@@ -201,7 +201,45 @@ public class Juego {
         switch (resultado) {
             case 0:
                 System.out.println("Colisión de personaje: " + p.getNombre());
+
+                // Verificar si es un héroe y estamos en los niveles 3 o 5
+                if (p instanceof Heroe) {
+                    Heroe heroe = (Heroe) p;
+
+                    if (mapaActual.getNivel() == 3 || mapaActual.getNivel() == 5) {
+                        // Verificar si la colisión es contra una pared
+                        if (xNueva >= 0 && xNueva < MatrizMapa[0].length && yNueva >= 0 && yNueva < MatrizMapa.length) {
+                            if (MatrizMapa[yNueva][xNueva] == 1) { // 1 representa una pared
+                                int vidaPerdida = (mapaActual.getNivel() == 3) ? 1 : 2; // 1 vida en nivel 3, 2 vidas en
+                                                                                        // nivel 5
+                                heroe.setVida(heroe.getVida() - vidaPerdida);
+
+                                // Mensajes personalizados según el nivel
+                                if (mapaActual.getNivel() == 3) {
+                                    System.out.println(
+                                            "El héroe " + heroe.getNombre() + " se ha caído al agua y ha perdido "
+                                                    + vidaPerdida + " de vida. Su vida es " + heroe.getVida());
+                                } else if (mapaActual.getNivel() == 5) {
+                                    System.out.println(
+                                            "El héroe " + heroe.getNombre() + " ha caído a la lava y ha perdido "
+                                                    + vidaPerdida + " de vida. Su vida es " + heroe.getVida());
+                                }
+                            }
+                        }
+                    }
+
+                    // Verificar si el héroe ha sido derrotado
+                    if (heroe.getVida() <= 0) {
+                        System.out.println("El héroe " + heroe.getNombre() + " ha sido derrotado.");
+                        entidadesMapa.remove(antigua); // Eliminar al héroe del mapa
+                        entidades.remove(heroe); // Eliminar al héroe de la lista de entidades
+                        if (verificarDerrota()) {
+                            notifyObservers();
+                        }
+                    }
+                }
                 return false;
+
             case 1:
                 // Si hay un enemigo en la posición a la que intenta moverse
                 Posicion posicionEnemigo = new Posicion(xNueva, yNueva);
@@ -220,18 +258,15 @@ public class Juego {
                         entidadesMapa.remove(posicionEnemigo); // Eliminar al enemigo del mapa
                         entidades.remove(enemigoAtacado); // Eliminar al enemigo de la lista de entidades
                         if (verificarVictoria()) {
+                            ganarVida(heroe);
                             notifyObservers();
                         } else {
-                            if (heroe.getVida() < 10) {
-                                heroe.setVida(heroe.getVida() + 1);
-                                System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
-                            } else {
-                                System.out.println("El Héroe no puede ganar más vida. Su vida es " + heroe.getVida());
-                            }
+                            ganarVida(heroe);
                         }
                     }
                 }
                 return true;
+
             case 2:
                 // Movimiento válido, actualizar la posición
                 Posicion nueva = new Posicion(xNueva, yNueva);
@@ -239,8 +274,21 @@ public class Juego {
                 entidadesMapa.remove(antigua);
                 entidadesMapa.put(nueva, p);
                 return true;
+
             default:
                 return false;
+        }
+    }
+
+    public void ganarVida(Personaje p) {
+        if (p instanceof Heroe) {
+            Heroe heroe = (Heroe) p;
+            if (heroe.getVida() < 10) {
+                heroe.setVida(heroe.getVida() + 1);
+                System.out.println("El Héroe ha ganado uno de vida. Su vida es " + heroe.getVida());
+            } else {
+                System.out.println("El Héroe no puede ganar más vida. Su vida es " + heroe.getVida());
+            }
         }
     }
 

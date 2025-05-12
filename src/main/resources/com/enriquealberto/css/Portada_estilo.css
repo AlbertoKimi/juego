@@ -1,0 +1,6 @@
+#mensaje {
+    -fx-font-size: 30px; /* Tamaño de fuente */
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-style: italic; /* Texto en cursiva */
+    -fx-alignment: center; /* Centrar el texto */
+}

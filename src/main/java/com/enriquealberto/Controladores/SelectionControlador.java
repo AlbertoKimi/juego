@@ -76,7 +76,7 @@ public class SelectionControlador implements Observer{
 
         cargarPersonajes(heroes);
         setupDifficultySelector();
-        String videoPath = getClass().getResource("/com/enriquealberto/imagenes/fondo.mp4").toExternalForm();
+        String videoPath = getClass().getResource("/com/enriquealberto/videos/fondo.mp4").toExternalForm();
 
         //falta añadir que se desenfoque el video
         Media media = new Media(videoPath);
