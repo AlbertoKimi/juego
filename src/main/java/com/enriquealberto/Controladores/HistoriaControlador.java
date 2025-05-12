@@ -2,7 +2,6 @@ package com.enriquealberto.Controladores;
 
 import com.enriquealberto.EscenaID;
 import com.enriquealberto.ManagerEscenas;
-
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,11 +25,10 @@ public class HistoriaControlador {
         // Crear el ImageView para la imagen de fondo
         Image fondoImagen = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/Pergamino.png"));
         ImageView fondo = new ImageView(fondoImagen);
-        fondo.setPreserveRatio(false); // Permitir que ocupe toda la ventana
-        /* fondo.setSmooth(true); // Suavizar la imagen */
+        fondo.setPreserveRatio(false);
         fondo.setCache(true); // Mejorar el rendimiento
 
-        // Ajustar tamaño del video según el tamaño de la ventana
+        // Ajustar tamaño del video al de la ventana
         fondo.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 fondo.fitWidthProperty().bind(newScene.widthProperty());
@@ -38,7 +36,6 @@ public class HistoriaControlador {
             }
         });
 
-        // Añadir la imagen al AnchorPane
         historia.getChildren().add(fondo);
 
         // Crear el MediaView para el video
@@ -46,7 +43,7 @@ public class HistoriaControlador {
         MediaPlayer mediaPlayer = new MediaPlayer(videoPortal);
         MediaView mediaView = new MediaView(mediaPlayer);
 
-        // Configurar el MediaView para que ocupe toda la ventana
+        // Configurar ocupe toda la ventana
         mediaView.fitWidthProperty().bind(historia.widthProperty());
         mediaView.fitHeightProperty().bind(historia.heightProperty());
         mediaView.setPreserveRatio(false);
@@ -54,14 +51,13 @@ public class HistoriaControlador {
         // Ocultar el MediaView inicialmente
         mediaView.setVisible(false);
 
-        // Añadir el MediaView al AnchorPane
         historia.getChildren().add(mediaView);
 
-        // Crear el TextFlow
+      
         textFlow = new TextFlow();
         textFlow.getStyleClass().add("text-flow"); // Asignar la clase CSS
 
-        // Texto de la historia dividido en fragmentos
+        // Texto de la historia
         String[] fragmentos = {
                 "Una noche tranquila, mientras la luna velaba el cielo estrellado, la princesa del reino dormía profundamente en su habitación.\n\n",
                 "Pero de pronto, unos susurros siniestros y pasos furtivos rompieron el silencio.\n\n",
@@ -109,15 +105,15 @@ public class HistoriaControlador {
                 newScene.setCursor(new javafx.scene.ImageCursor(cursorImage));
 
                 // Luz antorcha
-                Circle foco = new Circle(60); // Radio del foco
+                Circle foco = new Circle(60); 
                 foco.setFill(new javafx.scene.paint.RadialGradient(
                         0, 0, 0.5, 0.5, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
-                        new javafx.scene.paint.Stop(0, javafx.scene.paint.Color.rgb(255, 255, 200, 0.4)), // Centro más brillante
-                        new javafx.scene.paint.Stop(1, javafx.scene.paint.Color.rgb(255, 255, 200, 0.1)) // Bordes menos transparentes
+                        new javafx.scene.paint.Stop(0, javafx.scene.paint.Color.rgb(255, 255, 200, 0.4)), 
+                        new javafx.scene.paint.Stop(1, javafx.scene.paint.Color.rgb(255, 255, 200, 0.1)) 
                 ));
 
                 // Aplicar un efecto de desenfoque para suavizar los bordes
-                foco.setEffect(new javafx.scene.effect.GaussianBlur(40)); // Desenfoque con un radio menor para más intensidad
+                foco.setEffect(new javafx.scene.effect.GaussianBlur(40)); 
 
                 // Hacer que el foco no intercepte eventos del ratón
                 foco.setMouseTransparent(true);
@@ -138,15 +134,13 @@ public class HistoriaControlador {
                     .allMatch(node -> "-fx-opacity: 1;".equals(node.getStyle()));
 
             if (todoTextoVisible) {
-                // Mostrar el MediaView y reproducir el video
                 mediaView.setVisible(true);
                 mediaPlayer.play();
 
                 // Asegurarse de que el MediaView esté al frente
-                historia.getChildren().remove(mediaView); // Eliminar temporalmente
-                historia.getChildren().add(mediaView);   // Volver a añadirlo al final
+                historia.getChildren().remove(mediaView); 
+                historia.getChildren().add(mediaView);  
 
-                // Detener el video en el último cuadro al finalizar
                 mediaPlayer.setOnEndOfMedia(() -> {
                     mediaPlayer.pause(); // Pausar en el último cuadro
                 });

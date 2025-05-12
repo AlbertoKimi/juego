@@ -18,29 +18,29 @@ public class ContenedorControlador {
     // Este método carga los paneles de Juego y Estadísticas solo cuando se llama
     public void cargarPaneles() {
         try {
-            // Cargar Juego.fxml directamente
+            // Cargar Juego.fxml 
             FXMLLoader juegoLoader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/Juego.fxml"));
             Parent juegoRoot = juegoLoader.load();
 
-            // Ajustar anclas para que ocupe todo el espacio
+            // Ajustar para que ocupe todo el espacio
             AnchorPane.setTopAnchor(juegoRoot, 0.0);
             AnchorPane.setBottomAnchor(juegoRoot, 0.0);
             AnchorPane.setLeftAnchor(juegoRoot, 0.0);
             AnchorPane.setRightAnchor(juegoRoot, 0.0);
 
-            juego.getChildren().setAll(juegoRoot); // Añadir al panel izquierdo
+            juego.getChildren().setAll(juegoRoot);
 
-            // Cargar Estadisticas.fxml directamente
+            // Cargar Estadisticas.fxml
             FXMLLoader estLoader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/estadisticas.fxml"));
             Parent estRoot = estLoader.load();
 
-            // Ajustar anclas para que ocupe todo el espacio
+          
             AnchorPane.setTopAnchor(estRoot, 0.0);
             AnchorPane.setBottomAnchor(estRoot, 0.0);
             AnchorPane.setLeftAnchor(estRoot, 0.0);
             AnchorPane.setRightAnchor(estRoot, 0.0);
 
-            estadistica.getChildren().setAll(estRoot); // Añadir al panel derecho
+            estadistica.getChildren().setAll(estRoot);
 
         } catch (IOException e) {
             e.printStackTrace();

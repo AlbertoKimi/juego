@@ -5,7 +5,6 @@ public class Mapa {
     private String suelo;
     private String pared;
     private int nivel;
-    //private static int contador=0;
     private  int [][] mapa;
 
     public Mapa(int nivel,String nombre, String suelo, String pared, int [][] mapa) {

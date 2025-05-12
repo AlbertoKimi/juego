@@ -1,22 +1,17 @@
 package com.enriquealberto.Controladores;
 
 import java.net.URL;
-
 import com.enriquealberto.EscenaID;
 import javafx.fxml.FXML;
 import com.enriquealberto.ManagerEscenas;
-
-
 import com.enriquealberto.model.Juego;
-
 import javafx.scene.control.Button;
-
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.layout.AnchorPane;
 
-import javafx.scene.control.Label;
+
 
 public class DerrotaControlador {
     @FXML
@@ -24,9 +19,6 @@ public class DerrotaControlador {
 
     @FXML
     private AnchorPane portada;
-
-    /*@FXML
-    Label titulo;*/
 
     @FXML
     Button botonVolverJugar;
@@ -48,18 +40,18 @@ public class DerrotaControlador {
             }
         });
 
-        // Cargar video desde resources
+        // Cargar video
         String videoPath = getClass().getResource("/com/enriquealberto/videos/Derrota.mp4").toExternalForm();
 
         Media media = new Media(videoPath);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetición infinita
-        mediaPlayer.setMute(true); // Silenciar
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
+        mediaPlayer.setMute(true); 
         mediaPlayer.play();
 
         // Asignar el MediaPlayer a la MediaView
         mediaView.setMediaPlayer(mediaPlayer);
-        mediaView.setPreserveRatio(false); // Que se estire al tamaño completo
+        mediaView.setPreserveRatio(false); 
 
         // Ajustar tamaño del video según el tamaño de la ventana
         mediaView.sceneProperty().addListener((obs, oldScene, newScene) -> {

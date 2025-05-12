@@ -2,13 +2,10 @@ package com.enriquealberto.Controladores;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
-
 import com.enriquealberto.EscenaID;
 import com.enriquealberto.ManagerEscenas;
 import com.enriquealberto.interfaces.Observer;
-
 import com.enriquealberto.model.*;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -183,8 +180,6 @@ public class JuegoControlador implements Observer {
             return;
         }
         ImageView personajeView = new ImageView(new Image(is));
-        // ImageView personajeView = new ImageView(new
-        // Image(getClass().getResourceAsStream(personaje.getImagen())));
         personajeView.setFitWidth(stackPane.getPrefWidth());
         personajeView.setFitHeight(stackPane.getPrefHeight());
         personajeView.setPreserveRatio(true);

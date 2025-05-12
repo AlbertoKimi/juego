@@ -1,7 +1,6 @@
 package com.enriquealberto.model;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
 import com.enriquealberto.Lectores.LectorMapa;
 import com.enriquealberto.interfaces.Observer;
 

@@ -209,7 +209,7 @@ public class Juego {
                     if (mapaActual.getNivel() == 3 || mapaActual.getNivel() == 5) {
                         // Verificar si la colisión es contra una pared
                         if (xNueva >= 0 && xNueva < MatrizMapa[0].length && yNueva >= 0 && yNueva < MatrizMapa.length) {
-                            if (MatrizMapa[yNueva][xNueva] == 1) { // 1 representa una pared
+                            if (MatrizMapa[yNueva][xNueva] == 1) { 
                                 int vidaPerdida = (mapaActual.getNivel() == 3) ? 1 : 2; // 1 vida en nivel 3, 2 vidas en
                                                                                         // nivel 5
                                 heroe.setVida(heroe.getVida() - vidaPerdida);

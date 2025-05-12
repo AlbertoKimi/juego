@@ -44,7 +44,7 @@ public class Enemigo extends Personaje implements Cloneable, Interaccion {
             if (enemigo.getAtaque() > heroe.getDefensa()) {
                 // Si el ataque del enemigo es mayor que la defensa del héroe
                 dañoSobrante = enemigo.getAtaque() - heroe.getDefensa();
-                heroe.setDefensa(0); // La defensa del héroe pasa a 0
+                heroe.setDefensa(0); 
                 if (dañoSobrante > 0) {
                     System.out.println("La defensa del héroe ha sido destruida. Daño sobrante: " + dañoSobrante);
                     heroe.setVida(heroe.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
@@ -60,7 +60,7 @@ public class Enemigo extends Personaje implements Cloneable, Interaccion {
 
             } else if (enemigo.getAtaque() == heroe.getDefensa()) {
                 // Si el ataque del enemigo es igual a la defensa del héroe
-                heroe.setDefensa(0); // La defensa del héroe pasa a 0
+                heroe.setDefensa(0); 
                 System.out.println("La defensa del héroe ha sido destruida. No hay daño sobrante.");
                 System.out.println("Vida restante del héroe: " + heroe.getVida());
             } else {

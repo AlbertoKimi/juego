@@ -16,7 +16,7 @@ import javafx.util.Duration;
 public class PortadaControlador {
 
     @FXML
-    private Label mensaje; // Label que mostrará "PULSA ENTER"
+    private Label mensaje; 
 
     @FXML
     private MediaView mediaView;

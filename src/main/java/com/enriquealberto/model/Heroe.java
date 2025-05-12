@@ -1,34 +1,15 @@
 package com.enriquealberto.model;
 
-import java.util.ArrayList;
+
 import com.enriquealberto.interfaces.Interaccion;
 
-import com.enriquealberto.interfaces.Observer;
-
 public class Heroe extends Personaje implements Interaccion,Cloneable {
-    /*private ArrayList<Observer> observers;*/
+  
 
     public Heroe(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje) {
         super(nombre, imagen, vida, ataque, defensa, velocidad, porcentaje);
-        /*this.observers = new ArrayList<>();*/
+        
     }
-
-    /*public void suscribe(Observer observer) {
-        observers.add(observer);
-    }
-
-    public void unsuscribe(Observer observer) {
-        observers.remove(observer);
-    }
-
-    public void notifyObservers() {
-        observers.forEach(x -> x.onChange());
-    }
-
-    public void setVida(int vida) {
-        this.vida = vida;
-        notifyObservers();
-    }*/
 
     @Override
     public void atacar(Heroe heroe, Enemigo enemigo) {
@@ -40,7 +21,7 @@ public class Heroe extends Personaje implements Interaccion,Cloneable {
             if (heroe.getAtaque() > enemigo.getDefensa()) {
                 // Si el ataque del héroe es mayor que la defensa del enemigo
                 dañoSobrante = heroe.getAtaque() - enemigo.getDefensa();
-                enemigo.setDefensa(0); // La defensa del enemigo pasa a 0
+                enemigo.setDefensa(0); 
                 if (dañoSobrante > 0) {
                     System.out.println("La defensa del enemigo ha sido destruida. Daño sobrante: " + dañoSobrante);
                     enemigo.setVida(enemigo.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
@@ -56,7 +37,7 @@ public class Heroe extends Personaje implements Interaccion,Cloneable {
 
             } else if (heroe.getAtaque() == enemigo.getDefensa()) {
                 // Si el ataque del héroe es igual a la defensa del enemigo
-                enemigo.setDefensa(0); // La defensa del enemigo pasa a 0
+                enemigo.setDefensa(0); 
                 System.out.println("La defensa del enemigo ha sido destruida. No hay daño sobrante.");
                 System.out.println("Vida restante del enemigo: " + enemigo.getVida());
             } else {
