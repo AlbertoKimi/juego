@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +26,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class SelectionControlador implements Observer{
@@ -46,6 +48,8 @@ public class SelectionControlador implements Observer{
     private Label c_nombre;
     @FXML
     private Label c_PERSONAJE;
+    @FXML
+    private ImageView fondoDecorado;
     @FXML
     private Label c_DIFICULTAD;
     @FXML
@@ -114,28 +118,21 @@ public class SelectionControlador implements Observer{
             juego.setNombre(newValue);
             System.out.println("Cadena actualizada a: " + newValue);
         });
-
         try {
-            String imagePath = getClass().getResource("/com/enriquealberto/imagenes/papiro.png").toExternalForm();
-            Image backgroundImage = new Image(imagePath);
-
-            BackgroundSize bgSize = new BackgroundSize(
-                    690, 300, false, false, false, false
-            );
-
-            BackgroundImage bgImage = new BackgroundImage(
-                    backgroundImage,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.CENTER,
-                    bgSize
-            );
-
-            formBackground.setBackground(new Background(bgImage));
-
+            Image imagen = new Image(getClass().getResource("/com/enriquealberto/imagenes/papiro.png").toExternalForm());
+            fondoDecorado.setImage(imagen);
+            fondoDecorado.setPreserveRatio(false);
+            fondoDecorado.fitWidthProperty().bind(formBackground.widthProperty().multiply(0.8));
+            fondoDecorado.fitHeightProperty().bind(formBackground.heightProperty().multiply(0.99));
+            formBackground.widthProperty().addListener((obs, oldVal, newVal) -> {
+                AnchorPane.setLeftAnchor(fondoDecorado, (formBackground.getWidth() - fondoDecorado.getFitWidth()) / 2);
+            });
+            formBackground.heightProperty().addListener((obs, oldVal, newVal) -> {
+                AnchorPane.setTopAnchor(fondoDecorado, (formBackground.getHeight() - fondoDecorado.getFitHeight()) / 2);
+            });
         } catch (Exception e) {
-            System.err.println("Error cargando imagen de fondo: " + e.getMessage());
-            formBackground.setStyle("-fx-background-color: rgba(255,0,0,0.3);");
+            System.err.println("Error cargando fondo decorado: " + e.getMessage());
+            e.printStackTrace();
         }
         start.setOnAction(event -> {
             // Verificar que todos los campos estén completados

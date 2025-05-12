@@ -53,6 +53,8 @@ public class EstadisticaControlador implements Observer {
 
         cargarPersonajes();
         cargarVidas();
+        AnchorPane.setLeftAnchor(cont_principal, 0.0);
+        AnchorPane.setRightAnchor(cont_principal, 0.0);
     }
 
     public void cargarPersonajes() {
