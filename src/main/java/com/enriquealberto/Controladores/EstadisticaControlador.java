@@ -1,34 +1,38 @@
 package com.enriquealberto.Controladores;
 
+import com.enriquealberto.model.Personaje;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
-import java.net.URL;
-
+import java.util.*;
 
 import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Heroe;
-
 import com.enriquealberto.model.Juego;
-import javafx.scene.shape.Sphere;
 
 public class EstadisticaControlador implements Observer {
+
     @FXML
     AnchorPane anchorPane;
 
-    VBox vBox;
-    Label titulo;
+    @FXML
+    VBox cont_principal;
+
+    private VBox contenedorJugador;
+    private VBox contenedorVidas;
+
     private Juego juego;
+
+    // Caché de imágenes
+    private final Map<String, Image> imagenesCache = new HashMap<>();
+
     @FXML
     public void initialize() {
         juego = Juego.getInstance();
@@ -36,34 +40,38 @@ public class EstadisticaControlador implements Observer {
             System.err.println("ERROR: El héroe no ha sido inicializado.");
             return;
         }
+
         juego.suscribe(this);
 
-        vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.setPadding(new Insets(7));
-        vBox.setAlignment(Pos.CENTER);
+        // Inicializar contenedores
+        contenedorJugador = new VBox(10);
+        contenedorJugador.setAlignment(Pos.CENTER);
+        contenedorJugador.setPadding(new Insets(10));
 
-        titulo = new Label();
-        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        contenedorVidas = new VBox(5);
+        contenedorVidas.setAlignment(Pos.TOP_LEFT);
+        contenedorVidas.setPadding(new Insets(5));
 
-        vBox.getChildren().add(titulo);
-        anchorPane.getChildren().add(vBox);
+        cont_principal.getChildren().addAll(contenedorJugador, contenedorVidas);
+
         cargarPersonajes();
-
+        cargarVidas();
     }
 
     public void cargarPersonajes() {
-        vBox.getChildren().clear();
+        contenedorJugador.getChildren().clear();
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/m_perso.fxml"));
             VBox personajeBox = loader.load();
+
             Label nombre = (Label) personajeBox.lookup("#p_nombre");
             ImageView foto = (ImageView) personajeBox.lookup("#p_foto");
 
+            nombre.setText(juego.getJugador().getNombre());
 
             if (juego.getJugador().getImagen() != null) {
-                foto.setImage(new Image(getClass().getResource("/" + juego.getJugador().getImagen()).toExternalForm()));
+                foto.setImage(cargarImagen("/" + juego.getJugador().getImagen()));
             }
 
             asignarAtributo(personajeBox, "vf", juego.getJugador().getVida(), "/com/enriquealberto/imagenes/vida.png");
@@ -71,90 +79,131 @@ public class EstadisticaControlador implements Observer {
             asignarAtributo(personajeBox, "df", juego.getJugador().getDefensa(), "/com/enriquealberto/imagenes/defensa.png");
             asignarAtributo(personajeBox, "sf", juego.getJugador().getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
 
-            vBox.getChildren().add(personajeBox);
-
+            contenedorJugador.getChildren().add(personajeBox);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void cargarVidas() {
+
+        List<Personaje> personajes = juego.getEntidades();
+        contenedorVidas.getChildren().clear();
+        System.out.println("→ Héroes cargados: " + personajes.size());
+        for (Personaje h : personajes) {
+            System.out.println("   - " + h.getNombre() + " (vida: " + h.getVida() + ")");
+        }
+
+        for (Personaje p : personajes) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/min_perso.fxml"));
+                HBox personajeBox = loader.load();
+
+                ImageView foto = (ImageView) personajeBox.lookup("#im_per");
+                if (p.getImagen() != null) {
+                    foto.setImage(cargarImagen("/" + p.getImagen()));
+                }
+
+                foto.setFitWidth(40);  // Reducido
+                foto.setFitHeight(40);
+
+                Image icono = cargarImagen("/com/enriquealberto/imagenes/vida.png");
+
+                HBox corazones = new HBox(3);
+                corazones.setAlignment(Pos.CENTER_LEFT);
+
+                if (p.getVida() <= 5) {
+                    for (int i = 0; i < p.getVida(); i++) {
+                        ImageView img = new ImageView(icono);
+                        img.setFitWidth(16);
+                        img.setFitHeight(16);
+                        corazones.getChildren().add(img);
+                    }
+                } else {
+                    ImageView img = new ImageView(icono);
+                    img.setFitWidth(16);
+                    img.setFitHeight(16);
+                    Label contador = new Label("×" + p.getVida());
+                    contador.setStyle("-fx-font-size: 14px; -fx-text-fill: black;");
+                    corazones.getChildren().addAll(img, contador);
+                }
+
+                personajeBox.getChildren().add(corazones);
+                contenedorVidas.getChildren().add(personajeBox);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Image cargarImagen(String ruta) {
+        return imagenesCache.computeIfAbsent(ruta, r -> new Image(getClass().getResource(r).toExternalForm()));
     }
 
     private void asignarAtributo(VBox personajeBox, String prefijo, int cantidad, String iconoRuta) {
-        // Mapeo de prefijos a nombres completos de atributos
         String nombreAtributo;
-        switch(prefijo) {
-            case "vf": nombreAtributo = "vida"; break;
-            case "af": nombreAtributo = "ataque"; break;
-            case "df": nombreAtributo = "defensa"; break;
-            case "sf": nombreAtributo = "velocidad"; break;
+        switch (prefijo) {
+            case "vf":
+                nombreAtributo = "vida";
+                break;
+            case "af":
+                nombreAtributo = "ataque";
+                break;
+            case "df":
+                nombreAtributo = "defensa";
+                break;
+            case "sf":
+                nombreAtributo = "velocidad";
+                break;
             default:
-                System.err.println("Prefijo no reconocido: " + prefijo);
-                return;
+                nombreAtributo = null;
+                break;
         }
 
-        // Buscamos el contenedor padre (HBox que contiene la etiqueta y el contenedor de imágenes)
+        if (nombreAtributo == null) return;
+
         HBox contenedorPadre = (HBox) personajeBox.lookup("#p_" + nombreAtributo);
-        if (contenedorPadre == null) {
-            System.err.println("No se encontró el contenedor padre para: p_" + nombreAtributo);
-            return;
-        }
-
-        // Buscamos el contenedor de imágenes (HBox dentro del contenedor padre)
         HBox contenedorImagenes = (HBox) personajeBox.lookup("#" + prefijo);
-        if (contenedorImagenes == null) {
-            System.err.println("No se encontró el contenedor de imágenes para: " + prefijo);
-            return;
-        }
 
-        // Limpiamos las imágenes existentes (excepto la etiqueta)
+        if (contenedorPadre == null || contenedorImagenes == null) return;
+
         contenedorImagenes.getChildren().removeIf(node -> node instanceof ImageView);
 
-        // Caso especial para la vida (vf)
         if (prefijo.equals("vf")) {
             manejarVidaMultiFila(contenedorPadre, contenedorImagenes, cantidad, iconoRuta);
         } else {
-            // Para otros atributos, comportamiento normal
             agregarIconos(contenedorImagenes, cantidad, iconoRuta);
         }
     }
 
     private void manejarVidaMultiFila(HBox contenedorPadre, HBox primeraFila, int cantidad, String iconoRuta) {
-        // Limpiar el contenedor de imágenes
         primeraFila.getChildren().clear();
+        Image icono = cargarImagen(iconoRuta);
 
-        // Cargar la imagen del corazón
-        Image icono = new Image(getClass().getResource(iconoRuta).toExternalForm());
-
-        // Mostrar siempre al menos 1 corazón
-        ImageView img = new ImageView(icono);
-        img.setFitWidth(25);
-        img.setFitHeight(25);
-        primeraFila.getChildren().add(img);
-
-        // Si la vida es 5 o menos, mostrar todos los corazones
         if (cantidad <= 5) {
-            for (int i = 1; i < cantidad; i++) {
-                ImageView corazonExtra = new ImageView(icono);
-                corazonExtra.setFitWidth(25);
-                corazonExtra.setFitHeight(25);
-                primeraFila.getChildren().add(corazonExtra);
+            for (int i = 0; i < cantidad; i++) {
+                ImageView img = new ImageView(icono);
+                img.setFitWidth(20);
+                img.setFitHeight(20);
+                primeraFila.getChildren().add(img);
             }
-        }
-        // Si la vida es más de 5, mostrar el contador
-        else {
+        } else {
+            ImageView img = new ImageView(icono);
+            img.setFitWidth(20);
+            img.setFitHeight(20);
             Label contador = new Label("×" + cantidad);
-            contador.setStyle("-fx-text-fill: black; -fx-font-family: 'Hoefler Text Black'; -fx-font-size: 16px;");
-            primeraFila.getChildren().add(contador);
+            contador.setStyle("-fx-text-fill: black; -fx-font-size: 14px;");
+            primeraFila.getChildren().addAll(img, contador);
         }
     }
 
     private void agregarIconos(HBox contenedor, int cantidad, String iconoRuta) {
-        Image icono = new Image(getClass().getResource(iconoRuta).toExternalForm());
-
+        Image icono = cargarImagen(iconoRuta);
         for (int i = 0; i < cantidad; i++) {
             ImageView img = new ImageView(icono);
-            img.setFitWidth(25);
-            img.setFitHeight(25);
+            img.setFitWidth(20);
+            img.setFitHeight(20);
             contenedor.getChildren().add(img);
         }
     }
@@ -162,5 +211,6 @@ public class EstadisticaControlador implements Observer {
     @Override
     public void onChange() {
         cargarPersonajes();
+        cargarVidas();
     }
 }
