@@ -7,44 +7,54 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+/**
+ * Controlador principal que gestiona el contenedor de las vistas del juego.
+ * Se encarga de cargar y mostrar dinámicamente los paneles de juego y estadísticas.
+ */
 public class ContenedorControlador {
 
     @FXML
-    private AnchorPane juego;
-
+    private AnchorPane juego;         // Panel contenedor para la vista principal del juego
     @FXML
-    private AnchorPane estadistica;
+    private AnchorPane estadistica;  // Panel contenedor para la vista de estadísticas
 
-    // Este método carga los paneles de Juego y Estadísticas solo cuando se llama
+    /**
+     * Carga y muestra los paneles de juego y estadísticas dentro del contenedor principal.
+     * Este método debe llamarse explícitamente después de inicializar el controlador.
+     *
+     * @throws RuntimeException Si ocurre un error al cargar los archivos FXML
+     */
     public void cargarPaneles() {
         try {
-            // Cargar Juego.fxml 
-            FXMLLoader juegoLoader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/Juego.fxml"));
-            Parent juegoRoot = juegoLoader.load();
+            // Cargar y configurar el panel de juego
+            cargarPanel("/com/enriquealberto/vistas/Juego.fxml", juego);
 
-            // Ajustar para que ocupe todo el espacio
-            AnchorPane.setTopAnchor(juegoRoot, 0.0);
-            AnchorPane.setBottomAnchor(juegoRoot, 0.0);
-            AnchorPane.setLeftAnchor(juegoRoot, 0.0);
-            AnchorPane.setRightAnchor(juegoRoot, 0.0);
-
-            juego.getChildren().setAll(juegoRoot);
-
-            // Cargar Estadisticas.fxml
-            FXMLLoader estLoader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/estadisticas.fxml"));
-            Parent estRoot = estLoader.load();
-
-          
-            AnchorPane.setTopAnchor(estRoot, 0.0);
-            AnchorPane.setBottomAnchor(estRoot, 0.0);
-            AnchorPane.setLeftAnchor(estRoot, 0.0);
-            AnchorPane.setRightAnchor(estRoot, 0.0);
-
-            estadistica.getChildren().setAll(estRoot);
+            // Cargar y configurar el panel de estadísticas
+            cargarPanel("/com/enriquealberto/vistas/estadisticas.fxml", estadistica);
 
         } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Error al cargar los paneles internos del contenedor.");
+            System.err.println("Error crítico al cargar los paneles internos: " + e.getMessage());
+            throw new RuntimeException("Error al inicializar las vistas del juego", e);
         }
+    }
+
+    /**
+     * Método helper para cargar un archivo FXML en un panel contenedor.
+     *
+     * @param fxmlPath Ruta del archivo FXML a cargar
+     * @param contenedor Panel AnchorPane donde se insertará la vista cargada
+     * @throws IOException Si hay un error al leer el archivo FXML
+     */
+    private void cargarPanel(String fxmlPath, AnchorPane contenedor) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent root = loader.load();
+
+        // Configurar anclajes para que ocupe todo el espacio disponible
+        AnchorPane.setTopAnchor(root, 0.0);
+        AnchorPane.setBottomAnchor(root, 0.0);
+        AnchorPane.setLeftAnchor(root, 0.0);
+        AnchorPane.setRightAnchor(root, 0.0);
+
+        contenedor.getChildren().setAll(root);
     }
 }

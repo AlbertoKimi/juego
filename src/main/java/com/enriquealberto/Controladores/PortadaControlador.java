@@ -2,7 +2,6 @@ package com.enriquealberto.Controladores;
 
 import com.enriquealberto.EscenaID;
 import com.enriquealberto.ManagerEscenas;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -13,83 +12,113 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
+/**
+ * Controlador para la pantalla de portada del juego.
+ * Maneja la reproducción del video de fondo, efectos visuales
+ * y la transición a la siguiente pantalla al presionar Enter.
+ */
 public class PortadaControlador {
 
     @FXML
-    private Label mensaje; 
+    private Label mensaje; // Label con mensaje interactivo que parpadea
 
     @FXML
-    private MediaView mediaView;
+    private MediaView mediaView; // Componente para mostrar el video de fondo
 
     @FXML
-    private AnchorPane portada; // Este es el AnchorPane que contiene todos los elementos
+    private AnchorPane portada; // Panel contenedor principal
 
+    /**
+     * Método de inicialización llamado automáticamente por JavaFX.
+     * Configura todos los elementos multimedia y efectos visuales.
+     */
     @FXML
     public void initialize() {
-        // Cargar video desde resources
-        String videoPath = getClass().getResource("/com/enriquealberto/videos/fondo.mp4").toExternalForm();
+        configurarVideoFondo();
+        configurarEstilos();
+        configurarParpadeoTexto();
+        configurarPosicionTexto();
+        configurarEventosTeclado();
+    }
 
+    /**
+     * Configura el video de fondo con reproducción en bucle.
+     */
+    private void configurarVideoFondo() {
+        String videoPath = getClass().getResource("/com/enriquealberto/videos/fondo.mp4").toExternalForm();
         Media media = new Media(videoPath);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetición infinita
-        mediaPlayer.setMute(true); // Silenciar
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setMute(true);
         mediaPlayer.play();
 
-        // Asignar el MediaPlayer a la MediaView
         mediaView.setMediaPlayer(mediaPlayer);
-        mediaView.setPreserveRatio(false); // Que se estire al tamaño completo
+        mediaView.setPreserveRatio(false);
 
-        // Ajustar tamaño del video según el tamaño de la ventana
         mediaView.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 mediaView.fitWidthProperty().bind(newScene.widthProperty());
                 mediaView.fitHeightProperty().bind(newScene.heightProperty());
             }
         });
+    }
 
-        // Cargar el archivo CSS
+    /**
+     * Carga los estilos CSS para la pantalla.
+     */
+    private void configurarEstilos() {
         portada.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                newScene.getStylesheets().add(getClass().getResource("/com/enriquealberto/css/Portada_estilo.css").toExternalForm());
+                newScene.getStylesheets().add(
+                        getClass().getResource("/com/enriquealberto/css/Portada_estilo.css").toExternalForm()
+                );
             }
         });
+    }
 
-        // Configurar el parpadeo del Label
+    /**
+     * Configura el efecto de parpadeo para el mensaje de bienvenida.
+     */
+    private void configurarParpadeoTexto() {
         Timeline timeline = new Timeline(
-            new KeyFrame(Duration.seconds(2), e -> mensaje.setVisible(false)),
-            new KeyFrame(Duration.seconds(1), e -> mensaje.setVisible(true))
+                new KeyFrame(Duration.seconds(2), e -> mensaje.setVisible(false)),
+                new KeyFrame(Duration.seconds(1), e -> mensaje.setVisible(true))
         );
-        timeline.setCycleCount(Timeline.INDEFINITE); // Repetir indefinidamente
+        timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
 
-        // Centrar el Label en la ventana
-        // Centrar el Label correctamente (sin ajustes manuales)
+    /**
+     * Centra dinámicamente el texto cuando cambia el tamaño de la ventana.
+     */
+    private void configurarPosicionTexto() {
         portada.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -210);
+<<<<<<< HEAD
+            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -30);
+=======
+            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -20);
+>>>>>>> main
         });
 
         portada.heightProperty().addListener((obs, oldHeight, newHeight) -> {
             mensaje.setLayoutY((newHeight.doubleValue() - mensaje.getHeight()) / 2 +200);
         });
+    }
 
-        // Detectar la pulsación de la tecla Enter en la escena
+    /**
+     * Configura el evento para cambiar de pantalla al presionar Enter.
+     */
+    private void configurarEventosTeclado() {
         portada.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.setOnKeyPressed(event -> {
-                    System.out.println("Tecla presionada: " + event.getCode());
-                    switch (event.getCode()) {
-                        case ENTER:
-                            System.out.println("Cambiando a la escena HISTORIA...");
-                            ManagerEscenas.getInstance().loadScene(EscenaID.HISTORIA);
-                            break;
-                        default:
-                            break;
+                    if (event.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                        ManagerEscenas.getInstance().loadScene(EscenaID.HISTORIA);
                     }
                 });
             }
         });
 
-        // Solicitar el enfoque para que el evento de teclado funcione
         portada.setFocusTraversable(true);
         portada.requestFocus();
     }

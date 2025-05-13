@@ -5,11 +5,32 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 /**
- * JavaFX App
+ * Clase principal de la aplicación que extiende de {@link javafx.application.Application}.
+ * Esta clase inicializa la ventana principal y configura el gestor de escenas.
+ *
+ * @author Enrique
+ * @author Alberto
  */
 public class App extends Application {
 
+    /**
+     * Método principal que inicia la aplicación JavaFX.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados)
+     */
+    public static void main(String[] args) {
+        launch();
+    }
+
+    /**
+     * Método de inicio de la aplicación JavaFX. Configura la ventana principal,
+     * inicializa el gestor de escenas y registra todas las escenas disponibles.
+     *
+     * @param stage El escenario principal proporcionado por JavaFX
+     * @throws IOException Si ocurre un error al cargar las escenas
+     */
     @Override
     public void start(Stage stage) throws IOException {
         // Establece el título de la ventana
@@ -31,9 +52,5 @@ public class App extends Application {
 
         // Cargar la PORTADA primero (pantalla inicial)
         sm.loadScene(EscenaID.PORTADA);
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

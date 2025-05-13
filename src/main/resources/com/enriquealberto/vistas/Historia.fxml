@@ -2,5 +2,12 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 
+<!--
+Vista correspondiente a la sección "Historia" del juego o aplicación.
+Controlador asociado: com.enriquealberto.Controladores.HistoriaControlador
+
+Actualmente contiene solo un AnchorPane sin hijos.
+Es recomendable añadir elementos gráficos (texto, imágenes, etc.) desde FXML o cargarlos dinámicamente desde el controlador.
+-->
 
 <AnchorPane fx:id="historia" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.HistoriaControlador" />
