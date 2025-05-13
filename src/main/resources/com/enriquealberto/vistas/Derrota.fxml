@@ -6,22 +6,27 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
+<!-- Root AnchorPane que contiene toda la escena de derrota -->
 <AnchorPane fx:id="portada" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.DerrotaControlador">
    <children>
-      <!-- Vista de video al fondo -->
+      <!-- MediaView para el video de fondo que cubre toda la pantalla -->
       <MediaView fx:id="mediaView" fitHeight="800.0" fitWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+
+      <!-- Label con el mensaje de derrota centrado -->
       <Label layoutX="320.0" layoutY="290.0" prefHeight="77.0" prefWidth="506.0" text="¡HAS PERDIDO! " textFill="WHITE">
          <font>
             <Font name="Bell MT" size="66.0" />
          </font>
       </Label>
 
-      <!-- Botón centrado sobre el video -->
+      <!-- Botón para reiniciar el juego -->
       <Button fx:id="botonVolverJugar" layoutX="280.0" layoutY="520.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="190.0" text="VOLVER A JUGAR">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+
+      <!-- Botón para volver a la selección de héroe -->
       <Button fx:id="botonSelect" layoutX="650.0" layoutY="520.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="190.0" text="SELECCIÓN HÉROE">
          <font>
             <Font size="18.0" />

@@ -9,6 +9,14 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * Clase singleton que gestiona las escenas/pantallas de la aplicación.
+ * Permite cargar, almacenar y cambiar entre diferentes escenas del juego,
+ * así como mantener referencia a sus controladores.
+ *
+ * @author Enrique
+ * @author Alberto
+ */
 public class ManagerEscenas {
     private static ManagerEscenas instance;
     private Stage stage; // La ventana principal de la aplicación
@@ -16,23 +24,43 @@ public class ManagerEscenas {
     private HashMap<EscenaID, Object> sceneControllers; // Mapa para almacenar los controladores de las escenas
     private EscenaID currentScene; // Variable para almacenar la escena actualmente activa
 
+    /**
+     * Constructor privado para implementar el patrón Singleton.
+     */
     private ManagerEscenas() {
         scenes = new HashMap<>();
         sceneControllers = new HashMap<>();
     }
 
-    public static ManagerEscenas getInstance(){
+    /**
+     * Obtiene la instancia única del ManagerEscenas (Singleton).
+     *
+     * @return La instancia única del ManagerEscenas
+     */
+    public static ManagerEscenas getInstance() {
         if (instance == null) {
             instance = new ManagerEscenas();
         }
         return instance;
     }
 
-    public void init(Stage stage){
+    /**
+     * Inicializa el ManagerEscenas con el Stage principal.
+     *
+     * @param stage El Stage principal de la aplicación
+     */
+    public void init(Stage stage) {
         this.stage = stage;
     }
 
-    public void setScene(EscenaID sceneID, String fxml){
+    /**
+     * Carga y registra una nueva escena en el manager.
+     *
+     * @param sceneID Identificador único de la escena
+     * @param fxml Nombre del archivo FXML (sin extensión) que define la escena
+     * @throws IllegalStateException Si no se encuentra el archivo FXML especificado
+     */
+    public void setScene(EscenaID sceneID, String fxml) {
         Screen screen = Screen.getPrimary();
         double screenWidth = screen.getBounds().getWidth();
         double screenHeight = screen.getBounds().getHeight();
@@ -43,7 +71,7 @@ public class ManagerEscenas {
                 throw new IllegalStateException("No se pudo encontrar el archivo FXML: " + fxml + ".fxml");
             }
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, screenWidth * 0.75, screenHeight * 0.88);
+            Scene scene = new Scene(root, screenWidth * 0.83, screenHeight * 0.90);
             scene.getStylesheets().add(App.class.getResource("/com/enriquealberto/css/styles.css").toExternalForm());
             scenes.put(sceneID, scene); // Almacena la escena en el mapa
 
@@ -56,34 +84,64 @@ public class ManagerEscenas {
         }
     }
 
-    public void removeScene(EscenaID sceneID){
+    /**
+     * Elimina una escena y su controlador del manager.
+     *
+     * @param sceneID Identificador de la escena a eliminar
+     */
+    public void removeScene(EscenaID sceneID) {
         scenes.remove(sceneID);
         sceneControllers.remove(sceneID); // Eliminar también el controlador si se elimina la escena
     }
 
+    /**
+     * Carga y muestra una escena previamente registrada.
+     *
+     * @param sceneID Identificador de la escena a cargar
+     */
     public void loadScene(EscenaID sceneID) {
-        if (scenes.containsKey(sceneID)){
+        if (scenes.containsKey(sceneID)) {
             stage.setScene(scenes.get(sceneID)); // Establece la escena en la ventana principal
             stage.show();
             currentScene = sceneID; // Actualiza la escena actualmente activa
         }
     }
 
-    public Scene getScene(EscenaID sceneID){
+    /**
+     * Obtiene una escena registrada.
+     *
+     * @param sceneID Identificador de la escena a obtener
+     * @return La escena correspondiente al ID, o null si no existe
+     */
+    public Scene getScene(EscenaID sceneID) {
         return scenes.get(sceneID); // Obtiene la escena
     }
 
-    // Obtener el controlador de una escena
-    public Object getController(EscenaID sceneID){
+    /**
+     * Obtiene el controlador asociado a una escena.
+     *
+     * @param sceneID Identificador de la escena
+     * @return El controlador de la escena, o null si no existe
+     */
+    public Object getController(EscenaID sceneID) {
         return sceneControllers.get(sceneID); // Devuelve el controlador de la escena
     }
 
+    /**
+     * Obtiene el Stage principal de la aplicación.
+     *
+     * @return El Stage principal
+     */
     public Stage getStage() {
         return this.stage;
     }
 
+    /**
+     * Obtiene el identificador de la escena actualmente activa.
+     *
+     * @return El identificador de la escena actual
+     */
     public EscenaID getCurrentScene() {
-        // Devuelve la escena actualmente activa
-        return currentScene; // Asegúrate de tener una variable que almacene la escena actual
+        return currentScene;
     }
 }

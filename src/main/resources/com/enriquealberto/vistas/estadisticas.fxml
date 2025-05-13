@@ -4,25 +4,43 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.EstadisticaControlador">
+<!--
+Vista de estadísticas de jugador.
+Controlador asociado: com.enriquealberto.Controladores.EstadisticaControlador
+-->
 
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.EstadisticaControlador">
    <children>
+      <!-- Contenedor principal que superpone elementos (fondo + contenido) -->
       <StackPane fx:id="rootStack" alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
-         <!-- Imagen de fondo -->
+         <!-- Imagen de fondo decorativa que ocupa todo el espacio -->
          <ImageView fx:id="fondoDecorado" preserveRatio="false" />
-         <!-- Contenido encima del fondo -->
+
+         <!-- Contenedor principal del contenido de estadísticas -->
          <VBox fx:id="cont_principal" alignment="TOP_CENTER" maxWidth="600" spacing="20.0">
+
+            <!-- Etiqueta con el nombre del jugador en la parte superior -->
             <Label id="titulo" fx:id="lblTituloJugador" text="Nombre del Jugador">
                <VBox.margin>
                   <Insets top="15.0" />
-               </VBox.margin></Label>
+               </VBox.margin>
+            </Label>
+
+            <!-- Contenedor para mostrar información general del jugador (nombre, estadísticas básicas, etc.) -->
             <VBox fx:id="contenedorJugador" alignment="CENTER" spacing="10.0" />
+
+            <!-- Zona para mostrar estadísticas detalladas de entidades como vidas, ataques, etc. -->
             <VBox fx:id="zonaEntidades" alignment="CENTER" spacing="10.0">
-               <VBox fx:id="contenedorVidas" spacing="8.0" />
+
+               <!-- Contenedor de elementos gráficos representando vidas u otras estadísticas (usando FlowPane para diseño adaptable) -->
+               <FlowPane fx:id="contenedorVidas" hgap="10" vgap="10" prefWrapLength="520" />
+
+               <!-- Márgenes alrededor de la zona de estadísticas -->
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>

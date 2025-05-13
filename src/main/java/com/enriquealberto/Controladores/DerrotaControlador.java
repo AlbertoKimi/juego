@@ -11,83 +11,128 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.layout.AnchorPane;
 
-
-
+/**
+ * Controlador para la escena de derrota del juego.
+ * Maneja la visualización de un video de derrota y proporciona opciones
+ * para volver a jugar o regresar a la selección de personaje.
+ */
 public class DerrotaControlador {
     @FXML
-    private MediaView mediaView;
-
+    private MediaView mediaView;       // Componente para mostrar el video de derrota
     @FXML
-    private AnchorPane portada;
-
+    private AnchorPane portada;        // Panel contenedor principal
     @FXML
-    Button botonVolverJugar;
-
+    private Button botonVolverJugar;   // Botón para reiniciar el juego
     @FXML
-    Button botonSelect;
+    private Button botonSelect;        // Botón para regresar a selección de personaje
 
+    /**
+     * Método de inicialización llamado automáticamente por JavaFX.
+     * Configura los estilos CSS, carga el video de derrota y establece los manejadores de eventos.
+     */
     @FXML
     public void initialize() {
-        // Esperar a que la escena esté disponible
+        configurarEstilosCSS();
+        configurarVideoDerrota();
+        configurarAccionesBotones();
+    }
+
+    /**
+     * Configura los estilos CSS para la escena.
+     * Espera a que la escena esté disponible antes de aplicar los estilos.
+     */
+    private void configurarEstilosCSS() {
         portada.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 URL cssUrl = getClass().getResource("/com/enriquealberto/css/botones_estilo.css");
                 if (cssUrl == null) {
-                    System.err.println("El archivo CSS no se encontró en la ruta especificada.");
+                    System.err.println("Error: Archivo CSS no encontrado en /com/enriquealberto/css/botones_estilo.css");
                 } else {
-                    portada.getScene().getStylesheets().add(cssUrl.toExternalForm());
+                    newScene.getStylesheets().add(cssUrl.toExternalForm());
                 }
             }
         });
+    }
 
-        // Cargar video
-        String videoPath = getClass().getResource("/com/enriquealberto/videos/Derrota.mp4").toExternalForm();
+    /**
+     * Configura y reproduce el video de derrota.
+     * El video se ajusta automáticamente al tamaño de la ventana y se reproduce en bucle.
+     */
+    private void configurarVideoDerrota() {
+        try {
+            String videoPath = getClass().getResource("/com/enriquealberto/videos/Derrota.mp4").toExternalForm();
+            Media media = new Media(videoPath);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-        Media media = new Media(videoPath);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
-        mediaPlayer.setMute(true); 
-        mediaPlayer.play();
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setMute(true);
+            mediaPlayer.play();
 
-        // Asignar el MediaPlayer a la MediaView
-        mediaView.setMediaPlayer(mediaPlayer);
-        mediaView.setPreserveRatio(false); 
+            mediaView.setMediaPlayer(mediaPlayer);
+            mediaView.setPreserveRatio(false);
 
-        // Ajustar tamaño del video según el tamaño de la ventana
-        mediaView.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
-                mediaView.fitWidthProperty().bind(newScene.widthProperty());
-                mediaView.fitHeightProperty().bind(newScene.heightProperty());
-            }
-        });
+            // Ajuste responsive del video
+            mediaView.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    mediaView.fitWidthProperty().bind(newScene.widthProperty());
+                    mediaView.fitHeightProperty().bind(newScene.heightProperty());
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Error al cargar el video de derrota: " + e.getMessage());
+        }
+    }
 
+    /**
+     * Configura las acciones para los botones de la interfaz.
+     * - botonVolverJugar: Reinicia el juego y carga la escena principal
+     * - botonSelect: Regresa a la pantalla de selección de personaje
+     */
+    private void configurarAccionesBotones() {
+        // Acción para reiniciar el juego
         botonVolverJugar.setOnAction(event -> {
             ManagerEscenas manager = ManagerEscenas.getInstance();
+            reiniciarJuego(manager);
 
-            Juego.getInstance().resetearJuego(); // Limpia estado anterior
-
+            // Recargar escena principal
             manager.removeScene(EscenaID.CONTENEDOR);
             manager.setScene(EscenaID.CONTENEDOR, "contenedor");
             manager.loadScene(EscenaID.CONTENEDOR);
 
-            // Cargar paneles internos del contenedor
-            ContenedorControlador controladorContenedor = (ContenedorControlador) manager
-                    .getController(EscenaID.CONTENEDOR);
-            if (controladorContenedor != null) {
-                controladorContenedor.cargarPaneles();
-            } else {
-                System.err.println("No se pudo obtener el controlador del contenedor.");
-            }
+            // Cargar paneles internos
+            cargarPanelesContenedor(manager);
         });
 
+        // Acción para regresar a selección de personaje
         botonSelect.setOnAction(event -> {
             ManagerEscenas manager = ManagerEscenas.getInstance();
-
-            Juego.getInstance().resetearJuego();
+            reiniciarJuego(manager);
 
             manager.removeScene(EscenaID.SELECTION);
             manager.setScene(EscenaID.SELECTION, "selection");
             manager.loadScene(EscenaID.SELECTION);
         });
+    }
+
+    /**
+     * Reinicia el estado del juego.
+     */
+    private void reiniciarJuego(ManagerEscenas manager) {
+        Juego.getInstance().resetearJuego();
+    }
+
+    /**
+     * Carga los paneles internos del contenedor principal.
+     *
+     * @param manager Instancia del administrador de escenas
+     */
+    private void cargarPanelesContenedor(ManagerEscenas manager) {
+        ContenedorControlador controladorContenedor = (ContenedorControlador) manager
+                .getController(EscenaID.CONTENEDOR);
+        if (controladorContenedor != null) {
+            controladorContenedor.cargarPaneles();
+        } else {
+            System.err.println("Error: Controlador del contenedor no disponible");
+        }
     }
 }

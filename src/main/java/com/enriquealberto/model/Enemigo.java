@@ -2,38 +2,91 @@ package com.enriquealberto.model;
 
 import com.enriquealberto.interfaces.Interaccion;
 
-
+/**
+ * Clase que representa un enemigo en el juego, hereda de Personaje e implementa
+ * las interfaces Cloneable e Interaccion. Define el comportamiento y atributos
+ * específicos de los enemigos.
+ *
+ * @author Enrique
+ * @author Alberto
+ */
 public class Enemigo extends Personaje implements Cloneable, Interaccion {
 
-     private int t_enemigo;
-     private int percepcion;
+    private int t_enemigo; // Tipo de enemigo
+    private int percepcion; // Rango de percepción del enemigo
 
-    public Enemigo(String nombre, String imagen, int vida, int ataque, int defensa, int velocidad, int porcentaje, int t_enemigo, int percepcion) {
+    /**
+     * Constructor para crear un nuevo enemigo.
+     *
+     * @param nombre Nombre del enemigo
+     * @param imagen Ruta de la imagen del enemigo
+     * @param vida Puntos de vida del enemigo
+     * @param ataque Puntos de ataque del enemigo
+     * @param defensa Puntos de defensa del enemigo
+     * @param velocidad Velocidad del enemigo
+     * @param porcentaje Porcentaje de aparición del enemigo
+     * @param t_enemigo Tipo de enemigo
+     * @param percepcion Rango de percepción del enemigo
+     */
+    public Enemigo(String nombre, String imagen, int vida, int ataque, int defensa,
+                   int velocidad, int porcentaje, int t_enemigo, int percepcion) {
         super(nombre, imagen, vida, ataque, defensa, velocidad, porcentaje);
         this.t_enemigo = t_enemigo;
         this.percepcion = percepcion;
     }
 
-   public int getPercepcion() {
+    /**
+     * Obtiene el rango de percepción del enemigo.
+     *
+     * @return El valor de percepción del enemigo
+     */
+    public int getPercepcion() {
         return percepcion;
-   }
-   public void setPercepcion(int percepcion) {
-        this.percepcion = percepcion;
-   }
+    }
 
+    /**
+     * Establece el rango de percepción del enemigo.
+     *
+     * @param percepcion Nuevo valor de percepción
+     */
+    public void setPercepcion(int percepcion) {
+        this.percepcion = percepcion;
+    }
+
+    /**
+     * Establece los puntos de vida del enemigo.
+     *
+     * @param vida Nuevo valor de vida
+     */
     public void setVida(int vida) {
         this.vida = vida;
-
     }
+
+    /**
+     * Obtiene el tipo de enemigo.
+     *
+     * @return El tipo de enemigo
+     */
     public int getT_enemigo() {
         return t_enemigo;
     }
 
+    /**
+     * Establece el tipo de enemigo.
+     *
+     * @param t_enemigo Nuevo tipo de enemigo
+     */
     public void setT_enemigo(int t_enemigo) {
         this.t_enemigo = t_enemigo;
     }
 
-
+    /**
+     * Implementación del método de ataque definido en la interfaz Interaccion.
+     * Realiza un ataque contra un héroe, considerando defensa y vida.
+     *
+     * @param heroe El héroe que recibe el ataque
+     * @param enemigo El enemigo que realiza el ataque
+     */
     @Override
     public void atacar(Heroe heroe, Enemigo enemigo) {
         System.out.println("Atacando con " + enemigo.getNombre() + " con " + enemigo.getAtaque() + " de daño.");
@@ -44,7 +97,7 @@ public class Enemigo extends Personaje implements Cloneable, Interaccion {
             if (enemigo.getAtaque() > heroe.getDefensa()) {
                 // Si el ataque del enemigo es mayor que la defensa del héroe
                 dañoSobrante = enemigo.getAtaque() - heroe.getDefensa();
-                heroe.setDefensa(0); 
+                heroe.setDefensa(0);
                 if (dañoSobrante > 0) {
                     System.out.println("La defensa del héroe ha sido destruida. Daño sobrante: " + dañoSobrante);
                     heroe.setVida(heroe.getVida() - dañoSobrante); // Se resta el daño sobrante a la vida
@@ -60,7 +113,7 @@ public class Enemigo extends Personaje implements Cloneable, Interaccion {
 
             } else if (enemigo.getAtaque() == heroe.getDefensa()) {
                 // Si el ataque del enemigo es igual a la defensa del héroe
-                heroe.setDefensa(0); 
+                heroe.setDefensa(0);
                 System.out.println("La defensa del héroe ha sido destruida. No hay daño sobrante.");
                 System.out.println("Vida restante del héroe: " + heroe.getVida());
             } else {
@@ -80,7 +133,12 @@ public class Enemigo extends Personaje implements Cloneable, Interaccion {
         }
     }
 
-
+    /**
+     * Implementación del método clone para permitir la clonación de enemigos.
+     *
+     * @return Una copia del enemigo actual
+     * @throws AssertionError Si la clonación no es soportada
+     */
     @Override
     public Enemigo clone() {
         try {

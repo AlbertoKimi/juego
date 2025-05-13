@@ -20,22 +20,32 @@ import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+/**
+ * Controlador principal para la pantalla de juego.
+ * Maneja la visualización del mapa, movimiento de personajes y lógica de turnos.
+ * Implementa Observer para reaccionar a cambios en el estado del juego.
+ */
 public class JuegoControlador implements Observer {
-    @FXML
-    private StackPane rootStackPane; // Asegúrate de tener un StackPane en tu FXML con fx:id="rootStackPane"
-    @FXML
-    private ImageView fondoView;
 
-    GridPane gridPane;
-    GestorMapas gestorMapas;
-    VBox vbox;
-    Label titulo;
-    Juego juego;
+    // Elementos FXML inyectados
+    @FXML private StackPane rootStackPane;  // Panel raíz que contiene todos los elementos
+    @FXML private ImageView fondoView;      // Vista para la imagen de fondo
 
-    private Heroe heroe;
+    // Componentes internos
+    private GridPane gridPane;      // Grid para mostrar el mapa
+    private GestorMapas gestorMapas;// Gestor de mapas del juego
+    private VBox vbox;              // Contenedor vertical para título y grid
+    private Label titulo;           // Etiqueta para mostrar el nivel actual
+    private Juego juego;           // Referencia al modelo del juego
+    private Heroe heroe;            // Referencia al héroe controlado por el jugador
 
+    /**
+     * Método de inicialización llamado automáticamente por JavaFX.
+     * Configura los elementos visuales, eventos y estado inicial del juego.
+     */
     @FXML
     public void initialize() {
+        // Inicialización del modelo del juego
         juego = Juego.getInstance();
         heroe = juego.getJugador();
         if (heroe == null) {
@@ -43,50 +53,47 @@ public class JuegoControlador implements Observer {
             return;
         }
 
+        // Configuración del observer y entidades
         juego.suscribe(this);
         juego.iniciarentidades();
         gestorMapas = juego.getGestorMapas();
 
-        // Fondo
+        // Configuración del fondo
         Image fondo = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/fondojuego.png"));
         fondoView.setImage(fondo);
         fondoView.fitWidthProperty().bind(rootStackPane.widthProperty());
         fondoView.fitHeightProperty().bind(rootStackPane.heightProperty());
 
-        // Título
+        // Configuración del título del nivel
         titulo = new Label();
         titulo.getStyleClass().add("titulo-mapa");
 
-        // Grid
+        // Configuración del grid del mapa
         gridPane = new GridPane();
         gridPane.setPrefWidth(680);
         gridPane.setPrefHeight(680);
         gridPane.getStyleClass().add("grid-centro");
 
-        // VBox que contendrá título y grid
+        // Configuración del contenedor principal
         vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setAlignment(Pos.CENTER);
         vbox.getStyleClass().add("contenedor-juego");
-
-        // Asegurar que el VBox ocupe todo el espacio disponible
         vbox.setPrefWidth(Double.MAX_VALUE);
         vbox.setPrefHeight(Double.MAX_VALUE);
         vbox.setMaxWidth(Double.MAX_VALUE);
         vbox.setMaxHeight(Double.MAX_VALUE);
-
-        // Añadir título y grid al VBox
         vbox.getChildren().addAll(titulo, gridPane);
 
-        // Añadir VBox al StackPane
+        // Añadir al StackPane raíz
         rootStackPane.getChildren().add(vbox);
 
-        // Generar el mapa y configurar eventos
+        // Generación inicial del mapa
         generarMapa();
         pintarPersonajes();
         actualizarTurno();
 
-        // Eventos de teclado
+        // Configuración de eventos de teclado
         rootStackPane.setOnKeyPressed(event -> {
             Personaje actual = juego.getPersonajeActual();
             if (actual instanceof Heroe) { // Solo procesar teclas si es el turno del héroe
@@ -121,11 +128,15 @@ public class JuegoControlador implements Observer {
             }
         });
 
-        // Habilitar el foco en el AnchorPane para recibir eventos de teclado
+        // Habilitar el foco para eventos de teclado
         rootStackPane.setFocusTraversable(true);
         rootStackPane.requestFocus();
     }
 
+    /**
+     * Genera y muestra el mapa actual en el grid.
+     * Crea celdas para cada posición del mapa usando las imágenes correspondientes.
+     */
     public void generarMapa() {
         gridPane.getChildren().clear();
         gridPane.setHgap(0);
@@ -136,16 +147,17 @@ public class JuegoControlador implements Observer {
         int filas = matriz.length;
         int columnas = matriz[0].length;
 
-         // Actualizar el título del nivel
+        // Actualizar el título del nivel
         titulo.setText("NIVEL " + mapaActual.getNivel() + " : " + mapaActual.getNombre());
 
         double anchoCelda = Math.floor(gridPane.getPrefWidth() / columnas);
         double altoCelda = Math.floor(gridPane.getPrefHeight() / filas);
 
-        // Cargar imágenes una vez
+        // Cargar imágenes de suelo y pared
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()), anchoCelda, altoCelda, false, true);
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()), anchoCelda, altoCelda, false, true);
 
+        // Crear celdas del mapa
         for (int fila = 0; fila < filas; fila++) {
             for (int columna = 0; columna < columnas; columna++) {
                 int valor = matriz[fila][columna];
@@ -164,6 +176,9 @@ public class JuegoControlador implements Observer {
         }
     }
 
+    /**
+     * Avanza al siguiente mapa o muestra la pantalla de victoria si no hay más mapas.
+     */
     public void cambiarMapa() {
         boolean haySiguiente = gestorMapas.avanzarAlSiguienteMapa();
 
@@ -177,14 +192,19 @@ public class JuegoControlador implements Observer {
         } else {
             juego.resetearJuego();
             ManagerEscenas.getInstance().loadScene(EscenaID.VICTORIA);
-
         }
     }
 
+    /**
+     * Dibuja un personaje en la posición especificada.
+     * @param x Coordenada horizontal
+     * @param y Coordenada vertical
+     * @param personaje Personaje a dibujar
+     */
     public void pintarPersonaje(int x, int y, Personaje personaje) {
         StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
 
-        // Crear un nuevo ImageView para el personaje
+        // Crear vista de imagen para el personaje
         Image pj = new Image(getClass().getResourceAsStream("/" + personaje.getImagen()));
         ImageView personajeView = new ImageView(pj);
         personajeView.setFitWidth(stackPane.getPrefWidth());
@@ -192,7 +212,7 @@ public class JuegoControlador implements Observer {
         personajeView.setPreserveRatio(true);
         personajeView.setSmooth(true);
 
-
+        // Aplicar efecto de sombra
         DropShadow sombra = new DropShadow();
         sombra.setRadius(6);
         sombra.setOffsetX(4);
@@ -203,6 +223,10 @@ public class JuegoControlador implements Observer {
         stackPane.getChildren().add(personajeView);
     }
 
+    /**
+     * Dibuja todos los personajes en sus posiciones actuales.
+     * Regenera el mapa antes de pintar los personajes.
+     */
     public void pintarPersonajes() {
         generarMapa();
         for (Personaje p : juego.getEntidades()) {
@@ -210,22 +234,28 @@ public class JuegoControlador implements Observer {
         }
     }
 
+    /**
+     * Gestiona el cambio de turno entre jugador y enemigos.
+     * Los enemigos se mueven automáticamente durante su turno.
+     */
     private void actualizarTurno() {
-
         Personaje actual = juego.getPersonajeActual();
 
         if (actual instanceof Enemigo) {
-            new Timeline(new KeyFrame(Duration.millis(100), e -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
                 juego.moverenemigo((Enemigo) actual);
                 pintarPersonajes();
                 juego.pasarTurno();
                 actualizarTurno();
-
-            })).play();
+            }));
+            timeline.play();
         }
         // Si es el héroe, no hacemos nada y esperamos input del usuario
     }
 
+    /**
+     * Verifica y maneja la condición de victoria.
+     */
     public void notificarVictoria() {
         if (juego.verificarVictoria()) {
             System.out.println("¡Has derrotado a todos los enemigos! Cambiando al siguiente mapa...");
@@ -233,19 +263,20 @@ public class JuegoControlador implements Observer {
         }
     }
 
+    /**
+     * Método de Observer que reacciona a cambios en el juego.
+     * Verifica condiciones de victoria/derrota y actualiza la vista.
+     */
     @Override
     public void onChange() {
-
         if (juego.getEntidades().size() == 1 && juego.getEntidades().get(0) instanceof Heroe) {
             notificarVictoria();
-
         }
 
         if (juego.verificarDerrota()) {
             System.out.println("Has sido derrotado. Fin del juego.");
             juego.resetearJuego();
             ManagerEscenas.getInstance().loadScene(EscenaID.DERROTA);
-
         }
     }
 }

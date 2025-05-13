@@ -29,42 +29,51 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-public class SelectionControlador implements Observer{
+/**
+ * Controlador para la escena de selección de personaje y configuración del juego.
+ * Implementa la interfaz Observer para reaccionar a cambios en el modelo del juego.
+ */
+public class SelectionControlador implements Observer {
 
     @FXML
-    private HBox cont_perso;
+    private HBox cont_perso; // Contenedor horizontal para los personajes seleccionables
 
     @FXML
-    private ImageView fd1, fd2, fd3, fd4, fd5;
+    private ImageView fd1, fd2, fd3, fd4, fd5; // Imágenes para representar los niveles de dificultad
     private int selectedDifficulty = 0; // 0 significa ninguna seleccionada
-    private ArrayList<Heroe> heroes;
-    private final double ACTIVE_OPACITY = 1.0;
-    private final double INACTIVE_OPACITY = 0.3;
-    private boolean isHovering = false;
-    private int currentHoverLevel = 0;
-    @FXML
-    private TextField nom_jugador;
+    private ArrayList<Heroe> heroes; // Lista de héroes disponibles
+    private final double ACTIVE_OPACITY = 1.0; // Opacidad para dificultad seleccionada
+    private final double INACTIVE_OPACITY = 0.3; // Opacidad para dificultad no seleccionada
+    private boolean isHovering = false; // Indica si el ratón está sobre algún nivel de dificultad
+    private int currentHoverLevel = 0; // Nivel de dificultad sobre el que está el ratón
 
     @FXML
-    private Label c_nombre;
-    @FXML
-    private Label c_PERSONAJE;
-    @FXML
-    private ImageView fondoDecorado;
-    @FXML
-    private Label c_DIFICULTAD;
-    @FXML
-    private Label fallo;
-    @FXML
-    private Button start;
-    @FXML
-    private MediaView mediaView;
+    private TextField nom_jugador; // Campo de texto para el nombre del jugador
 
     @FXML
-    private AnchorPane formBackground;
+    private Label c_nombre; // Etiqueta para mostrar el nombre del jugador
+    @FXML
+    private Label c_PERSONAJE; // Etiqueta para mostrar el personaje seleccionado
+    @FXML
+    private ImageView fondoDecorado; // Imagen de fondo decorativo
+    @FXML
+    private Label c_DIFICULTAD; // Etiqueta para mostrar la dificultad seleccionada
+    @FXML
+    private Label fallo; // Etiqueta para mostrar mensajes de error
+    @FXML
+    private Button start; // Botón para iniciar el juego
+    @FXML
+    private MediaView mediaView; // Vista multimedia para el fondo animado
 
-    private Juego juego;
+    @FXML
+    private AnchorPane formBackground; // Panel de fondo del formulario
 
+    private Juego juego; // Instancia del modelo del juego
+
+    /**
+     * Método llamado cuando hay cambios en el modelo observado.
+     * Actualiza las etiquetas de la interfaz con los valores actuales del juego.
+     */
     @Override
     public void onChange() {
         c_nombre.setText(juego.getNombre() != null ? juego.getNombre() : "");
@@ -72,11 +81,16 @@ public class SelectionControlador implements Observer{
         c_PERSONAJE.setText(jugador != null ? jugador.getNombre() : "Sin personaje");
         c_DIFICULTAD.setText(String.valueOf(juego.getDificultad()));
     }
+
+    /**
+     * Método de inicialización llamado automáticamente después de cargar el FXML.
+     * Configura todos los componentes de la interfaz y sus listeners.
+     */
     @FXML
     public void initialize() {
-        juego=Juego.getInstance();
+        juego = Juego.getInstance();
         juego.suscribe(this);
-        heroes =juego.getHeroes();
+        heroes = juego.getHeroes();
 
         onChange();
 
@@ -84,7 +98,7 @@ public class SelectionControlador implements Observer{
         setupDifficultySelector();
         String videoPath = getClass().getResource("/com/enriquealberto/videos/fondo.mp4").toExternalForm();
 
-        //falta añadir que se desenfoque el video
+        // Configuración del video de fondo
         Media media = new Media(videoPath);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repetición infinita
@@ -94,17 +108,19 @@ public class SelectionControlador implements Observer{
         // Asignar el MediaPlayer a la MediaView
         mediaView.setMediaPlayer(mediaPlayer);
         mediaView.setPreserveRatio(false); // Que se estire al tamaño completo
+
+        // Configuración de efectos visuales para el video de fondo
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setBrightness(-0.3); // oscurece ligeramente (-1 a 1)
         colorAdjust.setContrast(-0.2);   // reduce el contraste (-1 a 1)
 
-// Crear desenfoque
+        // Crear desenfoque
         GaussianBlur blur = new GaussianBlur(20); // valor entre 10 y 30 suele verse bien
 
-// Encadenar efectos: primero blur, luego ajuste de color
+        // Encadenar efectos: primero blur, luego ajuste de color
         colorAdjust.setInput(blur);
 
-// Asignar el efecto combinado al MediaView
+        // Asignar el efecto combinado al MediaView
         mediaView.setEffect(colorAdjust);
 
         // Ajustar tamaño del video según el tamaño de la ventana
@@ -115,11 +131,14 @@ public class SelectionControlador implements Observer{
             }
         });
 
+        // Listener para el campo de nombre del jugador
         nom_jugador.textProperty().addListener((observable, oldValue, newValue) -> {
             juego.setNombre(newValue);
             System.out.println("Cadena actualizada a: " + newValue);
         });
+
         try {
+            // Configuración del fondo decorado (papiro)
             Image imagen = new Image(getClass().getResource("/com/enriquealberto/imagenes/papiro.png").toExternalForm());
             fondoDecorado.setImage(imagen);
             fondoDecorado.setPreserveRatio(false);
@@ -135,9 +154,13 @@ public class SelectionControlador implements Observer{
             System.err.println("Error cargando fondo decorado: " + e.getMessage());
             e.printStackTrace();
         }
+
+        // Configuración del botón de inicio
         start.setOnAction(event -> {
             // Verificar que todos los campos estén completados
-            if (juego.getNombre() != null && !juego.getNombre().isEmpty() && juego.getDificultad() != 0 && juego.getJugador() != null) {
+            if (juego.getNombre() != null && !juego.getNombre().isEmpty() &&
+                    juego.getDificultad() != 0 && juego.getJugador() != null) {
+
                 // Cargar la escena CONTENEDOR y luego cargar los paneles
                 ManagerEscenas.getInstance().loadScene(EscenaID.CONTENEDOR);
 
@@ -152,9 +175,11 @@ public class SelectionControlador implements Observer{
                 fallo.setText("Por favor completa todos los campos");
             }
         });
-
     }
 
+    /**
+     * Configura el selector de dificultad con sus imágenes y eventos.
+     */
     private void setupDifficultySelector() {
         // Cargar la imagen de dificultad en todos los ImageView
         Image difficultyImage = new Image(
@@ -171,12 +196,18 @@ public class SelectionControlador implements Observer{
         setupDifficultyClickEvents();
     }
 
+    /**
+     * Restablece la opacidad de todas las imágenes de dificultad al valor inactivo.
+     */
     private void resetDifficultyOpacity() {
         fd1.setOpacity(INACTIVE_OPACITY);
         fd2.setOpacity(INACTIVE_OPACITY);
         fd3.setOpacity(INACTIVE_OPACITY);
     }
 
+    /**
+     * Configura los eventos de hover (ratón sobre) para las imágenes de dificultad.
+     */
     private void setupDifficultyHoverEvents() {
         fd1.setOnMouseEntered(e -> {
             isHovering = true;
@@ -200,6 +231,10 @@ public class SelectionControlador implements Observer{
         fd3.setOnMouseExited(e -> checkHoverStatus());
     }
 
+    /**
+     * Verifica si el ratón todavía está sobre alguna imagen de dificultad.
+     * Si no está sobre ninguna, actualiza los efectos de selección.
+     */
     private void checkHoverStatus() {
         // Verificar si el ratón todavía está en alguna imagen
         isHovering = fd1.isHover() || fd2.isHover() || fd3.isHover();
@@ -208,12 +243,19 @@ public class SelectionControlador implements Observer{
         }
     }
 
+    /**
+     * Configura los eventos de clic para las imágenes de dificultad.
+     */
     private void setupDifficultyClickEvents() {
         fd1.setOnMouseClicked(e -> setSelectedDifficulty(1));
         fd2.setOnMouseClicked(e -> setSelectedDifficulty(2));
         fd3.setOnMouseClicked(e -> setSelectedDifficulty(3));
     }
 
+    /**
+     * Actualiza el efecto visual cuando el ratón pasa sobre los niveles de dificultad.
+     * @param hoveredLevel Nivel de dificultad sobre el que está el ratón
+     */
     private void updateHoverEffect(int hoveredLevel) {
         resetDifficultyOpacity();
 
@@ -226,12 +268,19 @@ public class SelectionControlador implements Observer{
             fd3.setOpacity(ACTIVE_OPACITY);
     }
 
+    /**
+     * Establece la dificultad seleccionada y actualiza el modelo del juego.
+     * @param level Nivel de dificultad seleccionado (1-3)
+     */
     private void setSelectedDifficulty(int level) {
         selectedDifficulty = level;
         updateSelectionEffect();
         Juego.getInstance().setDificultad(level);
     }
 
+    /**
+     * Actualiza el efecto visual según la dificultad seleccionada.
+     */
     private void updateSelectionEffect() {
         resetDifficultyOpacity();
 
@@ -246,6 +295,10 @@ public class SelectionControlador implements Observer{
         }
     }
 
+    /**
+     * Carga los personajes disponibles en el contenedor de selección.
+     * @param personajes Lista de héroes disponibles para seleccionar
+     */
     public void cargarPersonajes(List<Heroe> personajes) {
         cont_perso.getChildren().clear();
 
@@ -268,6 +321,8 @@ public class SelectionControlador implements Observer{
                 asignarAtributo(personajeBox, "df", p.getDefensa(), "/com/enriquealberto/imagenes/defensa.png");
                 asignarAtributo(personajeBox, "sf", p.getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
                 cont_perso.getChildren().add(personajeBox);
+
+                // Configuración del evento de clic para seleccionar personaje
                 personajeBox.setOnMouseClicked(e -> {
                     // Deseleccionar todos los estilos previos
                     cont_perso.getChildren().forEach(node -> node.getStyleClass().remove("selected-personaje"));
@@ -277,7 +332,6 @@ public class SelectionControlador implements Observer{
                     vibrarImagen(foto);
 
                     // Guardar el personaje seleccionado en el juego
-
                     Juego.getInstance().setJugador(p.clone());
                     // Actualizar etiquetas
                     onChange();
@@ -289,6 +343,13 @@ public class SelectionControlador implements Observer{
         }
     }
 
+    /**
+     * Asigna los atributos visuales a un personaje (vida, ataque, defensa, velocidad).
+     * @param personajeBox Contenedor del personaje
+     * @param prefijo Prefijo del identificador del atributo
+     * @param cantidad Valor numérico del atributo
+     * @param iconoRuta Ruta del icono a mostrar
+     */
     private void asignarAtributo(VBox personajeBox, String prefijo, int cantidad, String iconoRuta) {
         // Buscamos el contenedor HBox que contiene las imágenes
         HBox contenedor = (HBox) personajeBox.lookup("#" + prefijo.substring(0, 2)); // "vf", "af", etc.
@@ -312,8 +373,10 @@ public class SelectionControlador implements Observer{
         }
     }
 
-
-
+    /**
+     * Aplica una animación de vibración a una imagen cuando se selecciona.
+     * @param imageView Imagen a la que aplicar la animación
+     */
     public void vibrarImagen(ImageView imageView) {
         TranslateTransition vibracionX = new TranslateTransition(Duration.millis(50), imageView);
         vibracionX.setByX(3);
