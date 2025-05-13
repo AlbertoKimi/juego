@@ -3,9 +3,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
+<!--
+Componente de interfaz reutilizable para representar una miniatura de personaje (por ejemplo, en estadísticas o barra de turnos).
+
+Contenedor: HBox con alineación a la izquierda y separación entre nodos de 5 píxeles.
+Incluye un ImageView de 30x30 píxeles con relación de aspecto preservada.
+-->
+
 
 <HBox fx:id="min_per" alignment="CENTER_LEFT" spacing="5" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <!-- Imagen del personaje en miniatura -->
       <ImageView fx:id="im_per" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </HBox>

@@ -4,10 +4,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.media.MediaView?>
 
+<!--
+Pantalla de portada o inicio del juego.
+
+Controlador asociado: com.enriquealberto.Controladores.PortadaControlador
+
+Contenedor principal: AnchorPane de tamaño 726x461.
+
+Incluye:
+- Un MediaView que reproduce un video a pantalla completa como fondo.
+- Un Label con el mensaje "PULSA ENTER" que indica al jugador cómo avanzar.
+-->
+
 <AnchorPane fx:id="portada" prefHeight="461.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.PortadaControlador">
    <children>
       <!-- Vista de video al fondo -->
       <MediaView fx:id="mediaView" fitHeight="400.0" fitWidth="600.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
+      <!-- Mensaje para indicar al jugador que pulse ENTER -->
       <Label fx:id="mensaje" text="PULSA ENTER" />
    </children>
 </AnchorPane>

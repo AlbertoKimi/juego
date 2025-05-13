@@ -10,18 +10,34 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
+<!--
+Pantalla de selección de personaje antes de comenzar el juego.
 
+Controlador: com.enriquealberto.Controladores.SelectionControlador
+
+Elementos principales:
+- Video de fondo (MediaView)
+- Título "Selecciona Personaje"
+- Contenedor de personajes
+- Formulario para introducir nombre del jugador y elegir dificultad
+- Vista de resumen con nombre, personaje y dificultad seleccionados
+- Botón para comenzar el juego
+- Etiqueta de error en caso de validación fallida
+-->
 <AnchorPane fx:id="portada" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.SelectionControlador">
     <children>
+        <!-- Video de fondo -->
         <MediaView fx:id="mediaView" fitHeight="400.0" fitWidth="700.0" nodeOrientation="INHERIT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <!-- Contenedor principal centrado -->
         <VBox fx:id="fondo" alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <!-- Título -->
             <Label fx:id="titulo" alignment="CENTER" prefWidth="334.0" text="Selecciona Personaje">
                 <font>
                     <Font name="Hoefler Text Black" size="27.0" />
                 </font>
             </Label>
+            <!-- Contenedor para mostrar personajes disponibles -->
             <HBox fx:id="cont_perso" alignment="CENTER" prefHeight="0.0" prefWidth="800.0" styleClass="character-container" />
-
             <!-- Sección con imagen de fondo -->
             <AnchorPane fx:id="formBackground" styleClass="form-background">
                 <children>
