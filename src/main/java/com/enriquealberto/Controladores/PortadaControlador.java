@@ -64,11 +64,11 @@ public class PortadaControlador {
 
         // Centrar el Label en la ventana
         portada.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -100);
+            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -210);
         });
 
         portada.heightProperty().addListener((obs, oldHeight, newHeight) -> {
-            mensaje.setLayoutY((newHeight.doubleValue() - mensaje.getHeight()) / 2 +180);
+            mensaje.setLayoutY((newHeight.doubleValue() - mensaje.getHeight()) / 2 +200);
         });
 
         // Detectar la pulsación de la tecla Enter en la escena

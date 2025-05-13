@@ -61,8 +61,8 @@ public class JuegoControlador implements Observer {
 
         // Grid
         gridPane = new GridPane();
-        gridPane.setPrefWidth(710);
-        gridPane.setPrefHeight(710);
+        gridPane.setPrefWidth(680);
+        gridPane.setPrefHeight(680);
         gridPane.getStyleClass().add("grid-centro");
 
         // VBox que contendrá título y grid
@@ -71,12 +71,19 @@ public class JuegoControlador implements Observer {
         vbox.setAlignment(Pos.CENTER);
         vbox.getStyleClass().add("contenedor-juego");
 
+        // Asegurar que el VBox ocupe todo el espacio disponible
+        vbox.setPrefWidth(Double.MAX_VALUE);
+        vbox.setPrefHeight(Double.MAX_VALUE);
+        vbox.setMaxWidth(Double.MAX_VALUE);
+        vbox.setMaxHeight(Double.MAX_VALUE);
+
+        // Añadir título y grid al VBox
         vbox.getChildren().addAll(titulo, gridPane);
 
-        // Añadir vbox al stackpane encima del fondo
+        // Añadir VBox al StackPane
         rootStackPane.getChildren().add(vbox);
-        StackPane.setAlignment(vbox, Pos.CENTER); // Asegura centrado
 
+        // Generar el mapa y configurar eventos
         generarMapa();
         pintarPersonajes();
         actualizarTurno();
@@ -94,15 +101,15 @@ public class JuegoControlador implements Observer {
                         break;
                     case A:
                         juego.moverIzquierda(actual);
-                        movimientoRealizado =true;
+                        movimientoRealizado = true;
                         break;
                     case S:
                         juego.moverAbajo(actual);
-                        movimientoRealizado =true;
+                        movimientoRealizado = true;
                         break;
                     case D:
                         juego.moverDerecha(actual);
-                        movimientoRealizado =true;
+                        movimientoRealizado = true;
                         break;
                     default:
                         return;
@@ -116,11 +123,9 @@ public class JuegoControlador implements Observer {
             }
         });
 
-
         // Habilitar el foco en el AnchorPane para recibir eventos de teclado
         rootStackPane.setFocusTraversable(true);
         rootStackPane.requestFocus();
-
     }
 
     public void generarMapa() {
