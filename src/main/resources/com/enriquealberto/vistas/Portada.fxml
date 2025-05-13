@@ -8,6 +8,6 @@
    <children>
       <!-- Vista de video al fondo -->
       <MediaView fx:id="mediaView" fitHeight="400.0" fitWidth="600.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" />
-      <Label fx:id="mensaje" layoutX="14.0" layoutY="28.0" text="PULSA ENTER" />
+      <Label fx:id="mensaje" text="PULSA ENTER" />
    </children>
 </AnchorPane>
