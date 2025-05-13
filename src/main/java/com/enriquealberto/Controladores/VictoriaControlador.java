@@ -11,22 +11,30 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * Controlador para la escena de victoria del juego.
+ * Maneja la visualización de la pantalla de victoria y las acciones de los botones.
+ */
 public class VictoriaControlador {
     @FXML
-    private MediaView mediaView;
+    private MediaView mediaView; // Vista multimedia para el video de victoria
 
     @FXML
-    private AnchorPane portada;
+    private AnchorPane portada; // Panel principal que contiene los elementos de la escena
 
     @FXML
-    Button botonVolverJugar;
+    Button botonVolverJugar; // Botón para reiniciar el juego
 
     @FXML
-    Button botonSelect;
+    Button botonSelect; // Botón para volver a la selección de personaje
 
+    /**
+     * Método de inicialización llamado automáticamente después de cargar el FXML.
+     * Configura el video de fondo y los eventos de los botones.
+     */
     @FXML
     public void initialize() {
-        // Esperar a que la escena esté disponible
+        // Esperar a que la escena esté disponible para cargar el CSS
         portada.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 URL cssUrl = getClass().getResource("/com/enriquealberto/css/botones_estilo.css");
@@ -38,18 +46,18 @@ public class VictoriaControlador {
             }
         });
 
-        // Cargar video desde resources
+        // Cargar video de victoria desde resources
         String videoPath = getClass().getResource("/com/enriquealberto/videos/Victoria.mp4").toExternalForm();
 
         Media media = new Media(videoPath);
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); 
-        mediaPlayer.setMute(true); 
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Reproducción en bucle
+        mediaPlayer.setMute(true); // Silenciar el video
         mediaPlayer.play();
 
         // Asignar el MediaPlayer a la MediaView
         mediaView.setMediaPlayer(mediaPlayer);
-        mediaView.setPreserveRatio(false);
+        mediaView.setPreserveRatio(false); // Ajustar al tamaño del contenedor
 
         // Ajustar tamaño del video según el tamaño de la ventana
         mediaView.sceneProperty().addListener((obs, oldScene, newScene) -> {
@@ -59,6 +67,7 @@ public class VictoriaControlador {
             }
         });
 
+        // Configuración del botón "Volver a Jugar"
         botonVolverJugar.setOnAction(event -> {
             ManagerEscenas manager = ManagerEscenas.getInstance();
 
@@ -78,6 +87,7 @@ public class VictoriaControlador {
             }
         });
 
+        // Configuración del botón "Selección de Personaje"
         botonSelect.setOnAction(event -> {
             ManagerEscenas manager = ManagerEscenas.getInstance();
 

@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!-- Importación de clases JavaFX necesarias -->
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<!--
+    Definición del SplitPane principal que divide la pantalla en dos áreas.
+    Atributos principales:
+    - dividerPositions: Posición inicial del divisor (63.7% del ancho para el primer panel)
+    - prefHeight/prefWidth: Tamaño preferido inicial
+    - fx:controller: Especifica la clase controladora
+-->
 <SplitPane dividerPositions="0.6370320855614973" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.ContenedorControlador">
+  <!-- Contenedor de los paneles divididos -->
   <items>
+    <!--
+        Panel izquierdo (área principal del juego)
+        - fx:id="juego": Identificador para referencia en el controlador
+        - prefWidth: 439px (aproximadamente 63.7% del ancho total)
+    -->
     <AnchorPane fx:id="juego" minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="439.0" />
+    <!--
+       Panel derecho (área de estadísticas)
+       - fx:id="estadistica": Identificador para referencia en el controlador
+       - prefWidth: 161px (el resto del ancho total)
+   -->
     <AnchorPane fx:id="estadistica" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
   </items>
 </SplitPane>

@@ -13,22 +13,46 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+/**
+ * Controlador para la escena de historia/introducción del juego.
+ * Muestra una narrativa visual con efectos especiales y transiciones.
+ */
 public class HistoriaControlador {
 
     @FXML
-    AnchorPane historia;
+    AnchorPane historia; // Panel raíz de la vista
 
-    private TextFlow textFlow;
+    private TextFlow textFlow; // Contenedor para el texto narrativo
 
+    /**
+     * Método de inicialización llamado automáticamente por JavaFX.
+     * Configura todos los elementos visuales y efectos de la escena.
+     */
     @FXML
     public void initialize() {
-        // Crear el ImageView para la imagen de fondo
+        // Configuración del fondo de pergamino
+        configurarFondoPergamino();
+
+        // Configuración del video del portal (oculto inicialmente)
+        MediaView mediaView = configurarVideoPortal();
+
+        // Configuración del texto narrativo
+        configurarTextoHistoria();
+
+        // Configuración de efectos visuales y transición
+        configurarEfectosVisuales(mediaView);
+    }
+
+    /**
+     * Configura la imagen de fondo del pergamino.
+     */
+    private void configurarFondoPergamino() {
         Image fondoImagen = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/Pergamino.png"));
         ImageView fondo = new ImageView(fondoImagen);
         fondo.setPreserveRatio(false);
-        fondo.setCache(true); // Mejorar el rendimiento
+        fondo.setCache(true); // Optimización de rendimiento
 
-        // Ajustar tamaño del video al de la ventana
+        // Ajuste responsive del fondo
         fondo.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 fondo.fitWidthProperty().bind(newScene.widthProperty());
@@ -37,27 +61,35 @@ public class HistoriaControlador {
         });
 
         historia.getChildren().add(fondo);
+    }
 
-        // Crear el MediaView para el video
+    /**
+     * Configura el video del portal que se mostrará posteriormente.
+     * @return MediaView configurado
+     */
+    private MediaView configurarVideoPortal() {
         Media videoPortal = new Media(getClass().getResource("/com/enriquealberto/videos/portal.mp4").toExternalForm());
         MediaPlayer mediaPlayer = new MediaPlayer(videoPortal);
         MediaView mediaView = new MediaView(mediaPlayer);
 
-        // Configurar ocupe toda la ventana
+        // Ajuste responsive del video
         mediaView.fitWidthProperty().bind(historia.widthProperty());
         mediaView.fitHeightProperty().bind(historia.heightProperty());
         mediaView.setPreserveRatio(false);
-
-        // Ocultar el MediaView inicialmente
-        mediaView.setVisible(false);
+        mediaView.setVisible(false); // Oculto inicialmente
 
         historia.getChildren().add(mediaView);
+        return mediaView;
+    }
 
-      
+    /**
+     * Configura el texto narrativo de la historia con fragmentos interactivos.
+     */
+    private void configurarTextoHistoria() {
         textFlow = new TextFlow();
-        textFlow.getStyleClass().add("text-flow"); // Asignar la clase CSS
+        textFlow.getStyleClass().add("text-flow"); // Estilo CSS
 
-        // Texto de la historia
+        // Fragmentos de la historia
         String[] fragmentos = {
                 "Una noche tranquila, mientras la luna velaba el cielo estrellado, la princesa del reino dormía profundamente en su habitación.\n\n",
                 "Pero de pronto, unos susurros siniestros y pasos furtivos rompieron el silencio.\n\n",
@@ -69,90 +101,121 @@ public class HistoriaControlador {
                 "Así comienza la gran aventura...\n\n"
         };
 
-        // Crear nodos Text para cada fragmento
+        // Crear nodos Text interactivos para cada fragmento
         for (String fragmento : fragmentos) {
             Text text = new Text(fragmento);
-
-            // Evento para mostrar el fragmento al pasar el ratón
-            text.setOnMouseEntered(event -> {
-                text.setStyle("-fx-opacity: 1;");
-            });
-
+            text.setOnMouseEntered(event -> text.setStyle("-fx-opacity: 1;"));
             textFlow.getChildren().add(text);
         }
 
-        // Centrar el TextFlow
+        // Posicionamiento del texto
         AnchorPane.setTopAnchor(textFlow, 0.0);
         AnchorPane.setBottomAnchor(textFlow, 0.0);
         AnchorPane.setLeftAnchor(textFlow, 0.0);
         AnchorPane.setRightAnchor(textFlow, 0.0);
         historia.getChildren().add(textFlow);
+    }
 
-        // Añadir css al texto
+    /**
+     * Configura los efectos visuales adicionales y la transición final.
+     * @param mediaView MediaView del portal para la transición
+     */
+    private void configurarEfectosVisuales(MediaView mediaView) {
         historia.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                String cssPath = getClass().getResource("/com/enriquealberto/css/historia.css").toExternalForm();
-                if (cssPath != null) {
-                    System.out.println("CSS cargado desde: " + cssPath);
-                    newScene.getStylesheets().add(cssPath);
-                } else {
-                    System.out.println("No se encontró el archivo CSS.");
-                }
+                // Cargar CSS
+                cargarEstilos(newScene);
 
-                // Configurar el cursor personalizado
-                Image cursorImage = new Image(
-                        getClass().getResourceAsStream("/com/enriquealberto/imagenes/Antorcha.png"));
-                newScene.setCursor(new javafx.scene.ImageCursor(cursorImage));
+                // Configurar cursor personalizado
+                configurarCursor(newScene);
 
-                // Luz antorcha
-                Circle foco = new Circle(60); 
-                foco.setFill(new javafx.scene.paint.RadialGradient(
-                        0, 0, 0.5, 0.5, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
-                        new javafx.scene.paint.Stop(0, javafx.scene.paint.Color.rgb(255, 255, 200, 0.4)), 
-                        new javafx.scene.paint.Stop(1, javafx.scene.paint.Color.rgb(255, 255, 200, 0.1)) 
-                ));
+                // Configurar efecto de antorcha
+                configurarEfectoAntorcha(newScene);
 
-                // Aplicar un efecto de desenfoque para suavizar los bordes
-                foco.setEffect(new javafx.scene.effect.GaussianBlur(40)); 
-
-                // Hacer que el foco no intercepte eventos del ratón
-                foco.setMouseTransparent(true);
-                historia.getChildren().add(foco);
-
-                // Actualizar la posición del foco según el ratón
-                newScene.setOnMouseMoved(event -> {
-                    foco.setCenterX(event.getSceneX());
-                    foco.setCenterY(event.getSceneY());
-                });
+                // Configurar interacción final
+                configurarInteraccionFinal(mediaView);
             }
         });
+    }
 
-        // Evento para cambiar a la vista SELECTION al hacer clic con texto visible.
+    /**
+     * Carga los estilos CSS para la escena.
+     */
+    private void cargarEstilos(javafx.scene.Scene newScene) {
+        String cssPath = getClass().getResource("/com/enriquealberto/css/historia.css").toExternalForm();
+        if (cssPath != null) {
+            newScene.getStylesheets().add(cssPath);
+        }
+    }
+
+    /**
+     * Configura el cursor personalizado de antorcha.
+     */
+    private void configurarCursor(javafx.scene.Scene newScene) {
+        Image cursorImage = new Image(
+                getClass().getResourceAsStream("/com/enriquealberto/imagenes/Antorcha.png"));
+        newScene.setCursor(new javafx.scene.ImageCursor(cursorImage));
+    }
+
+    /**
+     * Configura el efecto visual de luz de antorcha.
+     */
+    private void configurarEfectoAntorcha(javafx.scene.Scene newScene) {
+        Circle foco = new Circle(60);
+        foco.setFill(new javafx.scene.paint.RadialGradient(
+                0, 0, 0.5, 0.5, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
+                new javafx.scene.paint.Stop(0, javafx.scene.paint.Color.rgb(255, 255, 200, 0.4)),
+                new javafx.scene.paint.Stop(1, javafx.scene.paint.Color.rgb(255, 255, 200, 0.1))
+        ));
+        foco.setEffect(new javafx.scene.effect.GaussianBlur(40));
+        foco.setMouseTransparent(true);
+        historia.getChildren().add(foco);
+
+        // Seguimiento del ratón
+        newScene.setOnMouseMoved(event -> {
+            foco.setCenterX(event.getSceneX());
+            foco.setCenterY(event.getSceneY());
+        });
+    }
+
+    /**
+     * Configura la interacción final para cambiar de escena.
+     */
+    private void configurarInteraccionFinal(MediaView mediaView) {
         historia.setOnMouseClicked(event -> {
-            boolean todoTextoVisible = textFlow.getChildren().stream()
-                    .filter(node -> node instanceof Text)
-                    .allMatch(node -> "-fx-opacity: 1;".equals(node.getStyle()));
-
-            if (todoTextoVisible) {
-                mediaView.setVisible(true);
-                mediaPlayer.play();
-
-                // Asegurarse de que el MediaView esté al frente
-                historia.getChildren().remove(mediaView); 
-                historia.getChildren().add(mediaView);  
-
-                mediaPlayer.setOnEndOfMedia(() -> {
-                    mediaPlayer.pause(); // Pausar en el último cuadro
-                });
-
-                // Permitir hacer clic en el video para cambiar a la escena SELECTION
-                mediaView.setOnMouseClicked(e -> {
-                    ManagerEscenas sm = ManagerEscenas.getInstance();
-                    sm.loadScene(EscenaID.SELECTION);
-                });
-            } else {
-                System.out.println("Aún hay texto oculto. Haz visible todo el texto para continuar.");
+            if (esTodoTextoVisible()) {
+                mostrarPortalYTransicion(mediaView);
             }
+        });
+    }
+
+    /**
+     * Verifica si todo el texto está visible.
+     */
+    private boolean esTodoTextoVisible() {
+        return textFlow.getChildren().stream()
+                .filter(node -> node instanceof Text)
+                .allMatch(node -> "-fx-opacity: 1;".equals(node.getStyle()));
+    }
+
+    /**
+     * Muestra el portal y configura la transición a la siguiente escena.
+     */
+    private void mostrarPortalYTransicion(MediaView mediaView) {
+        MediaPlayer mediaPlayer = mediaView.getMediaPlayer();
+        mediaView.setVisible(true);
+        mediaPlayer.play();
+
+        // Reordenar para que el video esté al frente
+        historia.getChildren().remove(mediaView);
+        historia.getChildren().add(mediaView);
+
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.pause());
+
+        // Configurar clic en el video para cambiar de escena
+        mediaView.setOnMouseClicked(e -> {
+            ManagerEscenas sm = ManagerEscenas.getInstance();
+            sm.loadScene(EscenaID.SELECTION);
         });
     }
 }
