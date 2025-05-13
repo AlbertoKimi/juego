@@ -174,12 +174,8 @@ public class JuegoControlador implements Observer {
         StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
 
         // Crear un nuevo ImageView para el personaje
-        InputStream is = getClass().getResourceAsStream("/" + personaje.getImagen());
-        if (is == null) {
-            System.err.println("No se encontró la imagen: " + personaje.getImagen());
-            return;
-        }
-        ImageView personajeView = new ImageView(new Image(is));
+        Image pj = new Image(getClass().getResourceAsStream("/" + personaje.getImagen()));
+        ImageView personajeView = new ImageView(pj);
         personajeView.setFitWidth(stackPane.getPrefWidth());
         personajeView.setFitHeight(stackPane.getPrefHeight());
         personajeView.setPreserveRatio(true);
