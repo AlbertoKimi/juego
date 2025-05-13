@@ -3,18 +3,14 @@ package com.enriquealberto.Controladores;
 import com.enriquealberto.model.Personaje;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
 import java.io.IOException;
 import java.util.*;
-
 import com.enriquealberto.interfaces.Observer;
-import com.enriquealberto.model.Heroe;
 import com.enriquealberto.model.Juego;
 
 public class EstadisticaControlador implements Observer {
