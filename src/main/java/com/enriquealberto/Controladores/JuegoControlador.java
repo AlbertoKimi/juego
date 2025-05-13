@@ -1,6 +1,6 @@
 package com.enriquealberto.Controladores;
 
-import java.io.InputStream;
+
 import java.util.LinkedHashMap;
 import com.enriquealberto.EscenaID;
 import com.enriquealberto.ManagerEscenas;
@@ -12,12 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
