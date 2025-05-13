@@ -3,7 +3,6 @@ package com.enriquealberto.Controladores;
 import com.enriquealberto.model.Personaje;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.util.*;
 
 import com.enriquealberto.interfaces.Observer;
-import com.enriquealberto.model.Heroe;
 import com.enriquealberto.model.Juego;
 
 public class EstadisticaControlador implements Observer {
@@ -33,8 +31,7 @@ public class EstadisticaControlador implements Observer {
     private VBox contenedorJugador;
 
     @FXML
-    private VBox contenedorVidas;
-
+    private FlowPane contenedorVidas;
 
     private Juego juego;
     private final Map<String, Image> imagenesCache = new HashMap<>();
@@ -54,9 +51,6 @@ public class EstadisticaControlador implements Observer {
         lblTituloJugador.setText(juego.getNombre());
         cargarPersonajes();
         cargarVidas();
-
-
-
     }
 
     public void cargarPersonajes() {
@@ -96,6 +90,7 @@ public class EstadisticaControlador implements Observer {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/min_perso.fxml"));
                 HBox personajeBox = loader.load();
+                personajeBox.setPrefWidth(250); // Para que entren dos columnas
 
                 if (p.equals(actual)) {
                     personajeBox.getStyleClass().add("selected-personaje");
