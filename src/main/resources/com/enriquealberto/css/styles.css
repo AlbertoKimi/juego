@@ -183,24 +183,22 @@
     -fx-background-radius: 10px;
 }
 .titulo-mapa {
-    -fx-font-size: 30px;
+    -fx-font-size: 36px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0.5, 0, 2);
     -fx-alignment: center;
-    -fx-padding: 5px;
+    -fx-padding: 20px;
     -fx-background-color: rgba(0, 0, 0, 0.5);
     -fx-background-radius: 15px;
 }
 .contenedor-juego {
     -fx-alignment: center;
+
+    -fx-background-radius: 10;
     -fx-padding: 15px;
     -fx-spacing: 15px;
-    -fx-background-radius: 10;
-    -fx-max-width: 100%; /* Asegurar que no limite el ancho */
-    -fx-max-height: 100%; /* Asegurar que no limite el alto */
-    -fx-pref-width: 100%; /* Asegurar que ocupe todo el ancho */
-    -fx-pref-height: 100%; /* Asegurar que ocupe todo el alto */
+    -fx-max-width: 750px;
 }
 .grid-centro {
     -fx-alignment: center;
@@ -210,6 +208,7 @@
     -fx-scale-y: 0.98;
     -fx-border-color: linear-gradient(to right, gold, orange, red);
     -fx-border-width: 3px;
+    -fx-border-radius: 10px;
     -fx-background-radius: 10px;
 }
 
