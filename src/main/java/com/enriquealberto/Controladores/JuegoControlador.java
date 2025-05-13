@@ -9,6 +9,7 @@ import com.enriquealberto.model.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -18,21 +19,22 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class JuegoControlador implements Observer {
     @FXML
-    AnchorPane anchorPane;
+    private StackPane rootStackPane; // Asegúrate de tener un StackPane en tu FXML con fx:id="rootStackPane"
+    @FXML
+    private ImageView fondoView;
 
     GridPane gridPane;
     GestorMapas gestorMapas;
     VBox vbox;
     Label titulo;
-    Enemigo enemigo;
     Juego juego;
 
     private Heroe heroe;
-    private int contador = 0;
 
     @FXML
     public void initialize() {
@@ -42,38 +44,45 @@ public class JuegoControlador implements Observer {
             System.err.println("ERROR: El héroe no ha sido inicializado en ventana juego.");
             return;
         }
+
         juego.suscribe(this);
         juego.iniciarentidades();
-        System.out.println("controlador de juego inicializado");
         gestorMapas = juego.getGestorMapas();
 
+        // Fondo
+        Image fondo = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/fondojuego.png"));
+        fondoView.setImage(fondo);
+        fondoView.fitWidthProperty().bind(rootStackPane.widthProperty());
+        fondoView.fitHeightProperty().bind(rootStackPane.heightProperty());
+
+        // Título
+        titulo = new Label();
+        titulo.getStyleClass().add("titulo-mapa");
+
+        // Grid
+        gridPane = new GridPane();
+        gridPane.setPrefWidth(710);
+        gridPane.setPrefHeight(710);
+        gridPane.getStyleClass().add("grid-centro");
+
+        // VBox que contendrá título y grid
         vbox = new VBox();
         vbox.setSpacing(10);
-        vbox.setPadding(new Insets(7));
         vbox.setAlignment(Pos.CENTER);
-
-        titulo = new Label();
-        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-
-        gridPane = new GridPane();
-        gridPane.setPrefWidth(710); // Ancho fijo
-        gridPane.setPrefHeight(710); // Alto fijo
+        vbox.getStyleClass().add("contenedor-juego");
 
         vbox.getChildren().addAll(titulo, gridPane);
 
-        anchorPane.setPrefWidth(900);
-        anchorPane.setPrefHeight(700);
+        // Añadir vbox al stackpane encima del fondo
+        rootStackPane.getChildren().add(vbox);
+        StackPane.setAlignment(vbox, Pos.CENTER); // Asegura centrado
 
-        AnchorPane.setTopAnchor(vbox, 0.0);
-        AnchorPane.setBottomAnchor(vbox, 0.0);
-        AnchorPane.setLeftAnchor(vbox, 0.0);
-        AnchorPane.setRightAnchor(vbox, 0.0);
-        anchorPane.getChildren().add(vbox);
-
+        generarMapa();
         pintarPersonajes();
-        actualizarTurno(); // empieza el primer turno
+        actualizarTurno();
 
-        anchorPane.setOnKeyPressed(event -> {
+        // Eventos de teclado
+        rootStackPane.setOnKeyPressed(event -> {
             Personaje actual = juego.getPersonajeActual();
             if (actual instanceof Heroe) { // Solo procesar teclas si es el turno del héroe
                 boolean movimientoRealizado = false;
@@ -106,11 +115,11 @@ public class JuegoControlador implements Observer {
                 }
             }
         });
-        System.out.println(contador);
+
 
         // Habilitar el foco en el AnchorPane para recibir eventos de teclado
-        anchorPane.setFocusTraversable(true);
-        anchorPane.requestFocus();
+        rootStackPane.setFocusTraversable(true);
+        rootStackPane.requestFocus();
 
     }
 
@@ -170,18 +179,30 @@ public class JuegoControlador implements Observer {
     }
 
     public void pintarPersonaje(int x, int y, Personaje personaje) {
-        // Obtener la celda correspondiente en el GridPane
         StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
 
         // Crear un nuevo ImageView para el personaje
-        Image pj = new Image(getClass().getResourceAsStream("/" + personaje.getImagen()));
-        ImageView personajeView = new ImageView(pj);
+        InputStream is = getClass().getResourceAsStream("/" + personaje.getImagen());
+        if (is == null) {
+            System.err.println("No se encontró la imagen: " + personaje.getImagen());
+            return;
+        }
+        ImageView personajeView = new ImageView(new Image(is));
+        // ImageView personajeView = new ImageView(new
+        // Image(getClass().getResourceAsStream(personaje.getImagen())));
         personajeView.setFitWidth(stackPane.getPrefWidth());
         personajeView.setFitHeight(stackPane.getPrefHeight());
         personajeView.setPreserveRatio(true);
         personajeView.setSmooth(true);
 
-        // Añadir el ImageView del personaje al StackPane
+
+        DropShadow sombra = new DropShadow();
+        sombra.setRadius(6);
+        sombra.setOffsetX(4);
+        sombra.setOffsetY(4);
+        sombra.setColor(Color.color(0, 0, 0, 0.6));
+        personajeView.setEffect(sombra);
+
         stackPane.getChildren().add(personajeView);
     }
 
@@ -190,15 +211,6 @@ public class JuegoControlador implements Observer {
         for (Personaje p : juego.getEntidades()) {
             pintarPersonaje(p.getPosicion().getX(), p.getPosicion().getY(), p);
         }
-    }
-
-    public void eliminarPersonaje(int x, int y) {
-        // Obtener la celda correspondiente en el GridPane
-        StackPane stackPane = (StackPane) gridPane.getChildren().get(y * gridPane.getColumnCount() + x);
-
-        // Buscar y eliminar solo el ImageView del personaje
-        stackPane.getChildren()
-                .removeIf(node -> node instanceof ImageView && !node.equals(stackPane.getChildren().get(0)));
     }
 
     private void actualizarTurno() {

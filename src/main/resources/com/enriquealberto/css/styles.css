@@ -84,7 +84,7 @@
 /* Etiquetas del formulario - Manteniendo tu estilo */
 .form-label {
     -fx-font-family: "Hoefler Text Black";
-    -fx-font-size: 15px;
+    -fx-font-size: 19px;
     -fx-text-fill: #000000;
 }
 
@@ -143,8 +143,8 @@
 .selected-personaje {
     -fx-background-color: rgba(255, 255, 255, 0.78);
     -fx-effect: dropshadow(gaussian, rgba(255,215,0, 0.8), 20, 0.3, 0, 0);
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
     -fx-border-color: linear-gradient(to right, gold, orange, red);
     -fx-border-width: 3px;
     -fx-border-radius: 10px;
@@ -156,4 +156,100 @@
 .selected-personaje #p_foto {
     -fx-effect: dropshadow(gaussian, rgba(255,215,0,0.8), 15, 0.3, 0, 0);
 }
+#c_nombre,
+#c_PERSONAJE,
+#c_DIFICULTAD {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+#zonaEntidades {
+    -fx-background-color: rgba(255, 255, 255, 0.69);
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0, 0.8), 20, 0.3, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-border-color: linear-gradient(to right, gold, orange, red);
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+#personajeJugador {
+    -fx-background-color: rgba(255, 255, 255, 0.69);
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0, 0.8), 20, 0.3, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-border-color: linear-gradient(to right, gold, orange, red);
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+.titulo-mapa {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 10, 0.5, 0, 2);
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-background-radius: 15px;
+}
+.contenedor-juego {
+    -fx-alignment: center;
 
+    -fx-background-radius: 10;
+    -fx-padding: 15px;
+    -fx-spacing: 15px;
+    -fx-max-width: 750px;
+}
+.grid-centro {
+    -fx-alignment: center;
+    -fx-background-color: rgba(255, 255, 255, 0.69);
+    -fx-effect: dropshadow(gaussian, rgba(255,215,0, 0.8), 20, 0.3, 0, 0);
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+    -fx-border-color: linear-gradient(to right, gold, orange, red);
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+
+/* Estilo del fondo */
+#portada {
+    -fx-background-color: #1e1e1e;
+}
+
+/* Estilo del Label (Texto de "PULSA ENTER") */
+#mensaje {
+    -fx-font-family: "Arial";  /* O cualquier otra fuente que te guste */
+    -fx-font-size: 60px; /* Tamaño de fuente más grande */
+    -fx-font-weight: bold;
+    -fx-text-fill: linear-gradient(to right, #ff4e50, #f9d423); /* Degradado vibrante */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 10, 0.5, 0, 5); /* Sombra con mayor efecto */
+    -fx-text-align: center; /* Centra el texto dentro de su contenedor */
+    -fx-opacity: 1; /* Asegúrate de que el texto sea visible */
+    /* Remover las traducciones manuales que afectan el centro */
+}
+
+/* Animación de rebote hacia arriba y hacia abajo */
+@keyframes rebote {
+    0% {
+        -fx-translate-y: 0%;
+    }
+    25% {
+        -fx-translate-y: -10%;
+    }
+    50% {
+        -fx-translate-y: 0%;
+    }
+    75% {
+        -fx-translate-y: 10%;
+    }
+    100% {
+        -fx-translate-y: 0%;
+    }
+}
+
+#mensaje {
+    animation: rebote 1.5s ease-in-out infinite; /* Animación de rebote suave */
+    -fx-alignment: center; /* Centra el texto dentro del contenedor */
+}

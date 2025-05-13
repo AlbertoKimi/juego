@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.EstadisticaControlador">
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.enriquealberto.Controladores.EstadisticaControlador" />
+   <children>
+      <StackPane fx:id="rootStack" alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+         <!-- Imagen de fondo -->
+         <ImageView fx:id="fondoDecorado" preserveRatio="false" />
+         <!-- Contenido encima del fondo -->
+         <VBox fx:id="cont_principal" alignment="TOP_CENTER" maxWidth="600" spacing="20.0">
+            <Label id="titulo" fx:id="lblTituloJugador" text="Nombre del Jugador">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin></Label>
+            <VBox fx:id="contenedorJugador" alignment="CENTER" spacing="10.0" />
+            <VBox fx:id="zonaEntidades" alignment="CENTER" spacing="10.0">
+               <VBox fx:id="contenedorVidas" spacing="8.0" />
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </VBox>
+         </VBox>
+      </StackPane>
+   </children>
+</AnchorPane>

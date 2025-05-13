@@ -16,16 +16,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class SelectionControlador implements Observer{
@@ -43,10 +44,13 @@ public class SelectionControlador implements Observer{
     private int currentHoverLevel = 0;
     @FXML
     private TextField nom_jugador;
+
     @FXML
     private Label c_nombre;
     @FXML
     private Label c_PERSONAJE;
+    @FXML
+    private ImageView fondoDecorado;
     @FXML
     private Label c_DIFICULTAD;
     @FXML
@@ -56,6 +60,8 @@ public class SelectionControlador implements Observer{
     @FXML
     private MediaView mediaView;
 
+    @FXML
+    private AnchorPane formBackground;
 
     private Juego juego;
 
@@ -113,7 +119,22 @@ public class SelectionControlador implements Observer{
             juego.setNombre(newValue);
             System.out.println("Cadena actualizada a: " + newValue);
         });
-
+        try {
+            Image imagen = new Image(getClass().getResource("/com/enriquealberto/imagenes/papiro.png").toExternalForm());
+            fondoDecorado.setImage(imagen);
+            fondoDecorado.setPreserveRatio(false);
+            fondoDecorado.fitWidthProperty().bind(formBackground.widthProperty().multiply(0.8));
+            fondoDecorado.fitHeightProperty().bind(formBackground.heightProperty().multiply(0.99));
+            formBackground.widthProperty().addListener((obs, oldVal, newVal) -> {
+                AnchorPane.setLeftAnchor(fondoDecorado, (formBackground.getWidth() - fondoDecorado.getFitWidth()) / 2);
+            });
+            formBackground.heightProperty().addListener((obs, oldVal, newVal) -> {
+                AnchorPane.setTopAnchor(fondoDecorado, (formBackground.getHeight() - fondoDecorado.getFitHeight()) / 2);
+            });
+        } catch (Exception e) {
+            System.err.println("Error cargando fondo decorado: " + e.getMessage());
+            e.printStackTrace();
+        }
         start.setOnAction(event -> {
             // Verificar que todos los campos estén completados
             if (juego.getNombre() != null && !juego.getNombre().isEmpty() && juego.getDificultad() != 0 && juego.getJugador() != null) {
@@ -246,7 +267,6 @@ public class SelectionControlador implements Observer{
                 asignarAtributo(personajeBox, "af", p.getAtaque(), "/com/enriquealberto/imagenes/ataque.png");
                 asignarAtributo(personajeBox, "df", p.getDefensa(), "/com/enriquealberto/imagenes/defensa.png");
                 asignarAtributo(personajeBox, "sf", p.getVelocidad(), "/com/enriquealberto/imagenes/velocidad.png");
-
                 cont_perso.getChildren().add(personajeBox);
                 personajeBox.setOnMouseClicked(e -> {
                     // Deseleccionar todos los estilos previos
@@ -270,27 +290,25 @@ public class SelectionControlador implements Observer{
     }
 
     private void asignarAtributo(VBox personajeBox, String prefijo, int cantidad, String iconoRuta) {
-        // Cargar la imagen una sola vez
+        // Buscamos el contenedor HBox que contiene las imágenes
+        HBox contenedor = (HBox) personajeBox.lookup("#" + prefijo.substring(0, 2)); // "vf", "af", etc.
+        if (contenedor == null) {
+            System.err.println("No se encontró el contenedor para: " + prefijo);
+            return;
+        }
+
+        // Limpiamos las imágenes existentes (excepto la etiqueta)
+        contenedor.getChildren().removeIf(node -> node instanceof ImageView);
+
+        // Cargamos la imagen del icono
         Image icono = new Image(getClass().getResource(iconoRuta).toExternalForm());
 
-        for (int i = 1; i <= 5; i++) {
-            String id = "#" + prefijo + i;
-            ImageView img = (ImageView) personajeBox.lookup(id);
-
-            if (img == null) {
-                System.err.println("No se encontró ImageView con ID: " + id);
-                continue;
-            }
-
-            boolean visible = i <= cantidad;
-            img.setVisible(visible);
-            img.setManaged(visible);
-
-            if (visible) {
-                img.setImage(icono);
-            } else {
-                img.setImage(null); // Limpiar la imagen si no es visible
-            }
+        // Añadimos tantas imágenes como indique la cantidad
+        for (int i = 0; i < cantidad; i++) {
+            ImageView img = new ImageView(icono);
+            img.setFitWidth(25);
+            img.setFitHeight(25);
+            contenedor.getChildren().add(img);
         }
     }
 
