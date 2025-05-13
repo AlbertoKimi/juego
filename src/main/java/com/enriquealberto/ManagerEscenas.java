@@ -43,7 +43,7 @@ public class ManagerEscenas {
                 throw new IllegalStateException("No se pudo encontrar el archivo FXML: " + fxml + ".fxml");
             }
             Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, screenWidth * 0.75, screenHeight * 0.88);
+            Scene scene = new Scene(root, screenWidth * 0.85, screenHeight * 0.92);
             scene.getStylesheets().add(App.class.getResource("/com/enriquealberto/css/styles.css").toExternalForm());
             scenes.put(sceneID, scene); // Almacena la escena en el mapa
 
