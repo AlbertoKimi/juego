@@ -23,10 +23,18 @@ public class EstadisticaControlador implements Observer {
     AnchorPane anchorPane;
 
     @FXML
+    ImageView fondoDecorado;
+    @FXML
     VBox cont_principal;
+    @FXML
+    private Label lblTituloJugador;
 
+    @FXML
     private VBox contenedorJugador;
+
+    @FXML
     private VBox contenedorVidas;
+
 
     private Juego juego;
     private final Map<String, Image> imagenesCache = new HashMap<>();
@@ -38,23 +46,17 @@ public class EstadisticaControlador implements Observer {
             System.err.println("ERROR: El héroe no ha sido inicializado.");
             return;
         }
-
         juego.suscribe(this);
-
-        contenedorJugador = new VBox(10);
-        contenedorJugador.setAlignment(Pos.CENTER);
-        contenedorJugador.setPadding(new Insets(10));
-
-        contenedorVidas = new VBox(5);
-        contenedorVidas.setAlignment(Pos.TOP_LEFT);
-        contenedorVidas.setPadding(new Insets(5));
-
-        cont_principal.getChildren().addAll(contenedorJugador, contenedorVidas);
-
+        Image imagen = new Image(getClass().getResource("/com/enriquealberto/imagenes/fondoesta.png").toExternalForm());
+        fondoDecorado.setImage(imagen);
+        fondoDecorado.fitWidthProperty().bind(anchorPane.widthProperty());
+        fondoDecorado.fitHeightProperty().bind(anchorPane.heightProperty());
+        lblTituloJugador.setText(juego.getNombre());
         cargarPersonajes();
         cargarVidas();
-        AnchorPane.setLeftAnchor(cont_principal, 0.0);
-        AnchorPane.setRightAnchor(cont_principal, 0.0);
+
+
+
     }
 
     public void cargarPersonajes() {
@@ -63,6 +65,7 @@ public class EstadisticaControlador implements Observer {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/enriquealberto/vistas/m_perso.fxml"));
             VBox personajeBox = loader.load();
+            personajeBox.setId("personajeJugador");
 
             Label nombre = (Label) personajeBox.lookup("#p_nombre");
             ImageView foto = (ImageView) personajeBox.lookup("#p_foto");
