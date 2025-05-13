@@ -65,7 +65,7 @@ public class PortadaControlador {
         // Centrar el Label en la ventana
         // Centrar el Label correctamente (sin ajustes manuales)
         portada.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -210);
+            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -30);
         });
 
         portada.heightProperty().addListener((obs, oldHeight, newHeight) -> {
