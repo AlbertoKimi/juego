@@ -93,11 +93,7 @@ public class PortadaControlador {
      */
     private void configurarPosicionTexto() {
         portada.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-<<<<<<< HEAD
-            mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -30);
-=======
             mensaje.setLayoutX((newWidth.doubleValue() - mensaje.getWidth()) / 2 -20);
->>>>>>> main
         });
 
         portada.heightProperty().addListener((obs, oldHeight, newHeight) -> {
