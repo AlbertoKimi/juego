@@ -26,7 +26,8 @@ import javafx.util.Duration;
 public class JuegoControlador implements Observer {
     @FXML
     AnchorPane anchorPane;
-
+    @FXML
+    private ImageView fondoView;
     GridPane gridPane;
     GestorMapas gestorMapas;
     VBox vbox;
@@ -54,19 +55,27 @@ public class JuegoControlador implements Observer {
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(7));
         vbox.setAlignment(Pos.CENTER);
+// Cargar la imagen como fondo
+        Image fondo = new Image(getClass().getResourceAsStream("/com/enriquealberto/imagenes/fondojuego.png"));
+        fondoView.setImage(fondo);
 
+// Ajustar para que se redimensione con la ventana (por si cambias tamaño)
+        fondoView.fitWidthProperty().bind(anchorPane.widthProperty());
+        fondoView.fitHeightProperty().bind(anchorPane.heightProperty());
         titulo = new Label();
-        titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        titulo.getStyleClass().add("titulo-mapa");
+        //titulo.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         gridPane = new GridPane();
         gridPane.setPrefWidth(710); // Ancho fijo
         gridPane.setPrefHeight(710); // Alto fijo
-
+        gridPane.getStyleClass().add("grid-centro");
+        VBox.setMargin(gridPane, new Insets(0, 0, 0, 0));
         vbox.getChildren().addAll(titulo, gridPane);
+        vbox.getStyleClass().add("contenedor-juego");
 
         anchorPane.setPrefWidth(900);
         anchorPane.setPrefHeight(700);
-
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setLeftAnchor(vbox, 0.0);

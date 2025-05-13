@@ -44,6 +44,7 @@ public class SelectionControlador implements Observer{
     private int currentHoverLevel = 0;
     @FXML
     private TextField nom_jugador;
+
     @FXML
     private Label c_nombre;
     @FXML
