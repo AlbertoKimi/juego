@@ -7,8 +7,10 @@ import com.enriquealberto.Lectores.LectorMostruo;
 import com.enriquealberto.interfaces.Observer;
 
 /**
- * Clase principal que gestiona la lógica del juego, implementando el patrón Singleton.
- * Controla el estado del juego, los personajes, los turnos y las interacciones entre ellos.
+ * Clase principal que gestiona la lógica del juego, implementando el patrón
+ * Singleton.
+ * Controla el estado del juego, los personajes, los turnos y las interacciones
+ * entre ellos.
  */
 public class Juego {
     private static Juego instance;
@@ -48,6 +50,7 @@ public class Juego {
 
     /**
      * Obtiene la instancia única del juego (Singleton).
+     * 
      * @return La instancia única del juego
      */
     public static Juego getInstance() {
@@ -59,6 +62,7 @@ public class Juego {
 
     /**
      * Establece la instancia del juego (útil para testing).
+     * 
      * @param instance La instancia del juego a establecer
      */
     public static void setInstance(Juego instance) {
@@ -67,6 +71,7 @@ public class Juego {
 
     /**
      * Suscribe un observador para recibir notificaciones de cambios en el juego.
+     * 
      * @param observer El observador a suscribir
      */
     public void suscribe(Observer observer) {
@@ -75,6 +80,7 @@ public class Juego {
 
     /**
      * Elimina un observador de la lista de suscriptores.
+     * 
      * @param observer El observador a eliminar
      */
     public void unsuscribe(Observer observer) {
@@ -90,6 +96,7 @@ public class Juego {
 
     /**
      * Establece el jugador actual y notifica a los observadores.
+     * 
      * @param jugador El héroe que será controlado por el jugador
      */
     public void setJugador(Heroe jugador) {
@@ -101,6 +108,7 @@ public class Juego {
 
     /**
      * Obtiene la lista de héroes disponibles en el juego.
+     * 
      * @return Lista de héroes
      */
     public ArrayList<Heroe> getHeroes() {
@@ -109,6 +117,7 @@ public class Juego {
 
     /**
      * Establece la lista de héroes del juego.
+     * 
      * @param heroes Lista de héroes a establecer
      */
     public void setHeroes(ArrayList<Heroe> heroes) {
@@ -117,6 +126,7 @@ public class Juego {
 
     /**
      * Obtiene la lista de enemigos del juego.
+     * 
      * @return Lista de enemigos
      */
     public ArrayList<Enemigo> getEnemigos() {
@@ -125,6 +135,7 @@ public class Juego {
 
     /**
      * Establece la lista de enemigos del juego.
+     * 
      * @param enemigos Lista de enemigos a establecer
      */
     public void setEnemigos(ArrayList<Enemigo> enemigos) {
@@ -133,6 +144,7 @@ public class Juego {
 
     /**
      * Obtiene el héroe controlado por el jugador.
+     * 
      * @return El héroe jugador
      */
     public Heroe getJugador() {
@@ -141,6 +153,7 @@ public class Juego {
 
     /**
      * Obtiene el nivel de dificultad actual del juego.
+     * 
      * @return Nivel de dificultad (1-3)
      */
     public int getDificultad() {
@@ -149,6 +162,7 @@ public class Juego {
 
     /**
      * Establece el nivel de dificultad del juego y notifica a los observadores.
+     * 
      * @param dificultad Nivel de dificultad (1-3)
      */
     public void setDificultad(int dificultad) {
@@ -158,6 +172,7 @@ public class Juego {
 
     /**
      * Obtiene el nombre del juego.
+     * 
      * @return Nombre del juego
      */
     public String getNombre() {
@@ -166,6 +181,7 @@ public class Juego {
 
     /**
      * Establece el nombre del juego y notifica a los observadores.
+     * 
      * @param nombre Nombre del juego
      */
     public void setNombre(String nombre) {
@@ -194,7 +210,8 @@ public class Juego {
 
     /**
      * Inicializa las entidades del juego (jugador y enemigos) en el mapa actual.
-     * Coloca al jugador en la posición (0,0) y distribuye los enemigos aleatoriamente.
+     * Coloca al jugador en la posición (0,0) y distribuye los enemigos
+     * aleatoriamente.
      */
     public void iniciarentidades() {
         Random random = new Random();
@@ -235,6 +252,7 @@ public class Juego {
 
     /**
      * Coloca un enemigo en una posición aleatoria válida del mapa.
+     * 
      * @param enemigo El enemigo a colocar en el mapa
      */
     public void colocarEnemigoEnPosicionAleatoria(Enemigo enemigo) {
@@ -252,6 +270,7 @@ public class Juego {
 
     /**
      * Intenta mover un personaje a la derecha.
+     * 
      * @param p Personaje a mover
      * @return true si el movimiento fue exitoso, false en caso contrario
      */
@@ -261,6 +280,7 @@ public class Juego {
 
     /**
      * Intenta mover un personaje a la izquierda.
+     * 
      * @param p Personaje a mover
      * @return true si el movimiento fue exitoso, false en caso contrario
      */
@@ -270,6 +290,7 @@ public class Juego {
 
     /**
      * Intenta mover un personaje hacia arriba.
+     * 
      * @param p Personaje a mover
      * @return true si el movimiento fue exitoso, false en caso contrario
      */
@@ -279,6 +300,7 @@ public class Juego {
 
     /**
      * Intenta mover un personaje hacia abajo.
+     * 
      * @param p Personaje a mover
      * @return true si el movimiento fue exitoso, false en caso contrario
      */
@@ -288,6 +310,7 @@ public class Juego {
 
     /**
      * Comprueba el estado de una posición en el mapa.
+     * 
      * @param x Coordenada x
      * @param y Coordenada y
      * @return 0 si la posición es inválida (fuera de límites o obstáculo),
@@ -304,7 +327,7 @@ public class Juego {
         if (entidadesMapa.containsKey(new Posicion(x, y))) {
             return 1; // Personaje en esa posición
         }
-        if (MatrizMapa[y][x] == 0) {
+        if (MatrizMapa[y][x] == 0 || MatrizMapa[y][x] == 2) {
             return 2; // Posición vacía y accesible
         } else {
             return 0; // Otros casos (por defecto, posición inválida)
@@ -314,6 +337,7 @@ public class Juego {
     /**
      * Método principal para mover un personaje en una dirección específica.
      * Maneja colisiones, ataques y efectos especiales según el tipo de mapa.
+     * 
      * @param p Personaje a mover
      * @param x Desplazamiento en el eje x
      * @param y Desplazamiento en el eje y
@@ -389,10 +413,18 @@ public class Juego {
                 return true;
 
             case 2: // Movimiento válido
+                System.out.println("Movimiento permitido");
                 Posicion nueva = new Posicion(xNueva, yNueva);
                 p.setPosicion(nueva);
                 entidadesMapa.remove(antigua);
                 entidadesMapa.put(nueva, p);
+                if (p instanceof Heroe) {
+                    Heroe heroe = (Heroe) p;
+                    if (MatrizMapa[yNueva][xNueva] == 2) {
+                        heroe.setVida(heroe.getVida() - 1);
+                        System.out.println("El héroe ha perdido una vida");
+                    }
+                }
                 return true;
 
             default:
@@ -402,6 +434,7 @@ public class Juego {
 
     /**
      * Incrementa la vida del personaje (héroe) si es posible.
+     * 
      * @param p Personaje al que se le incrementará la vida
      */
     public void ganarVida(Personaje p) {
@@ -417,7 +450,9 @@ public class Juego {
     }
 
     /**
-     * Mueve un personaje en una dirección aleatoria hasta que el movimiento sea válido.
+     * Mueve un personaje en una dirección aleatoria hasta que el movimiento sea
+     * válido.
+     * 
      * @param p Personaje a mover
      */
     public void moverAleatorio(Personaje p) {
@@ -444,6 +479,7 @@ public class Juego {
 
     /**
      * Mueve un personaje (enemigo) hacia el jugador de manera inteligente.
+     * 
      * @param p Personaje a mover (normalmente un enemigo)
      */
     public void moverGuiado(Personaje p) {
@@ -484,6 +520,7 @@ public class Juego {
 
     /**
      * Maneja el movimiento de un enemigo, incluyendo detección y ataque al jugador.
+     * 
      * @param e Enemigo que se está moviendo
      */
     public void moverenemigo(Enemigo e) {
@@ -517,6 +554,7 @@ public class Juego {
 
     /**
      * Verifica si se han derrotado todos los enemigos (condición de victoria).
+     * 
      * @return true si no quedan enemigos, false en caso contrario
      */
     public boolean verificarVictoria() {
@@ -542,6 +580,7 @@ public class Juego {
 
     /**
      * Verifica si el jugador ha sido derrotado (condición de derrota).
+     * 
      * @return true si no quedan héroes vivos, false en caso contrario
      */
     public boolean verificarDerrota() {
@@ -555,6 +594,7 @@ public class Juego {
 
     /**
      * Obtiene el gestor de mapas del juego.
+     * 
      * @return El gestor de mapas
      */
     public GestorMapas getGestorMapas() {
@@ -563,6 +603,7 @@ public class Juego {
 
     /**
      * Establece el gestor de mapas del juego.
+     * 
      * @param gestorMapas Gestor de mapas a establecer
      */
     public void setGestorMapas(GestorMapas gestorMapas) {
@@ -571,6 +612,7 @@ public class Juego {
 
     /**
      * Obtiene la lista de todas las entidades (personajes) en el juego.
+     * 
      * @return Lista de entidades
      */
     public ArrayList<Personaje> getEntidades() {
@@ -579,6 +621,7 @@ public class Juego {
 
     /**
      * Establece la lista de entidades del juego.
+     * 
      * @param entidades Lista de entidades a establecer
      */
     public void setEntidades(ArrayList<Personaje> entidades) {
@@ -587,6 +630,7 @@ public class Juego {
 
     /**
      * Obtiene el personaje cuyo turno es actual.
+     * 
      * @return El personaje actual o null si no hay entidades
      */
     public Personaje getPersonajeActual() {

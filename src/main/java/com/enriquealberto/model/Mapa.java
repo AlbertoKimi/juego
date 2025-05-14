@@ -8,6 +8,7 @@ public class Mapa {
     private String nombre;      // Nombre descriptivo del mapa
     private String suelo;       // Textura o representación del suelo
     private String pared;       // Textura o representación de las paredes/obstáculos
+    private String trampa;       // Fondo del mapa (no utilizado actualmente)
     private int nivel;         // Número de nivel asociado al mapa
     private int[][] mapa;      // Matriz que representa la estructura del mapa (0 = suelo, 1 = pared)
 
@@ -20,11 +21,12 @@ public class Mapa {
      * @param pared Representación visual de las paredes/obstáculos
      * @param mapa Matriz bidimensional que define la estructura del mapa (0 para áreas transitables, 1 para obstáculos)
      */
-    public Mapa(int nivel, String nombre, String suelo, String pared, int[][] mapa) {
+    public Mapa(int nivel, String nombre, String suelo, String pared, String trampa,int[][] mapa) {
         this.nivel = nivel;
         this.nombre = nombre;
         this.suelo = suelo;
         this.pared = pared;
+        this.trampa =trampa;
         this.mapa = mapa;
     }
 
@@ -99,4 +101,15 @@ public class Mapa {
     public int getNivel() {
         return this.nivel;
     }
+
+     public String getTrampa() {
+        return this.trampa;
+    }
+
+    public void setTrampa(String trampa) {
+        this.pared = trampa;
+    }
 }
+
+    
+
