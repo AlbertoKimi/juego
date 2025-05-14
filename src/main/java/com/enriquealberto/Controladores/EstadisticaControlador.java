@@ -8,10 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
 import java.io.IOException;
 import java.util.*;
-
 import com.enriquealberto.interfaces.Observer;
 import com.enriquealberto.model.Juego;
 
