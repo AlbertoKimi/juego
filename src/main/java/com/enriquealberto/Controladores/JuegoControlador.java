@@ -156,12 +156,21 @@ public class JuegoControlador implements Observer {
         // Cargar imágenes de suelo y pared
         Image suelo = new Image(getClass().getResourceAsStream(mapaActual.getSuelo()), anchoCelda, altoCelda, false, true);
         Image pared = new Image(getClass().getResourceAsStream(mapaActual.getPared()), anchoCelda, altoCelda, false, true);
+        Image trampa = new Image(getClass().getResourceAsStream(mapaActual.getTrampa()), anchoCelda, altoCelda, false, true);
 
         // Crear celdas del mapa
         for (int fila = 0; fila < filas; fila++) {
             for (int columna = 0; columna < columnas; columna++) {
                 int valor = matriz[fila][columna];
-                ImageView imageView = new ImageView(valor == 0 ? suelo : pared);
+                /*ImageView imageView = new ImageView(valor == 0 ? suelo : pared);*/
+                ImageView imageView;
+                if (valor == 0) {
+                    imageView = new ImageView(suelo);
+                } else if (valor == 1) {
+                    imageView = new ImageView(pared);
+                } else {
+                    imageView = new ImageView(trampa);
+                }
                 imageView.setFitWidth(anchoCelda);
                 imageView.setFitHeight(altoCelda);
                 imageView.setPreserveRatio(false);
